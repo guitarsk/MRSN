@@ -7,8 +7,8 @@ public class Movie
     private ArrayList<String> genre ;
     private int releaseYear;
     private double rating = 0;
-    private ReviewCollection reviewList = new ReviewCollection();
     private static int count = 0;
+    private ArrayList<Integer> test = new ArrayList<Integer>();
 
     public Movie(String name, ArrayList<String> type, int year)
     {
@@ -38,20 +38,5 @@ public class Movie
     {
         this.rating = reviewList.calRating();
         return this.rating;
-    }
-
-    public void addNewReview(Review e)
-    {
-        reviewList.add(e);
-    }
-
-    public void printReviewList()
-    {
-        reviewList.printAll();
-    }
-
-    public void showReview(int index)
-    {
-        reviewList.showReview(index);
     }
 }
