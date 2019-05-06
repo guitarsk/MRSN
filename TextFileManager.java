@@ -10,7 +10,7 @@ import java.io.*;
  * This class encapsulates the weird Java file IO to give students
  * a way to read text files line by line that looks more like C
  */
-public class TextFileReader
+public class TextFileManager
 {
     /** Reader object to access the file */
     private BufferedReader reader = null;
