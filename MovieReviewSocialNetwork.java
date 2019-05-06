@@ -1,6 +1,7 @@
-public class MRSN
+public class MovieReviewSocialNetwork
 {
     private User currentUser=null;
+    
     public void register()
     {
         UserManager.getInstance().register();
