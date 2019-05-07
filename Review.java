@@ -6,24 +6,36 @@ public class Review
     private String movieName = null;
     private String title = null;
     private String body = null;
-    private Date reviewDate;
+    private String reviewDate = null;
     private double rating = 0;
-    private String writer=null;
-    private HashMap<String,String> likeAndDislike = new HashMap<String,String>();
+    private String writer = null;
+    private HashMap<String,String> likeAndDislike ;
 
-    public Review(String movie,String title,String body,double rate,String name)
+    public Review(String movie,String title,String body,double rate,String writer)
     {
         this.movieName = movie;
         this.title = title;
         this.body = body;
         this.rating = rate;
-        this.writer = name;
-        reviewDate = new Date();
+        this.writer = writer;
+        this.reviewDate = new Date().toString();
+        this.likeAndDislike = new HashMap<String,String>();
+    }
+
+    public Review(String movie,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
+    {
+        this.movieName = movie;
+        this.title = title;
+        this.body = body;
+        this.rating = rate;
+        this.writer = writer;
+        this.reviewDate = date;
+        this.likeAndDislike = likeAndDislike;
     }
 
     public String toString()
     {
-        return "Movie:"+movieName+" Title:"+title+" by "+creatorName;
+        return "Movie:"+movieName+" Title:"+title+" by "+writer;
     }
 
     public void showReview()
@@ -37,7 +49,7 @@ public class Review
         //System.out.println("\n"+);
     }
 
-    public Date getReviewDate()
+    public String getReviewDate()
     {
         return this.reviewDate;
     }
