@@ -65,13 +65,13 @@ public class MovieFileManager extends TextFileManager
         movieManager.writeMovie("[\nMOVIENAME lionking\nGENRE romance action\nyear 2018\n]");
         movieManager.writeMovie("[\nMOVIENAME eiei\nGENRE romance action\nyear 2018\n]");
         movieManager.closeWrite();
-        // movieManager.openRead("allMovie.txt");
-        // Movie test = null;
-        // if((test = movieManager.readMovie()) != null)
-        // {
-        //     System.out.println(test.getName() + " " + test.getYear());
-        // }
-        // movieManager.closeRead();
+        movieManager.openRead("allMovie.txt");
+        Movie test = null;
+        if((test = movieManager.readMovie()) != null)
+        {
+            System.out.println(test.getName() + " " + test.getYear());
+        }
+        movieManager.closeRead();
         movieManager.openWrite("allMovie.txt");
         movieManager.writeMovie("[\nMOVIENAME ghj\nGENRE romance action\nyear 2018\n]");
         movieManager.writeMovie("[\nMOVIENAME dfghjkl\nGENRE romance action\nyear 2018\n]");

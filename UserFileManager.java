@@ -40,6 +40,7 @@ public class UserFileManager extends TextFileManager
                 }
                 else
                 {
+                    System.out.println(fields[0]);
                     System.out.println("bad data");
                     return user;
                 }
@@ -54,5 +55,24 @@ public class UserFileManager extends TextFileManager
     public void writeUser(String userData)
     {
         writeNextLine(userData);
+    }
+
+    public static void main(String arg[])
+    {
+        UserFileManager userFileManager = new UserFileManager();
+        userFileManager.openWrite("allUser.txt");
+        userFileManager.writeUser("[\nNAME guitar\nEMAIL  tar_123@eiei.com\nPASSWORD 1234\nFAVTYPE COMEMEDY SCI-FI\n]");
+        userFileManager.writeUser("[\nNAME guitar\nEMAIL  tar_124@eiei.com\nPASSWORD 1234\nFAVTYPE COMEMEDY SCI-FI\n]");
+        userFileManager.closeWrite();
+        userFileManager.openRead("allUser.txt");
+        User test = null;
+        if((test = userFileManager.readUser()) != null)
+        {
+            System.out.println(test.getUserName() + " " + test.getEmail());
+        }
+        userFileManager.closeRead();
+        userFileManager.openWrite("allUser.txt");
+        userFileManager.writeUser("[\nNAME guitar\nEMAIL  tar_123asd@eiei.com\nPASSWORD 1234\nFAVTYPE COMEMEDY SCI-FI\n]");
+        userFileManager.closeWrite();
     }
 }

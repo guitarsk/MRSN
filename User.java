@@ -58,7 +58,7 @@ public class User
         followedList.add(followedUser);
     }
 
-    public String getFollowed(int index)
+    public User getFollowed(int index)
     {
         return followedList.get(index);
     }
