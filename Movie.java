@@ -1,3 +1,12 @@
+/**
+ * Movie class represent a movie
+ * 
+ * Created by Nawakanok Muengkam (Guitar) 5907050101044
+ *      Build project's possible framework and some implementation
+ *  Modified by jarudet Wichit (Jardet) 59070501008
+ *      7/5/2019 Continuing implement project
+ */
+
 import java.util.ArrayList;
 
 public class Movie
@@ -8,35 +17,71 @@ public class Movie
     private int releaseYear;
     private double rating = 0;
     private static int count = 0;
-    private ArrayList<Integer> test = new ArrayList<Integer>();
 
-    public Movie(String name, ArrayList<String> type, int year)
+    // i don't know what this do need to ask guitar
+    private ArrayList<Integer> test = new ArrayList<Integer>(); 
+
+    /**
+     * create instance of Movie
+     * @param name name for this Movie
+     * @param genre of this movie 
+     * @param year this movie created
+     */
+    public Movie(String name, ArrayList<String> genre, int year)
     {
+        this.movieID = count;
+        Movie.count++;
         this.name = name;
-        this.genre = type;
+        this.genre = genre;
         this.releaseYear = year;
         count++;
         this.movieID=count;
     }
 
+    /**
+     * getter for Movie's name
+     * @return name of this movie
+     */
     public String getName()
     {
         return this.name;
     }
 
+    /**
+     * getter for Movie's genre
+     * @return genre of this Movie
+     */
     public String getGenre()
     {
         return this.genre;
     }
 
-    public int getYear()
+    /**
+     * getter for this Movie releaseYear
+     * @return releaseYear of this movie
+     */
+    public int getReleaseYear()
     {
         return this.releaseYear;
     }
 
+    /**
+     * calculate this Movie rating and return average
+     * @return this Movie's average rating
+     */
     public double calRating()
     {
+        // confused need to look for whereabout of reviewList
         this.rating = reviewList.calRating();
         return this.rating;
+    }
+
+    /**
+     * get one line of data to write to file need more info from Guitar
+     * @return one line of String
+     */
+    public String getDataToWrite()
+    {
+        return "Dummy";
     }
 }
