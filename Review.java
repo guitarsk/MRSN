@@ -79,7 +79,7 @@ public class Review
         this.rating = newRate;
     }
 
-    public void setLikeAndDislike(String email,String value)
+    public void setLikeOrDislike(String email,String value)
     {
         if(likeAndDislike.isEmpty() == true)
         {
