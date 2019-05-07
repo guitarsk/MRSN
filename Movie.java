@@ -51,7 +51,7 @@ public class Movie
      * getter for Movie's genre
      * @return genre of this Movie
      */
-    public String getGenre()
+    public ArrayList<String> getGenre()
     {
         return this.genre;
     }

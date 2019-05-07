@@ -20,7 +20,7 @@ public class ReviewManager
     // i don't know if this one is the right implementation
     private static ReviewManager singletonInstance = new ReviewManager();
 
-    /** need to create review collection */
+     /** need to create review collection */
     private ReviewManager()
     {
         allReviews = new ReviewCollection();

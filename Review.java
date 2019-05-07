@@ -41,7 +41,19 @@ public class Review
         this.body = body;
         this.rating = rating;
         this.writer = writer;
-        reviewDate = new Date();
+        this.reviewDate = new Date().toString();
+        this.likeAndDislike = new HashMap<String,String>();
+    }
+
+    public Review(String movie,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
+    {
+        this.movieName = movie;
+        this.title = title;
+        this.body = body;
+        this.rating = rate;
+        this.writer = writer;
+        this.reviewDate = date;
+        this.likeAndDislike = likeAndDislike;
     }
 
     /**
@@ -53,7 +65,7 @@ public class Review
         return "Movie:"+movieName+" Title:"+title+" by "+creatorName;
     }
 
-    
+
 
     /**
      * getter for reviewDate

@@ -7,9 +7,13 @@ public class MovieReviewSocialNetwork
         UserManager.getInstance().register();
     }
 
-    public void login()
+    public boolean login()
     {
         currentUser = UserManager.getInstance().login(email, password);
+        if(currentUser==null)
+            return false;
+        else
+            return true;
     }
 
     public void viewMovie()

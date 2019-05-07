@@ -6,8 +6,7 @@ public class User
     private String email = null;
     private String password = null;
     private ArrayList<String> favoriteMovieType = new ArrayList<String>();
-    private ReviewCollection userReviews = new ReviewCollection();
-    private ArrayList<String> followedList = new ArrayList<String>();
+    private ArrayList<User> followedList = new ArrayList<User>();
 
     public User(String name,String email,String password,ArrayList<String> movieType)
     {
@@ -46,11 +45,6 @@ public class User
         return false;
     }
 
-    public void addNewReview(Review  e)
-    {
-        userReviews.add(e);
-    }
-
     public void printFollowed()
     {
         for(int i=0;i<followedList.size();i++)
@@ -59,29 +53,14 @@ public class User
         }
     }
 
-    public void addFollowed(String e)
+    public void addFollowed(User followedUser)
     {
-        followedList.add(e);
+        followedList.add(followedUser);
     }
 
-    public String getFollowedEmail(int index)
+    public User getFollowed(int index)
     {
         return followedList.get(index);
     }
 
-    public void manageReview()
-    {
-        userReviews.printAll();
-        userReviews.edit(index);
-        userReviews.delete(index);
-        userReviews.getReviewID();
-        
-        Moive a =MovieManager.getInstance().getMovie(movieName);
-        
-    }
-
-    public void showOwnReview()
-    {
-
-    }
 }
