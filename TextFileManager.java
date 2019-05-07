@@ -58,7 +58,7 @@ public class TextFileManager
         {
             writer = new BufferedWriter(new FileWriter(filename));
         } 
-        catch (FileNotFoundException fnf) 
+        catch (IOException ioe) 
         {
             bOk = false;
             writer = null;
@@ -117,11 +117,26 @@ public class TextFileManager
     /** 
      * Explicitly close the reader to free resources 
      */
-    public void close()
+    public void closeRead()
     {
         try 
         {
             reader.close();
+        } 
+        catch (IOException ioe) 
+        {
+            
+        }
+    }
+
+    /** 
+     * Explicitly close the writer to free resources 
+     */
+    public void closeWrite()
+    {
+        try 
+        {
+            writer.close();
         } 
         catch (IOException ioe) 
         {

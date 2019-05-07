@@ -7,13 +7,13 @@ public class MovieFileManager extends TextFileManager
         Movie movie = null;
         String lineRead = getNextLine();
         
-        if(lineRead != '[')
+        if(lineRead.equalsIgnoreCase("[")==true)
         {
             String name = null;
             ArrayList<String> genre = new ArrayList<String>();
             int year = -1;
             lineRead = getNextLine();
-            while(lineRead != ']')
+            while(lineRead.equalsIgnoreCase("]")==false)
             {
                 String fields[] = lineRead.split("\\s+");
                 if(fields[0].equalsIgnoreCase("MOVIENAME") && fields.length == 2)
@@ -35,13 +35,14 @@ public class MovieFileManager extends TextFileManager
                     }
                     catch (NumberFormatException nfe)
                     {
-                        System.out.println("bad data");
+                        System.out.println("bad dataa");
                         return movie;
                     }
                 }
                 else
                 {
-                    System.out.println("bad data");
+                    System.out.println(fields[0]);
+                    System.out.println("bad datab");
                     return movie;
                 }
                 lineRead = getNextLine();
@@ -55,5 +56,21 @@ public class MovieFileManager extends TextFileManager
     public void writeMovie(String movieData)
     {
         writeNextLine(movieData);
+    }
+
+    public static void main(String arg[])
+    {
+        MovieFileManager movieManager = new MovieFileManager();
+        movieManager.openWrite("allMovie.txt");
+        movieManager.writeMovie("[\nMOVIENAME lionking\nGENRE romance action\nyear 2018\n]");
+        movieManager.writeMovie("[\nMOVIENAME eiei\nGENRE romance action\nyear 2018\n]");
+        movieManager.closeWrite();
+        movieManager.openRead("allMovie.txt");
+        Movie test = null;
+        if((test = movieManager.readMovie()) != null)
+        {
+            System.out.println(test.getName() + " " + test.getYear());
+        }
+        movieManager.closeRead();
     }
 }

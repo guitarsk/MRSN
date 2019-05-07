@@ -7,7 +7,7 @@ public class UserFileManager extends TextFileManager
         User user = null;
         String lineRead = getNextLine();
         
-        if(lineRead != '[')
+        if(lineRead.equalsIgnoreCase("[")==true)
         {
             String name = null;
             String email = null;
@@ -15,7 +15,7 @@ public class UserFileManager extends TextFileManager
             ArrayList<String> type = new ArrayList<String>();
             
             lineRead = getNextLine();
-            while(lineRead != ']')
+            while(lineRead.equalsIgnoreCase("]")==false)
             {
                 String fields[] = lineRead.split("\\s+");
                 if(fields[0].equalsIgnoreCase("NAME") && fields.length == 2)

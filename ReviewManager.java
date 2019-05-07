@@ -8,7 +8,7 @@ public class ReviewManager
 
     private static ReviewManager singletonInstance = new ReviewManager();
 
-    private MovieManager()
+    private ReviewManager()
     {
 
     }

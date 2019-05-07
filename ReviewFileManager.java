@@ -8,7 +8,7 @@ public class ReviewFileManager extends TextFileManager
         Review review = null;
         String lineRead = getNextLine();
         
-        if(lineRead != '[')
+        if(lineRead.equalsIgnoreCase("[")==true)
         {
             String movieName = null;
             String title = null;
@@ -19,7 +19,7 @@ public class ReviewFileManager extends TextFileManager
             HashMap<String,String> likeAndDislike = new HashMap<String,String>();
             
             lineRead = getNextLine();
-            while(lineRead != ']')
+            while(lineRead.equalsIgnoreCase("]")==false)
             {
                 String fields[] = lineRead.split("\\s+");
                 if(fields[0].equalsIgnoreCase("MOVIENAME") && fields.length == 2)
@@ -41,7 +41,7 @@ public class ReviewFileManager extends TextFileManager
                 }
                 else if(fields[0].equalsIgnoreCase("RATING") && fields.length == 2)
                 {
-                    rate = fields[1];
+                    rate = Double.parseDouble(fields[1]);
                 }
                 else if(fields[0].equalsIgnoreCase("WRITER") && fields.length == 2)
                 {
