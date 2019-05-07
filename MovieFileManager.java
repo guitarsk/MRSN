@@ -61,7 +61,7 @@ public class MovieFileManager extends TextFileManager
     public static void main(String arg[])
     {
         MovieFileManager movieManager = new MovieFileManager();
-        movieManager.openWrite("allMovie.txt");
+        movieManager.openWrite("allMovie.txt",true);
         movieManager.writeMovie("[\nMOVIENAME lionking\nGENRE romance action\nyear 2018\n]");
         movieManager.writeMovie("[\nMOVIENAME eiei\nGENRE romance action\nyear 2018\n]");
         movieManager.closeWrite();
@@ -72,7 +72,7 @@ public class MovieFileManager extends TextFileManager
             System.out.println(test.getName() + " " + test.getYear());
         }
         movieManager.closeRead();
-        movieManager.openWrite("allMovie.txt");
+        movieManager.openWrite("allMovie.txt",true);
         movieManager.writeMovie("[\nMOVIENAME ghj\nGENRE romance action\nyear 2018\n]");
         movieManager.writeMovie("[\nMOVIENAME dfghjkl\nGENRE romance action\nyear 2018\n]");
         movieManager.closeWrite();

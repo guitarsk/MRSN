@@ -74,7 +74,7 @@ public class Review
         this.body = newBody;
     }
 
-    public void setRating(String newRate)
+    public void setRating(double newRate)
     {
         this.rating = newRate;
     }

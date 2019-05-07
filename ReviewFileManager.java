@@ -59,7 +59,7 @@ public class ReviewFileManager extends TextFileManager
                 lineRead = getNextLine();
             }
             if(movieName != null && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==false)
-                review = new Review(movie, title, body, rate, name);
+                review = new Review(movieName, title, body, date, rate, write, likeAndDislike);
         }
         return review;
     }
@@ -67,5 +67,24 @@ public class ReviewFileManager extends TextFileManager
     public void writeReview(String reviewData)
     {
         writeNextLine(reviewData);
+    }
+
+    public static void main(String arg[])
+    {
+        ReviewFileManager reviewFileManager = new ReviewFileManager();
+        reviewFileManager.openWrite("allReview.txt",true);
+        reviewFileManager.writeReview("[\nMOVIENAME eiei\nTITLE  ez\nBODY yeah\nDATE Tue_May_07_18:10:39_ICT_2019\nRATING 10.0\nWRITER guitar\nLIKE&DISLIKE jardet like\nLIKE&DISLIKE big like\n]");
+        reviewFileManager.writeReview("[\nMOVIENAME eiei\nTITLE  ez2\nBODY yeah\nDATE Tue_May_07_18:11:39_ICT_2019\nRATING 10.0\nWRITER guitar\nLIKE&DISLIKE jardet like\nLIKE&DISLIKE big like\n]");
+        reviewFileManager.closeWrite();
+        reviewFileManager.openRead("allReview.txt");
+        Review test = null;
+        if((test = reviewFileManager.readReview()) != null)
+        {
+            System.out.println(test);
+        }
+        reviewFileManager.closeRead();
+        reviewFileManager.openWrite("allReview.txt",false);
+        reviewFileManager.writeReview("[\nMOVIENAME eiei\nTITLE  ez3\nBODY yeah\nDATE Tue_May_07_18:20:39_ICT_2019\nRATING 10.0\nWRITER guitar\nLIKE&DISLIKE jardet like\nLIKE&DISLIKE big like\n]");
+        reviewFileManager.closeWrite();
     }
 }

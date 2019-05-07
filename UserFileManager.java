@@ -60,7 +60,7 @@ public class UserFileManager extends TextFileManager
     public static void main(String arg[])
     {
         UserFileManager userFileManager = new UserFileManager();
-        userFileManager.openWrite("allUser.txt");
+        userFileManager.openWrite("allUser.txt",true);
         userFileManager.writeUser("[\nNAME guitar\nEMAIL  tar_123@eiei.com\nPASSWORD 1234\nFAVTYPE COMEMEDY SCI-FI\n]");
         userFileManager.writeUser("[\nNAME guitar\nEMAIL  tar_124@eiei.com\nPASSWORD 1234\nFAVTYPE COMEMEDY SCI-FI\n]");
         userFileManager.closeWrite();
@@ -71,7 +71,7 @@ public class UserFileManager extends TextFileManager
             System.out.println(test.getUserName() + " " + test.getEmail());
         }
         userFileManager.closeRead();
-        userFileManager.openWrite("allUser.txt");
+        userFileManager.openWrite("allUser.txt",true);
         userFileManager.writeUser("[\nNAME guitar\nEMAIL  tar_123asd@eiei.com\nPASSWORD 1234\nFAVTYPE COMEMEDY SCI-FI\n]");
         userFileManager.closeWrite();
     }

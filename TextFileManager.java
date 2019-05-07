@@ -42,7 +42,7 @@ public class TextFileManager
     * @param filename   File to open
     * @return true if successfully opened, false if not found.
     */
-    public boolean openWrite(String filename)
+    public boolean openWrite(String filename, boolean append)
     {
         boolean bOk = true;
         try 
@@ -56,7 +56,7 @@ public class TextFileManager
         }
         try 
         {
-            writer = new BufferedWriter(new FileWriter(filename,true));
+            writer = new BufferedWriter(new FileWriter(filename,append));
         } 
         catch (IOException ioe) 
         {
