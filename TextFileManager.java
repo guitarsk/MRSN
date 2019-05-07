@@ -56,7 +56,7 @@ public class TextFileManager
         }
         try 
         {
-            writer = new BufferedWriter(new FileWriter(filename));
+            writer = new BufferedWriter(new FileWriter(filename,true));
         } 
         catch (IOException ioe) 
         {
@@ -64,7 +64,7 @@ public class TextFileManager
             writer = null;
         }
         return bOk;
-    }
+    } 
 
     /** 
     * Try to read a line from the open file.
