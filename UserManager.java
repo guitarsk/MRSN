@@ -6,6 +6,8 @@ public class UserManager
 {
     private final String userFileName = "allUsers.txt";
 
+    private UserFileManager userFileManager = null;
+
     private HashMap<String,User> allUsers = new HashMap<String,User>();
 
     private static UserManager singletonInstance = new UserManager();
@@ -22,7 +24,15 @@ public class UserManager
 
     public void initialize()
     {
-
+        User user = null;
+        userFileManager = new UserFileManager();
+        if(userFileManager.openRead(userFileName)==true)
+        {
+            while((user = userFileManager.readUser())!=null)
+            {
+                allUsers.put(user.getEmail(), user);
+            }
+        }
     }
 
     public User login(String email,String password)

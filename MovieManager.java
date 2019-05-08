@@ -14,6 +14,8 @@ public class MovieManager
 {
     private final String movieFileName = "allMovie.txt";
 
+    private MovieFileManager movieFileManager = null;
+
     private MovieCollection allMovies;
 
     private static MovieManager singletonInstance = new MovieManager();
@@ -37,7 +39,16 @@ public class MovieManager
      */
     public void initialize()
     {
+        Movie movie = null;
+        movieFileManager = new MovieFileManager();
         allMovies = new MovieCollection();
+        if(movieFileManager.openRead(movieFileName)==true)
+        {
+            while((movie = movieFileManager.readMovie())!=null)
+            {
+                allMovies.addMovie(movie.getName(), movie);
+            }
+        }
     }
 
     /* incomplete */

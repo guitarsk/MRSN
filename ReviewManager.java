@@ -15,6 +15,8 @@ public class ReviewManager
 {
     private final String reviewFileName = "allReviews.txt";
 
+    private ReviewFileManager reviewFileManager = null;
+
     private ReviewCollection allReviews;
 
     // i don't know if this one is the right implementation
@@ -23,7 +25,7 @@ public class ReviewManager
      /** need to create review collection */
     private ReviewManager()
     {
-        allReviews = new ReviewCollection();
+        
     }
 
     /** 
@@ -40,6 +42,16 @@ public class ReviewManager
     public void initialize()
     {
         
+        Review review = null;
+        reviewFileManager = new ReviewFileManager();
+        allReviews = new ReviewCollection();
+        if(reviewFileManager.openRead(reviewFileName)==true)
+        {
+            while((review = reviewFileManager.readReview())!=null)
+            { 
+                allReviews.add(review);
+            }
+        }
     }
 
     /**
