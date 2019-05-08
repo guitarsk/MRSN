@@ -22,7 +22,7 @@ public class ReviewCollection
     /** unfinished need to figure out how to put in data in one go */
     public ReviewCollection()
     {
-        movieMatchReview = new HashMap<Integer,Review>();
+        movieMatchReview = new HashMap<Integer,ArrayList<Integer>>();
         userMatchReview = new HashMap<String,ArrayList<Integer>>();
         reviews = new HashMap<Integer,Review>();
     }
@@ -36,7 +36,7 @@ public class ReviewCollection
     public ReviewCollection searchReview(String key)
     {
         
-        return newList;
+        return this;
     }
 
     /** i don't know what this do need to ask guitar */
@@ -53,7 +53,7 @@ public class ReviewCollection
     /** show review information 
      * @param index of review
      **/
-    public void showReview(int index)
+    public void showReview(String email, int value, int index)
     {
         reviews.get(index).showReview();
         reviews.get(index).setLikeAndDislike(email, value);
@@ -84,7 +84,7 @@ public class ReviewCollection
      */
     public void add(Review review)
     {
-        reviews.add(review);
+        reviews.add((Integer)review.getReviewID(),review);
     }
 
     /** get HashMap of all reviews in this class

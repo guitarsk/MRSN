@@ -7,7 +7,7 @@ public class MovieFileManager extends TextFileManager
         Movie movie = null;
         String lineRead = getNextLine();
         
-        if(lineRead.equalsIgnoreCase("[")==true)
+        if(lineRead != null && lineRead.equalsIgnoreCase("[")==true)
         {
             String name = null;
             ArrayList<String> genre = new ArrayList<String>();
@@ -69,7 +69,7 @@ public class MovieFileManager extends TextFileManager
         Movie test = null;
         if((test = movieManager.readMovie()) != null)
         {
-            System.out.println(test.getName() + " " + test.getYear());
+            System.out.println(test.getName() + " " + test.getReleaseYear());
         }
         movieManager.closeRead();
         movieManager.openWrite("allMovie.txt",true);

@@ -3,7 +3,7 @@
  * 
  *  Created by Nawakanok Muengkam (Guitar) 5907050101044
  *      Build project's possible framework and some implementation
- *  Modified by jarudet Wichit (Jardet) 59070501008
+ *  Modified by Jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project
  * 
  */
@@ -17,7 +17,7 @@ public class Review
     private String movieName = null;
     private String title = null;
     private String body = null;
-    private Date reviewDate;
+    private String reviewDate;
     private double rating = 0;
     private String writer=null;
     private HashMap<String,String> likeAndDislike = new HashMap<String,String>();
@@ -36,7 +36,7 @@ public class Review
     {
         this.reviewID = count;
         Review.count++;
-        this.movieName = movie;
+        this.movieName = movieName;
         this.title = title;
         this.body = body;
         this.rating = rating;
@@ -45,9 +45,9 @@ public class Review
         this.likeAndDislike = new HashMap<String,String>();
     }
 
-    public Review(String movie,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
+    public Review(String movieName,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
     {
-        this.movieName = movie;
+        this.movieName = movieName;
         this.title = title;
         this.body = body;
         this.rating = rate;
@@ -62,7 +62,7 @@ public class Review
      */
     public String toString()
     {
-        return "Movie:"+movieName+" Title:"+title+" by "+creatorName;
+        return "Movie:"+movieName+" Title:"+title+" by "+writer;
     }
 
 
@@ -71,7 +71,7 @@ public class Review
      * getter for reviewDate
      * @return date this Review was created
      */
-    public Date getReviewDate()
+    public String getReviewDate()
     {
         return this.reviewDate;
     }
@@ -148,7 +148,7 @@ public class Review
      * set rating to review
      * @param newRate for review
      */
-    public void setRating(String newRate)
+    public void setRating(Double newRate)
     {
         this.rating = newRate;
     }

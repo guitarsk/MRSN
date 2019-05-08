@@ -18,7 +18,7 @@ public class MovieCollection
     /**unfinished need to figure out how to create hashMap of Movie in one go */
     public MovieCollection()
     {
-        movies = new HashMap<Movie>();
+        movies = new HashMap<String,Movie>();
     }
 
     /**

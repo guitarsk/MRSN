@@ -12,9 +12,9 @@ import java.util.ArrayList;
 
 public class MovieManager
 {
-    private final String movieFileName = "allMovies.txt";
+    private final String movieFileName = "allMovie.txt";
 
-    private MovieCollection movies = new MovieCollection();
+    private MovieCollection allMovies;
 
     private static MovieManager singletonInstance = new MovieManager();
 
@@ -37,14 +37,14 @@ public class MovieManager
      */
     public void initialize()
     {
-        
+        allMovies = new MovieCollection();
     }
 
     /* incomplete */
     public void checkMovie(String movieName)
     {
         allMovies.checkMovie(movieName);
-        allMovies.add(movieName, movie);
+        //allMovies.add(movieName, movie);
     }
 
     /**
@@ -55,6 +55,15 @@ public class MovieManager
     public Movie getMovie(String movieName)
     {
         return allMovies.getMovie(movieName);
+    }
+
+    /**
+     * get path for Movie file
+     * @return path for Movie file
+     */
+    public String getMovieFileName()
+    {
+        return movieFileName;
     }
 
     /**

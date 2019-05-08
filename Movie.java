@@ -72,8 +72,15 @@ public class Movie
     public double calRating()
     {
         // confused need to look for whereabout of reviewList
-        this.rating = reviewList.calRating();
         return this.rating;
+    }
+
+    /**
+     * print first 5 recent reviews of this Movie
+     */
+    public void printReviewList()
+    {
+
     }
 
     /**

@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -51,7 +52,7 @@ public class UserManager
         }
     }
 
-    public boolean register()
+    public boolean register(String name,String email,String password,ArrayList<String> movieType)
     {
         User newUser = new User(name, email, password, movieType);
         allUsers.put(email, newUser);
