@@ -18,23 +18,3 @@ MOVIENAME|dfghjkl
 GENRE|romance|action
 year|2018
 ]
-[
-MOVIENAME lionking
-GENRE romance action
-year 2018
-]
-[
-MOVIENAME eiei
-GENRE romance action
-year 2018
-]
-[
-MOVIENAME ghj
-GENRE romance action
-year 2018
-]
-[
-MOVIENAME dfghjkl
-GENRE romance action
-year 2018
-]
