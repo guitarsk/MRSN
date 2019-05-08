@@ -15,7 +15,7 @@ public class MovieFileManager extends TextFileManager
             lineRead = getNextLine();
             while(lineRead.equalsIgnoreCase("]")==false)
             {
-                String fields[] = lineRead.split("\\s+");
+                String fields[] = lineRead.split("\\|");
                 if(fields[0].equalsIgnoreCase("MOVIENAME") && fields.length == 2)
                 {
                     name = fields[1];
@@ -62,8 +62,8 @@ public class MovieFileManager extends TextFileManager
     {
         MovieFileManager movieManager = new MovieFileManager();
         movieManager.openWrite("allMovie.txt",true);
-        movieManager.writeMovie("[\nMOVIENAME lionking\nGENRE romance action\nyear 2018\n]");
-        movieManager.writeMovie("[\nMOVIENAME eiei\nGENRE romance action\nyear 2018\n]");
+        movieManager.writeMovie("[\nMOVIENAME|lionking\nGENRE|romance|action\nyear|2018\n]");
+        movieManager.writeMovie("[\nMOVIENAME|eiei\nGENRE|romance|action\nyear|2018\n]");
         movieManager.closeWrite();
         movieManager.openRead("allMovie.txt");
         Movie test = null;
@@ -73,8 +73,8 @@ public class MovieFileManager extends TextFileManager
         }
         movieManager.closeRead();
         movieManager.openWrite("allMovie.txt",true);
-        movieManager.writeMovie("[\nMOVIENAME ghj\nGENRE romance action\nyear 2018\n]");
-        movieManager.writeMovie("[\nMOVIENAME dfghjkl\nGENRE romance action\nyear 2018\n]");
+        movieManager.writeMovie("[\nMOVIENAME|ghj\nGENRE|romance|action\nyear|2018\n]");
+        movieManager.writeMovie("[\nMOVIENAME|dfghjkl\nGENRE|romance|action\nyear|2018\n]");
         movieManager.closeWrite();
     }
 }

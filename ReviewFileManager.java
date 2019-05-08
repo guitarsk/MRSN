@@ -21,7 +21,7 @@ public class ReviewFileManager extends TextFileManager
             lineRead = getNextLine();
             while(lineRead.equalsIgnoreCase("]")==false)
             {
-                String fields[] = lineRead.split("\\s+");
+                String fields[] = lineRead.split("\\|");
                 if(fields[0].equalsIgnoreCase("MOVIENAME") && fields.length == 2)
                 {
                     movieName = fields[1];
@@ -53,6 +53,7 @@ public class ReviewFileManager extends TextFileManager
                 }
                 else
                 {
+                    System.out.println(fields[0]);
                     System.out.println("bad data");
                     return review;
                 }
@@ -73,8 +74,8 @@ public class ReviewFileManager extends TextFileManager
     {
         ReviewFileManager reviewFileManager = new ReviewFileManager();
         reviewFileManager.openWrite("allReview.txt",true);
-        reviewFileManager.writeReview("[\nMOVIENAME eiei\nTITLE  ez\nBODY yeah\nDATE Tue_May_07_18:10:39_ICT_2019\nRATING 10.0\nWRITER guitar\nLIKE&DISLIKE jardet like\nLIKE&DISLIKE big like\n]");
-        reviewFileManager.writeReview("[\nMOVIENAME eiei\nTITLE  ez2\nBODY yeah\nDATE Tue_May_07_18:11:39_ICT_2019\nRATING 10.0\nWRITER guitar\nLIKE&DISLIKE jardet like\nLIKE&DISLIKE big like\n]");
+        reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez\nBODY|yeah\nDATE|Tue May 07 18:10:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
+        reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez2\nBODY|yeah\nDATE|Tue May 07 18:11:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         reviewFileManager.closeWrite();
         reviewFileManager.openRead("allReview.txt");
         Review test = null;
@@ -83,8 +84,8 @@ public class ReviewFileManager extends TextFileManager
             System.out.println(test);
         }
         reviewFileManager.closeRead();
-        reviewFileManager.openWrite("allReview.txt",false);
-        reviewFileManager.writeReview("[\nMOVIENAME eiei\nTITLE  ez3\nBODY yeah\nDATE Tue_May_07_18:20:39_ICT_2019\nRATING 10.0\nWRITER guitar\nLIKE&DISLIKE jardet like\nLIKE&DISLIKE big like\n]");
+        reviewFileManager.openWrite("allReview.txt",true);
+        reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez3\nBODY|yeah\nDATE|Tue May 07 18:20:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         reviewFileManager.closeWrite();
     }
 }
