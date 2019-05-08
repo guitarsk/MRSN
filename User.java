@@ -63,4 +63,20 @@ public class User
         return followedList.get(index);
     }
 
+    public String getDataToWrite()
+    {
+        String data = null;
+        data = "[\nNAME|"+this.name+"\nEMAIL|"+this.email+"\nPASSWORD|"+this.password+"\nFAVTYPE";
+        for(int i = 0 ; i<favoriteMovieType.size() ; i++)
+        {
+            data += "|"+favoriteMovieType.get(i);
+        }
+        data+="\nFOLLOW";
+        for(int i = 0 ; i<followedList.size() ; i++)
+        {
+            data += "|"+followedList.get(i).getEmail();
+        }
+        data += "\n]";
+        return data;
+    }
 }

@@ -75,8 +75,9 @@ public class ReviewManager
     /**
      * save all Review in ReviewCollection to file suing ReviewFileManager
      */
-    public static void saveReview()
+    public void rewriteAllReview()
     {
-
+        String reviewData = null;
+        //seem like user 
     }
 }

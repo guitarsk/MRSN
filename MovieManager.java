@@ -97,11 +97,4 @@ public class MovieManager
 
     }
 
-    /**
-     * save all Movie in MovieCollection to file
-     */
-    public void saveMovie()
-    {
-
-    }
 }

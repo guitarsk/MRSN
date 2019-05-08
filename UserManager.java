@@ -73,4 +73,11 @@ public class UserManager
     {
         return allUsers.get(email);
     }
+
+    public void rewriteAllUser()
+    {
+        String userData = null;
+        /* iterator แล้วเรียก getDataToWrite */
+        userFileManager.writeUser(userData);
+    }
 }
