@@ -1,3 +1,4 @@
+
 /**
  *  MovieReviewSocialnetwork is facade class for MRSN project
  * 
@@ -5,8 +6,11 @@
  *      Build project's possible framework and some implementation
  *  Modified by Jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project  
+ * 
+ *  Borrow method getOneInteger() and getOneString() from Prof.Sally Goldin
  */
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -15,26 +19,77 @@ public class MovieReviewSocialNetwork
     private User currentUser=null;
     
     /**
-     * ask user for input and return one line of string
-     * @return String user input
+     * Asks for one integer value, and returns it
+     * as the function value.
+     * @param   prompt    String to print, telling which coordinate
+     * @return  the value. Exits with error if user types in
+     *          something that can't be read as an integer 
      */
-   public String getLineString()
-    {
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        return input;
-    }
+    private int getOneInteger(String prompt)
+       {
+       int value = 0;	   
+       String inputString;
+       int readBytes = 0;
+       byte buffer[] = new byte[200]; 
+       System.out.println(prompt);
+       try
+           {
+           readBytes = System.in.read(buffer,0,200);
+	   }
+       catch (IOException ioe)
+           {
+	   System.out.println("Input/output exception - Exiting");
+	   System.exit(1);
+           }
+       inputString = new String(buffer);
+       try 
+           {
+	   /* modify to work for both Windows and Linux */
+	   int pos = inputString.indexOf("\r");
+	   if (pos <= 0)
+	       pos = inputString.indexOf("\n");
+           if (pos > 0)
+	      inputString = inputString.substring(0,pos);
+           value = Integer.parseInt(inputString);
+	   }
+       catch (NumberFormatException nfe) 
+           {
+	   System.out.println("Bad number entered - Exiting");
+	   System.exit(1);
+           }
+       return value;
+       }
 
     /**
-     * ask user for input and return one int
-     * @return int user input
+     * Asks for a string, and returns it
+     * as the function value.
+     * @param   prompt    String to print, telling which coordinate
+     * @return  the string value entered, without a newline 
      */
-    public int getOneInt()
-    {
-        Scanner scanner = new Scanner(System.in);
-        int number = scanner.nextInt();
-        return number;
-    }
+    private String getOneString(String prompt)
+       {	   
+       String inputString;
+       int readBytes = 0;
+       byte buffer[] = new byte[200]; 
+       System.out.println(prompt);
+       try
+           {
+           readBytes = System.in.read(buffer,0,200);
+	   }
+       catch (IOException ioe)
+           {
+	   System.out.println("Input/output exception - Exiting");
+	   System.exit(1);
+           }
+       inputString = new String(buffer);
+       /* modify to work for both Windows and Linux */
+       int pos = inputString.indexOf("\r");
+       if (pos <=0 )
+	   pos = inputString.indexOf("\n");
+       if (pos > 0)
+	   inputString = inputString.substring(0,pos);
+       return inputString;
+       }
     
     /**
      * clear terminal screen
@@ -68,12 +123,10 @@ public class MovieReviewSocialNetwork
 
         while(true)
         {
-            System.out.print("Please enter user name :");
-            name = getLineString();
-            System.out.print("Please enter email :");
-            email = getLineString();
+            name = getOneString("Please enter user name :");
+            email = getOneString("Please enter email :");
             System.out.print("Please enter password :");
-            password = getLineString();
+            password = getOneString("Please enter password :");
             System.out.print("Please choose favorite movie genres");
             ArrayList<String> genre = new ArrayList<String>();
             genre.add("Action");
@@ -181,22 +234,18 @@ public class MovieReviewSocialNetwork
             System.out.println("1) Login");
             System.out.println("2) Register");
             System.out.println("3) Exit");
-            System.out.println("Your input :");
-            intInput = MRSN.getOneInt();
+            intInput = MRSN.getOneInteger("Your input :");
             switch(intInput)
             {
                 case 1:
                     while(true)
                     {
-                        System.out.print("Please enter email :");
-                        String email = MRSN.getLineString();
-                        System.out.print("Please enter password :");
-                        String password = MRSN.getLineString();
+                        String email = MRSN.getOneString("Please enter email :");
+                        String password = MRSN.getOneString("Please enter password :");
                         if(MRSN.login(email,password))
                         {
                             System.out.println("Login successful");
                             MRSN.pressAnyKeyToContinue();
-                            MRSN.clearScreen();
                             break;
                         }
                         else
@@ -220,6 +269,7 @@ public class MovieReviewSocialNetwork
         /** using website phase */
         while(true)
         {
+            MRSN.clearScreen();
             System.out.println("Welcome to MRSN! Please choose your action");
             System.out.println("1) search for...");
             System.out.println("2) discover new things");
@@ -227,19 +277,16 @@ public class MovieReviewSocialNetwork
             System.out.println("4) edit my profile");
             System.out.println("5) write review");
             System.out.println("6) logout");
-            System.out.println("Your input :");
-            intInput = MRSN.getOneInt();
+            intInput = MRSN.getOneInteger("Your input :");
             switch(intInput)
             {
-                case 1:
+                case 1:// search func still lack select movie state and select review state
                     System.out.println("\nChoose your searh option");
                     System.out.println("1) search movie name");
                     System.out.println("2) search by category");
                     System.out.println("3) search reviewer name");
-                    System.out.println("Your input :");
-                    intInput = MRSN.getOneInt();
-                    System.out.println("Search for :");
-                    stringInput = MRSN.getLineString();
+                    intInput = MRSN.getOneInteger("Your input :");
+                    stringInput = MRSN.getOneString("Search for :");
                     if(intInput == 1 || intInput == 2) // search using MovieManager
                     {
                         ArrayList<Movie> movieTemp = MovieManager.getInstance().search(stringInput,intInput);
