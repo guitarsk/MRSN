@@ -71,7 +71,7 @@ public class MovieFileManager extends TextFileManager
         Movie test = null;
         while((test = movieManager.readMovie()) != null)
         {
-            System.out.println(test.getName() + " " + test.getReleaseYear());
+            System.out.println(test.getMovieID()+"\n"+test.getDataToWrite());
         }
         movieManager.closeRead();
         // movieManager.openWrite("allMovie.txt",true);

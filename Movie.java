@@ -26,12 +26,11 @@ public class Movie
      */
     public Movie(String name, ArrayList<String> genre, int year)
     {
+        count++;
         this.movieID = count;
-        Movie.count++;
         this.name = name;
         this.genre = genre;
         this.releaseYear = year;
-        count++;
         this.movieID=count;
     }
 

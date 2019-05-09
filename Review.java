@@ -36,8 +36,8 @@ public class Review
      */
     public Review(String movieName,String title,String body,double rating,String writer)
     {
+        count++;
         this.reviewID = count;
-        Review.count++;
         this.movieName = movieName;
         this.title = title;
         this.body = body;
@@ -49,6 +49,8 @@ public class Review
 
     public Review(String movieName,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
     {
+        count++;
+        this.reviewID = count;
         this.movieName = movieName;
         this.title = title;
         this.body = body;
@@ -188,7 +190,7 @@ public class Review
 
     /**
      * need more info about file format from Guitar b4 continue implement
-     * @return one line of data to write to file
+     * @return Data to write to file
      */
     public String getDataToWrite()
     {

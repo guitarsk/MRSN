@@ -58,6 +58,7 @@ public class UserFileManager extends TextFileManager
 
     public HashMap<String,ArrayList<String>> readFollow()
     {
+        HashMap<String,ArrayList<String>> follow = new HashMap<String,ArrayList<String>>();
         
         String lineRead = null;
         
@@ -66,9 +67,8 @@ public class UserFileManager extends TextFileManager
             lineRead = getNextLine();
             if(lineRead != null && lineRead.equalsIgnoreCase("[")==true)
             {
-                HashMap<String,String> follow = new HashMap<String,String>();
+                ArrayList<String> email = new ArrayList<String>();
                 String name = null;
-                String email = null;
                 
                 lineRead = getNextLine();
                 while(lineRead.equalsIgnoreCase("]")==false)
@@ -80,7 +80,7 @@ public class UserFileManager extends TextFileManager
                     }
                     else if(fields[0].equalsIgnoreCase("FOLLOW") && fields.length == 2)
                     {
-
+                        email.add(fields[1]);
                     }
                     else
                     {
@@ -88,11 +88,11 @@ public class UserFileManager extends TextFileManager
                     }
                     lineRead = getNextLine();
                 }
-                if(name != null && email != null && password != null && type.isEmpty()==false)
-                    user = new User(name, email, password, type);
+                if(name != null && email.isEmpty()==false)
+                    follow.put(name, email);
             }
         }
-        while(user == null && lineRead != null);
+        while(follow.isEmpty() == true && lineRead != null);
         return user;
     }
 

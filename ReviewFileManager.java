@@ -102,7 +102,7 @@ public class ReviewFileManager extends TextFileManager
         Review test = null;
         while((test = reviewFileManager.readReview()) != null)
         {
-            System.out.println(test.getDataToWrite());
+            System.out.println(test.getReviewID()+"\n"+test.getDataToWrite());
         }
         reviewFileManager.closeRead();
         // reviewFileManager.openWrite("allReview.txt",true);
