@@ -76,6 +76,19 @@ public class ReviewManager
 
     }
 
+    public ArrayList<Review> search(String key, int searchOption)
+    {
+        switch (searchOption) 
+        {
+            case 3:
+                
+                break;
+        
+            default:
+                break;
+        }
+    }
+
     /**
      * save all Review in ReviewCollection to file suing ReviewFileManager
      */

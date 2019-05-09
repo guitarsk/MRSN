@@ -234,25 +234,35 @@ public class MovieReviewSocialNetwork
                 case 1:
                     System.out.println("\nChoose your searh option");
                     System.out.println("1) search movie name");
-                    System.out.println("2) search reviewer name");
-                    System.out.println("3) search by category");
+                    System.out.println("2) search by category");
+                    System.out.println("3) search reviewer name");
                     System.out.println("Your input :");
                     intInput = MRSN.getOneInt();
                     System.out.println("Search for :");
                     stringInput = MRSN.getLineString();
-                    ArrayList<Movie> movieTemp;
-                    if((movieTemp = MovieManager.getInstance().printSearch(stringInput,intInput))!=null)
+                    if(intInput == 1 || intInput == 2) // search using MovieManager
                     {
+                        ArrayList<Movie> movieTemp = MovieManager.getInstance().search(stringInput,intInput);
                         System.out.println(" "+movieTemp.size()+" results found");
                         for(int i = 0 ; i < movieTemp.size() ; i++ )
                         {
                             movieTemp.get(i).printMovieInfo();
-                        }
+                        }       
+                    }
+                    else if(intInput == 3) // search using ReviewManager
+                    {
+                        ArrayList<Review> reviewTemp = ReviewManager.getInstance().search(stringInput,intInput);
+                        System.out.println(" "+reviewTemp.size()+" results found");
+                        for(int i = 0 ; i < reviewTemp.size() ; i++ )
+                        {
+                            reviewTemp.get(i).printReviewInfo();
+                        }    
                     }
                     else
                     {
-                        System.out.println(" 0 results found");
+                        System.out.println("Error :Invalid number");
                     }
+                    
                     break;
                 case 2:
                     break;
