@@ -198,10 +198,10 @@ public class Review
         data = "[\nMOVIENAME|"+this.movieName+"\nTITLE|"+this.title+"\nBODY|"+this.body+"\nDATE|"+this.reviewDate+"\nRATING|"+this.rating+"\nWRITER|"+this.writer;
         if(this.likeAndDislike.isEmpty() == false)
         {
-            Iterator it = this.likeAndDislike.entrySet().iterator();
+            Iterator<Map.Entry<String,String>> it = this.likeAndDislike.entrySet().iterator();
             while(it.hasNext())
             {
-                Map.Entry pair = (Map.Entry)it.next();
+                Map.Entry<String,String> pair = (Map.Entry)it.next();
                 data += "\nLIKE&DISLIKE|"+pair.getKey()+"|"+pair.getValue();
             }
         }

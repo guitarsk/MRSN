@@ -63,7 +63,7 @@ public class User
         return followedList.get(index);
     }
 
-    public String getDataToWrite()
+    public String getUserDataToWrite()
     {
         String data = null;
         data = "[\nNAME|"+this.name+"\nEMAIL|"+this.email+"\nPASSWORD|"+this.password+"\nFAVTYPE";
@@ -71,12 +71,22 @@ public class User
         {
             data += "|"+favoriteMovieType.get(i);
         }
-        data+="\nFOLLOW";
-        for(int i = 0 ; i<followedList.size() ; i++)
-        {
-            data += "|"+followedList.get(i).getEmail();
-        }
         data += "\n]";
+        return data;
+    }
+
+    public String getFollowDataToWrite()
+    {
+        String data = null;
+        if(followedList.isEmpty()==false)
+        {
+            data = "[\nUSER|"+this.email;
+            for(int i=0 ; i < followedList.size() ;i++)
+            {
+                data += "\nFOLLOW|"+followedList.get(i).getEmail();
+            }
+            data += "\n]";
+        }
         return data;
     }
 }

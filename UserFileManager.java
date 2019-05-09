@@ -1,5 +1,8 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class UserFileManager extends TextFileManager
 {
@@ -58,10 +61,9 @@ public class UserFileManager extends TextFileManager
 
     public HashMap<String,ArrayList<String>> readFollow()
     {
-        HashMap<String,ArrayList<String>> follow = new HashMap<String,ArrayList<String>>();
+        HashMap<String,ArrayList<String>> follow = null;
         
         String lineRead = null;
-        
         do
         {
             lineRead = getNextLine();
@@ -89,39 +91,72 @@ public class UserFileManager extends TextFileManager
                     lineRead = getNextLine();
                 }
                 if(name != null && email.isEmpty()==false)
+                {
+                    follow = new HashMap<String,ArrayList<String>>();
                     follow.put(name, email);
+                }
+                
             }
         }
-        while(follow.isEmpty() == true && lineRead != null);
+        while(follow == null && lineRead != null);
         return follow;
     }
 
-    public void writeUser(String userData)
+    public void writeData(String data)
     {
-        writeNextLine(userData);
-    }
-
-    public void writeFollow(String followData)
-    {
-        writeNextLine(followData);
+        writeNextLine(data);
     }
 
     public static void main(String arg[])
     {
         UserFileManager userFileManager = new UserFileManager();
-        userFileManager.openWrite("allUsers.txt",true);
-        userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_123@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
-        userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_124@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
-        userFileManager.closeWrite();
+        HashMap<String,User> allUser = new HashMap<String,User>();
+        // userFileManager.openWrite("allUsers.txt",true);
+        // userFileManager.writeData("[\nNAME|guitar\nEMAIL|tar_123@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
+        // userFileManager.writeData("[\nNAME|guitar\nEMAIL|tar_124@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
+        // userFileManager.closeWrite();
+
+        // userFileManager.openWrite("allFollows.txt",true);
+        // userFileManager.writeData("[\nUSER|tar_123@eiei.com\nFOLLOW|tar_124@eiei.com\nFOLLOW|tar_123asd@eiei.com\n]");
+        // userFileManager.writeData("[\nUSER|tar_124@eiei.com\nFOLLOW|tar_123asd@eiei.com\n]");
+        // userFileManager.closeWrite();
+
         userFileManager.openRead("allUsers.txt");
         User test = null;
         while((test = userFileManager.readUser()) != null)
         {
-            System.out.println(test.getUserName() + " " + test.getEmail());
+            allUser.put(test.getEmail(), test);
         }
         userFileManager.closeRead();
-        userFileManager.openWrite("allUsers.txt",true);
-        userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_123asd@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
-        userFileManager.closeWrite();
+
+        HashMap<String,ArrayList<String>> follow = null;
+
+        userFileManager.openRead("allFollows.txt");
+        while((follow = userFileManager.readFollow()) != null)
+        {
+            Iterator<Map.Entry<String,ArrayList<String>>> it = follow.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry<String,ArrayList<String>> pair = it.next();
+                for(int i = 0 ; i < pair.getValue().size() ; i++)
+                {
+                    test = allUser.get(pair.getValue().get(i));
+                    allUser.get(pair.getKey()).addFollowed(test);
+                }
+            }
+        }
+        userFileManager.closeRead();
+
+        Iterator<Map.Entry<String,User>> it = allUser.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry<String,User> pair = it.next();
+                test = pair.getValue();
+                System.out.println(test.getUserDataToWrite());
+                System.out.println(test.getFollowDataToWrite());
+            }
+        // userFileManager.openWrite("allUsers.txt",true);
+        // userFileManager.writeData("[\nNAME|guitar\nEMAIL|tar_123asd@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
+        // userFileManager.closeWrite();
     }
 }
