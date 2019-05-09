@@ -88,9 +88,10 @@ public class MovieManager
     /* incomplete */
     public ArrayList<Movie> printSearch(String key,int searchOption)
     {
-        switch(searchOption)
+        /*switch(searchOption)
         {
             case 1:
+                
                 break;
             case 2:
                 break;
@@ -103,7 +104,7 @@ public class MovieManager
         if(allMovies.checkMovie(key))
         {
 
-        }
+        }*/
     }
 
     /* incomplete */

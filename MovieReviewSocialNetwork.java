@@ -234,8 +234,8 @@ public class MovieReviewSocialNetwork
                 case 1:
                     System.out.println("\nChoose your searh option");
                     System.out.println("1) search movie name");
-                    System.out.println("2) search reviewer name");
-                    System.out.println("3) search by category");
+                    System.out.println("2) search by category");
+                    System.out.println("3) search reviewer name");
                     System.out.println("Your input :");
                     intInput = MRSN.getOneInt();
                     System.out.println("Search for :");
