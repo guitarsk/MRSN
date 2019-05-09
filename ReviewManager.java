@@ -78,7 +78,7 @@ public class ReviewManager
     public void rewriteAllReview()
     {
         String reviewData = null;
-        //seem like user
+        //seem like user iterator it
         reviewFileManager.writeReview(reviewData); 
     }
 }
