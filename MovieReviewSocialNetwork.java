@@ -25,40 +25,40 @@ public class MovieReviewSocialNetwork
      * @return  the value. Exits with error if user types in
      *          something that can't be read as an integer 
      */
-    private int getOneInteger(String prompt)
-       {
-       int value = 0;	   
-       String inputString;
-       int readBytes = 0;
-       byte buffer[] = new byte[200]; 
-       System.out.println(prompt);
-       try
-           {
-           readBytes = System.in.read(buffer,0,200);
-	   }
-       catch (IOException ioe)
-           {
-	   System.out.println("Input/output exception - Exiting");
-	   System.exit(1);
-           }
-       inputString = new String(buffer);
-       try 
-           {
-	   /* modify to work for both Windows and Linux */
-	   int pos = inputString.indexOf("\r");
-	   if (pos <= 0)
-	       pos = inputString.indexOf("\n");
-           if (pos > 0)
-	      inputString = inputString.substring(0,pos);
-           value = Integer.parseInt(inputString);
-	   }
-       catch (NumberFormatException nfe) 
-           {
-	   System.out.println("Bad number entered - Exiting");
-	   System.exit(1);
-           }
-       return value;
-       }
+    public int getOneInteger(String prompt)
+    {
+        int value = 0;	   
+        String inputString;
+        int readBytes = 0;
+        byte buffer[] = new byte[200]; 
+        System.out.println(prompt);
+        try
+        {
+            readBytes = System.in.read(buffer,0,200);
+	    }
+        catch (IOException ioe)
+        {
+	        System.out.println("Input/output exception - Exiting");
+	        System.exit(1);
+        }
+        inputString = new String(buffer);
+        try 
+        {
+            /* modify to work for both Windows and Linux */
+            int pos = inputString.indexOf("\r");
+            if (pos <= 0)
+                pos = inputString.indexOf("\n");
+            if (pos > 0)
+                inputString = inputString.substring(0,pos);
+            value = Integer.parseInt(inputString);
+        }
+        catch (NumberFormatException nfe) 
+        {
+	        System.out.println("Bad number entered - Exiting");
+	        System.exit(1);
+        }
+        return value;
+    }
 
     /**
      * Asks for a string, and returns it
@@ -66,35 +66,36 @@ public class MovieReviewSocialNetwork
      * @param   prompt    String to print, telling which coordinate
      * @return  the string value entered, without a newline 
      */
-    private String getOneString(String prompt)
-       {	   
-       String inputString;
-       int readBytes = 0;
-       byte buffer[] = new byte[200]; 
-       System.out.println(prompt);
-       try
-           {
-           readBytes = System.in.read(buffer,0,200);
-	   }
-       catch (IOException ioe)
-           {
-	   System.out.println("Input/output exception - Exiting");
-	   System.exit(1);
-           }
-       inputString = new String(buffer);
-       /* modify to work for both Windows and Linux */
-       int pos = inputString.indexOf("\r");
-       if (pos <=0 )
-	   pos = inputString.indexOf("\n");
-       if (pos > 0)
-	   inputString = inputString.substring(0,pos);
-       return inputString;
-       }
+    public String getOneString(String prompt)
+    {	   
+        String inputString;
+        int readBytes = 0;
+        byte buffer[] = new byte[200]; 
+        System.out.println(prompt);
+        try
+        {
+            readBytes = System.in.read(buffer,0,200);
+        }
+        catch (IOException ioe)
+        {
+            System.out.println("Input/output exception - Exiting");
+            System.exit(1);
+        }
+        inputString = new String(buffer);
+        /* modify to work for both Windows and Linux */
+        int pos = inputString.indexOf("\r");
+        if (pos <=0 )
+            pos = inputString.indexOf("\n");
+        if (pos > 0)
+            inputString = inputString.substring(0,pos);
+        return inputString;
+    }
     
     /**
      * clear terminal screen
      */
-    public void clearScreen() {  
+    public void clearScreen() 
+    {  
         System.out.print("\033[H\033[2J");  
         System.out.flush();  
     }  
@@ -102,7 +103,7 @@ public class MovieReviewSocialNetwork
     /**
      * wait for one input
      */
-    private void pressAnyKeyToContinue()
+    public void pressAnyKeyToContinue()
     { 
         System.out.println("Press any key to continue...");
         try
@@ -211,19 +212,11 @@ public class MovieReviewSocialNetwork
     {
         /** Initialize phase */
         MovieReviewSocialNetwork MRSN = new MovieReviewSocialNetwork();
-        int intInput;
-        String stringInput;
-        MovieFileManager movieFileManager = new MovieFileManager();
-        movieFileManager.openRead(MovieManager.getInstance().getMovieFileName());
-        Movie test = null;
-        while((test = movieFileManager.readMovie()) != null)
-        {
-            System.out.println(test.getName() + " " + test.getReleaseYear());
-        }
-        movieFileManager.closeRead();
+        UserManager.getInstance().initialize();
+        MovieManager.getInstance().initialize();
+        ReviewManager.getInstance().initialize();
 
         /** login or register phase */
-       
         /**
          * attempt to login might need some method to break out of the loop to register without successfully login
          */
