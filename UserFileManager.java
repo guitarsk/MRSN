@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserFileManager extends TextFileManager
 {
@@ -40,6 +41,46 @@ public class UserFileManager extends TextFileManager
                         {
                             type.add(fields[i]);
                         }
+                    }
+                    else
+                    {
+                        System.out.println("bad line data --> skip line");
+                    }
+                    lineRead = getNextLine();
+                }
+                if(name != null && email != null && password != null && type.isEmpty()==false)
+                    user = new User(name, email, password, type);
+            }
+        }
+        while(user == null && lineRead != null);
+        return user;
+    }
+
+    public HashMap<String,ArrayList<String>> readFollow()
+    {
+        
+        String lineRead = null;
+        
+        do
+        {
+            lineRead = getNextLine();
+            if(lineRead != null && lineRead.equalsIgnoreCase("[")==true)
+            {
+                HashMap<String,String> follow = new HashMap<String,String>();
+                String name = null;
+                String email = null;
+                
+                lineRead = getNextLine();
+                while(lineRead.equalsIgnoreCase("]")==false)
+                {
+                    String fields[] = lineRead.split("\\|");
+                    if(fields[0].equalsIgnoreCase("USER") && fields.length == 2)
+                    {
+                        name = fields[1];
+                    }
+                    else if(fields[0].equalsIgnoreCase("FOLLOW") && fields.length == 2)
+                    {
+
                     }
                     else
                     {

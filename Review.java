@@ -10,6 +10,8 @@
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class Review
 {
@@ -194,8 +196,12 @@ public class Review
         data = "[\nMOVIENAME|"+this.movieName+"\nTITLE|"+this.title+"\nBODY|"+this.body+"\nDATE|"+this.reviewDate+"\nRATING|"+this.rating+"\nWRITER|"+this.writer;
         if(this.likeAndDislike.isEmpty() == false)
         {
-            //iterator 
-            //data += "\nLIKE&DISLIKE|"+key+"|"+value;
+            Iterator it = this.likeAndDislike.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry pair = (Map.Entry)it.next();
+                data += "\nLIKE&DISLIKE|"+pair.getKey()+"|"+pair.getValue();
+            }
         }
         data += "\n]";
         return data;
