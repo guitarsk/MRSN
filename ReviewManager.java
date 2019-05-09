@@ -6,11 +6,13 @@
  *  Modified by jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project
  *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
- *      9/5/2019 Implement initialize method
+ *      9/5/2019 Implement initialize and rewriteAllReview method
  * 
  */
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class ReviewManager
@@ -90,13 +92,40 @@ public class ReviewManager
     }
 
     /**
-     * save all Review in ReviewCollection to file suing ReviewFileManager
+     * save all Review in ReviewCollection to file using ReviewFileManager
+     * @return true for success write ,otherwise fail to write
      */
-    public void rewriteAllReview()
+    public boolean rewriteAllReview()
     {
         String reviewData = null;
-        //seem like user iterator it
-        reviewFileManager.writeReview(reviewData); 
+        HashMap<Integer,Review> temp = allReviews.getAllReview(); /* get all review in collection */
+        boolean success = false;
+
+        if(reviewFileManager.openWrite(reviewFileName, false))  /* open file to write */
+        {
+            Iterator<Map.Entry<Integer,Review>> it = temp.entrySet().iterator();
+            while(it.hasNext()) //loop for get data to write in file
+            {
+                Map.Entry<Integer,Review> pair = it.next();
+                reviewData = pair.getValue().getDataToWrite();
+                reviewFileManager.writeReview(reviewData); //write 
+            }
+            reviewFileManager.closeWrite();
+            success = true;
+        }
+        return success;
+    }
+
+    public boolean writeNewReview(Review newReview)
+    {
+        boolean success = false;
+        if(reviewFileManager.openWrite(reviewFileName, true)==true)
+        {
+            reviewFileManager.writeReview(newReview.getDataToWrite());
+            reviewFileManager.closeWrite();
+            success = true;
+        }
+        return success;
     }
 
     public void printSearch(int id)

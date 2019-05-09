@@ -113,4 +113,16 @@ public class MovieManager
 
     }
 
+    public boolean writeNewMovie(Movie newMovie)
+    {
+        boolean success = false;
+        if(reviewFileManager.openWrite(reviewFileName, true)==true)
+        {
+            movieFileManager.writeMovie(newMovie.getDataToWrite());
+            movieFileManager.closeWrite();
+            success = true;
+        }
+        return success;
+    }
+
 }
