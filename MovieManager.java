@@ -88,36 +88,23 @@ public class MovieManager
     }
 
     /* incomplete */
-    public ArrayList<Movie> search(String key,int searchOption)
+    public ArrayList<Integer> search(String key,int searchOption)
     {
-        ArrayList<Movie> movieTemp = new ArrayList<Movie>();
         switch(searchOption)
         {
             case 1:
-                for(Movie movie : allMovies.getAllMovie().values())
-                {
-                    if(movie.getName().contains(key))
-                    {
-                        movieTemp.add(movie);
-                    }
-                }
-                return movieTemp;
+                return allMovies.searchMovie(key);
             case 2:
-                for(Movie movie : allMovies.getAllMovie().values())
-                {
-                    for(int i = 0 ; i < movie.getGenre().size() ; i++)
-                    {
-                        if(movie.getGenre().get(i).equals(key))
-                        {
-                            movieTemp.add(movie);
-                        }
-                    }
-                    
-                }
-                return movieTemp;
+                return allMovies.searchGenre(key);
             default:
-                return movieTemp;
+                System.out.println("Error in MovieManager: wrong search option");
+                return null;
         }
+    }
+
+    public void printSearch(int id)
+    {
+        allMovies.showMovie(id);
     }
 
     /* incomplete */

@@ -287,22 +287,23 @@ public class MovieReviewSocialNetwork
                     System.out.println("3) search reviewer name");
                     intInput = MRSN.getOneInteger("Your input :");
                     stringInput = MRSN.getOneString("Search for :");
+                    ArrayList<Integer> idTemp;
                     if(intInput == 1 || intInput == 2) // search using MovieManager
                     {
-                        ArrayList<Movie> movieTemp = MovieManager.getInstance().search(stringInput,intInput);
-                        System.out.println(" "+movieTemp.size()+" results found");
-                        for(int i = 0 ; i < movieTemp.size() ; i++ )
+                        idTemp = MovieManager.getInstance().search(stringInput,intInput);
+                        System.out.println(" "+idTemp.size()+" results found");
+                        for(int i = 0 ; i <idTemp.size() ; i++ )
                         {
-                            movieTemp.get(i).printMovieInfo();
+                            MovieManager.getInstance().printSearch(idTemp.get(i));
                         }       
                     }
                     else if(intInput == 3) // search using ReviewManager
                     {
-                        ArrayList<Review> reviewTemp = ReviewManager.getInstance().search(stringInput,intInput);
-                        System.out.println(" "+reviewTemp.size()+" results found");
-                        for(int i = 0 ; i < reviewTemp.size() ; i++ )
+                        idTemp = ReviewManager.getInstance().search(stringInput,intInput);
+                        System.out.println(" "+idTemp.size()+" results found");
+                        for(int i = 0 ; i < idTemp.size() ; i++ )
                         {
-                            reviewTemp.get(i).printReviewInfo();
+                            ReviewManager.getInstance().printSearch(idTemp.get(i));
                         }    
                     }
                     else

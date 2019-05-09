@@ -30,10 +30,34 @@ public class MovieCollection
     }
 
     /* incomplete */
-    public MovieCollection searchMovie(String key)
+    public ArrayList<Integer> searchMovie(String key)
     {
-        MovieCollection newList = new MovieCollection();
-        return newList;
+        ArrayList<Integer> idTemp = new ArrayList<Integer>();
+        for(Movie movie : movies.values())
+        {
+            if(movie.getName().contains(key))
+            {
+                idTemp.add(movie.getMovieID());
+            }
+        }
+        return idTemp;
+    }
+
+
+    public ArrayList<Integer> searchGenre(String key)
+    {
+        ArrayList<Integer> idTemp = new ArrayList<Integer>();
+        for (Movie movie : movies.values())
+        {
+            for(int i = 0 ; i < movie.getGenre().size() ; i++)
+            {
+                if(movie.getGenre().get(i).equals(key))
+                {
+                    idTemp.add(movie.getMovieID());
+                }
+            }
+        }
+        return idTemp;
     }
 
     /* incomplete */
@@ -81,9 +105,14 @@ public class MovieCollection
      * get all movies from MovieCollection
      * @return all movies
      */
-    public HashMap<String,Movie> getAllMovie()
+    public HashMap<Integer,Movie> getAllMovie()
     {
         return this.movies;
+    }
+
+    public void showMovie(Integer id)
+    {
+        movies.get(id).showMovie();
     }
 
 }

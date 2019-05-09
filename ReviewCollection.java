@@ -82,10 +82,17 @@ public class ReviewCollection
     }
     
     /* incomplete  need specific implementation for each type of search*/
-    public ReviewCollection searchReview(String key)
+    public ArrayList<Integer> searchReview(String key)
     {
-        
-        return this;
+        ArrayList<Integer> idTemp = new ArrayList<Integer>();
+        for(Review review : reviews.values())
+        {
+            if(review.getWriter().equals(key))
+            {
+                idTemp.add(review.getReviewID());
+            }
+        }
+        return idTemp;
     }
 
     /** i don't know what this do need to ask guitar */
@@ -96,12 +103,13 @@ public class ReviewCollection
     }
 
     /** show review information 
-     * @param index of review
+     * @param id of review
      **/
-    public void showReview(String email, String value, int index)
+    public void showReview(Integer id)
     {
-        
+        reviews.get(id).showReview();
     }
+
 
     /**
      * delete review from reviewID

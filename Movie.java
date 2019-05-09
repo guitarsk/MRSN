@@ -96,8 +96,16 @@ public class Movie
     /**
      * show Movie's info
      */
-    public void printMovieInfo()
+    public void showMovie()
     {
+        
+        System.out.println(name+" ("+releaseYear+")");
+        System.out.println("Rating :"+rating);
+        System.out.print("Genre :");
+        for(int i = 0 ; i < genre.size() ; i++)
+        {
+            System.out.print(genre.get(i)+"");
+        }
 
     }
 

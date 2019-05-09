@@ -76,23 +76,16 @@ public class ReviewManager
 
     }
 
-    public ArrayList<Review> search(String key, int searchOption)
+    public ArrayList<Integer> search(String key, int searchOption)
     {
-        ArrayList<Review> reviewTemp = new ArrayList<Review>();
+        ArrayList<Integer> idTemp = new ArrayList<Integer>();
         switch (searchOption) 
         {
             case 3:
-                for(Review review : allReviews.getAllReview().values())
-                {   
-                    if(review.getWriter().equals(key))
-                    {
-                        reviewTemp.add(review);
-                    }
-                }
-                return reviewTemp;
-        
+                return allReviews.searchReview(key);        
             default:
-                return reviewTemp;
+                System.out.println("Error in ReviewManager: Wrong search option");
+                return null;
         }
     }
 
@@ -104,5 +97,16 @@ public class ReviewManager
         String reviewData = null;
         //seem like user iterator it
         reviewFileManager.writeReview(reviewData); 
+    }
+
+    public void printSearch(int id)
+    {
+        allReviews.showReview(id);
+    }
+
+    /* incomplete */
+    public void printSort()
+    {
+
     }
 }
