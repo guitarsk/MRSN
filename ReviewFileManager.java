@@ -13,7 +13,7 @@ public class ReviewFileManager extends TextFileManager
             lineRead = getNextLine();
             if(lineRead != null && lineRead.equalsIgnoreCase("[")==true)
             {
-                String movieName = null;
+                int movieID = -1;
                 String title = null;
                 String body = null;
                 String date = null;
@@ -25,9 +25,16 @@ public class ReviewFileManager extends TextFileManager
                 while(lineRead.equalsIgnoreCase("]")==false)
                 {
                     String fields[] = lineRead.split("\\|");
-                    if(fields[0].equalsIgnoreCase("MOVIENAME") && fields.length == 2)
+                    if(fields[0].equalsIgnoreCase("MOVIEID") && fields.length == 2)
                     {
-                        movieName = fields[1];
+                        try
+                        {
+                            movieID = Integer.parseInt(fields[1]);
+                        }
+                        catch (NumberFormatException nfe)
+                        {
+                            System.out.println("bad line data --> skip line");
+                        }
                     }
                     else if(fields[0].equalsIgnoreCase("TITLE") && fields.length == 2)
                     {
@@ -68,9 +75,9 @@ public class ReviewFileManager extends TextFileManager
                     }
                     lineRead = getNextLine();
                 }
-                if(movieName != null && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==false)
+                if(movieID != -1 && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==false)
                     review = new Review(movieName, title, body, date, rate, write, likeAndDislike);
-                else if(movieName != null && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==true)
+                else if(movieID != -1 && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==true)
                     review = new Review(movieName, title, body, date, rate, write, likeAndDislike);
             }
         }
@@ -88,14 +95,14 @@ public class ReviewFileManager extends TextFileManager
     {
         ReviewFileManager reviewFileManager = new ReviewFileManager();
         // reviewFileManager.openWrite("allReviews.txt",true);
-        // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez\nBODY|yeah\nDATE|Tue May 07 18:10:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
-        // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez2\nBODY|yeah\nDATE|Tue May 07 18:11:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
+        // reviewFileManager.writeReview("[\nMOVIEID|1\nTITLE|ez\nBODY|yeah\nDATE|Tue May 07 18:10:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
+        // reviewFileManager.writeReview("[\nMOVIEID|1\nTITLE|ez2\nBODY|yeah\nDATE|Tue May 07 18:11:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         // reviewFileManager.closeWrite();
 
 
         // test for none like or dislike
         // reviewFileManager.openWrite("allReviews.txt",true);
-        // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez3\nBODY|yeah\nDATE|Tue May 07 18:20:39 ICT 2019\nRATING|10.0\nWRITER|guitar\n]");
+        // reviewFileManager.writeReview("[\nMOVIEID|1\nTITLE|ez3\nBODY|yeah\nDATE|Tue May 07 18:20:39 ICT 2019\nRATING|10.0\nWRITER|guitar\n]");
         // reviewFileManager.closeWrite();
 
         reviewFileManager.openRead("allReviews.txt");
@@ -106,7 +113,7 @@ public class ReviewFileManager extends TextFileManager
         }
         reviewFileManager.closeRead();
         // reviewFileManager.openWrite("allReviews.txt",true);
-        // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez3\nBODY|yeah\nDATE|Tue May 07 18:20:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
+        // reviewFileManager.writeReview("[\nMOVIEID|1\nTITLE|ez4\nBODY|yeah\nDATE|Tue May 07 18:20:49 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         // reviewFileManager.closeWrite();
     }
 }
