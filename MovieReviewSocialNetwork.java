@@ -295,6 +295,7 @@ public class MovieReviewSocialNetwork
                         System.out.println(" "+idTemp.size()+" results found");
                         for(int i = 0 ; i <idTemp.size() ; i++ )
                         {
+                            System.out.println(i+")");
                             MovieManager.getInstance().printSearch(idTemp.get(i));
                         }       
                     }
@@ -304,6 +305,7 @@ public class MovieReviewSocialNetwork
                         System.out.println(" "+idTemp.size()+" results found");
                         for(int i = 0 ; i < idTemp.size() ; i++ )
                         {
+                            System.out.println(i+")");
                             ReviewManager.getInstance().printSearch(idTemp.get(i));
                         }    
                     }
@@ -311,7 +313,11 @@ public class MovieReviewSocialNetwork
                     {
                         System.out.println("Error :Invalid number");
                     }
-                    
+                    intInput = MRSN.getOneInteger("Select your Movie number ( enter 0 to exit ) :");
+                    if(intInput != 0)
+                    {
+                        
+                    }                    
                     break;
                 case 2:
                     break;
