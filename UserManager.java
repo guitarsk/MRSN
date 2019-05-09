@@ -86,23 +86,22 @@ public class UserManager
 
     public boolean register(String name,String email,String password,ArrayList<String> movieType)
     {
-        boolean duplicated = false;
-
-        //check all emails for duplication
-        for(String key : allUsers.keySet())
+        boolean success = true;
+        if(allUsers.isEmpty() == true)
         {
-            if(email.equals(key))
-            {
-                duplicated = true;
-            }
+            User newUser = new User(name, email, password, movieType);
+            allUsers.put(email, newUser);
         }
-        if(duplicated)
+        else if(allUsers.containsKey(email)==false)
         {
-            return false;
+            User newUser = new User(name, email, password, movieType);
+            allUsers.put(email, newUser);
         }
-        User newUser = new User(name, email, password, movieType);
-        allUsers.put(email, newUser);
-        return true;
+        else
+        {
+            success = false;
+        }
+        return success;
     }
 
     public User getUser(String email)
