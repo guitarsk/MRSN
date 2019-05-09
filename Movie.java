@@ -18,9 +18,6 @@ public class Movie
     private double rating = 0;
     private static int count = 0;
 
-    // i don't know what this do need to ask guitar
-    private ArrayList<Integer> test = new ArrayList<Integer>(); 
-
     /**
      * create instance of Movie
      * @param name name for this Movie
@@ -36,6 +33,11 @@ public class Movie
         this.releaseYear = year;
         count++;
         this.movieID=count;
+    }
+
+    public int getMovieID()
+    {
+        return this.movieID;
     }
 
     /**
@@ -89,6 +91,13 @@ public class Movie
      */
     public String getDataToWrite()
     {
-        return "Dummy";
+        String data = null;
+        data = "[\nMOVIENAME|" + this.name + "\nGERNE|";
+        for(int i = 0 ; i < this.genre.size() ; i++)
+        {
+            data += "|" + this.genre.get(i);
+        }
+        data += "\nYEAR|" + this.releaseYear + "\n]";
+        return data;
     }
 }

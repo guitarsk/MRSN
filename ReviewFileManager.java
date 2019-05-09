@@ -70,6 +70,8 @@ public class ReviewFileManager extends TextFileManager
                 }
                 if(movieName != null && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==false)
                     review = new Review(movieName, title, body, date, rate, write, likeAndDislike);
+                else if(movieName != null && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==true)
+                    review = new Review(movieName, title, body, date, rate, write, likeAndDislike);
             }
         }
         while(review == null && lineRead != null);
@@ -89,6 +91,13 @@ public class ReviewFileManager extends TextFileManager
         // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez\nBODY|yeah\nDATE|Tue May 07 18:10:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez2\nBODY|yeah\nDATE|Tue May 07 18:11:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         // reviewFileManager.closeWrite();
+
+
+        // test for none like or dislike
+        // reviewFileManager.openWrite("allReview.txt",true);
+        // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez3\nBODY|yeah\nDATE|Tue May 07 18:20:39 ICT 2019\nRATING|10.0\nWRITER|guitar\n]");
+        // reviewFileManager.closeWrite();
+
         reviewFileManager.openRead("allReview.txt");
         Review test = null;
         while((test = reviewFileManager.readReview()) != null)

@@ -20,7 +20,7 @@ public class Review
     private String reviewDate;
     private double rating = 0;
     private String writer=null;
-    private HashMap<String,String> likeAndDislike = new HashMap<String,String>();
+    private HashMap<String,String> likeAndDislike;
     private static int count = 0; // use to create review ID
 
 
@@ -190,6 +190,14 @@ public class Review
      */
     public String getDataToWrite()
     {
-        return "Dummy";
+        String data = null;
+        data = "[\nMOVIENAME|"+this.movieName+"\nTITLE|"+this.title+"\nBODY|"+this.body+"\nDATE|"+this.reviewDate+"\nRATING|"+this.rating+"\nWRITER|"+this.writer;
+        if(this.likeAndDislike.isEmpty() == false)
+        {
+            //iterator 
+            //data += "\nLIKE&DISLIKE|"+key+"|"+value;
+        }
+        data += "\n]";
+        return data;
     }
 }
