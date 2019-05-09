@@ -1,9 +1,0 @@
-[
-USER|tar_123@eiei.com
-FOLLOW|tar_124@eiei.com
-FOLLOW|tar_123asd@eiei.com
-]
-[
-USER|tar_124@eiei.com
-FOLLOW|tar_123asd@eiei.com
-]
