@@ -78,14 +78,21 @@ public class ReviewManager
 
     public ArrayList<Review> search(String key, int searchOption)
     {
+        ArrayList<Review> reviewTemp = new ArrayList<Review>();
         switch (searchOption) 
         {
             case 3:
-                
-                break;
+                for(Review review : allReviews.getAllReview().values())
+                {   
+                    if(review.getWriter().equals(key))
+                    {
+                        reviewTemp.add(review);
+                    }
+                }
+                return reviewTemp;
         
             default:
-                break;
+                return reviewTemp;
         }
     }
 
