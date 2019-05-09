@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public class UserManager
 {
@@ -37,7 +38,21 @@ public class UserManager
             userFileManager.closeRead();
             if(userFileManager.openRead(followFileName)==true)
             {
-                
+                HashMap<String,ArrayList<String>> follow = null;
+                while((follow = userFileManager.readFollow())!=null)
+                {
+                    Iterator<Map.Entry<String,ArrayList<String>>> it = follow.entrySet().iterator();
+                    while(it.hasNext())
+                    {
+                        Map.Entry<String,ArrayList<String>> pair = it.next();
+                        for(int i = 0 ; i < pair.getValue().size() ; i++)
+                        {
+                            user = allUsers.get(pair.getValue().get(i));
+                            allUsers.get(pair.getKey()).addFollowed(user);
+                        }
+                    }
+                }
+                userFileManager.closeRead();
             }
         }
     }

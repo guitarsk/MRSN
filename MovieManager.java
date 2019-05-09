@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 public class MovieManager
 {
-    private final String movieFileName = "allMovie.txt";
+    private final String movieFileName = "allMovies.txt";
 
     private MovieFileManager movieFileManager = null;
 
