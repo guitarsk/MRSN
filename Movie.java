@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Movie
 {
-    private int movieID;
+    private Integer movieID;
     private String name = null;
     private ArrayList<String> genre ;
     private int releaseYear;
@@ -34,7 +34,7 @@ public class Movie
         this.movieID=count;
     }
 
-    public int getMovieID()
+    public Integer getMovieID()
     {
         return this.movieID;
     }
@@ -80,6 +80,14 @@ public class Movie
      * print first 5 recent reviews of this Movie
      */
     public void printReviewList()
+    {
+
+    }
+
+    /**
+     * show Movie's info
+     */
+    public void printMovieInfo()
     {
 
     }

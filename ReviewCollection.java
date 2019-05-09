@@ -74,9 +74,9 @@ public class ReviewCollection
      */
     public void edit(int index)
     {
-        reviews.get(index).setBody(newBody);
+        /*reviews.get(index).setBody(newBody);
         reviews.get(index).setRating(newRate);
-        reviews.get(index).setTitle(newTitle);
+        reviews.get(index).setTitle(newTitle);*/
     }
 
     /** add new review

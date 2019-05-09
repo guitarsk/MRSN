@@ -46,7 +46,7 @@ public class MovieManager
         {
             while((movie = movieFileManager.readMovie())!=null)
             {
-                allMovies.addMovie(movie.getName(), movie);
+                allMovies.addMovie(movie);
             }
         }
     }
@@ -86,9 +86,24 @@ public class MovieManager
     }
 
     /* incomplete */
-    public void printSearch(String key)
+    public ArrayList<Movie> printSearch(String key,int searchOption)
     {
+        switch(searchOption)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            default:
+                break;
+        }
+        /** if the name exactly matched print only */
+        if(allMovies.checkMovie(key))
+        {
 
+        }
     }
 
     /* incomplete */

@@ -37,6 +37,28 @@ public class MovieReviewSocialNetwork
     }
     
     /**
+     * clear terminal screen
+     */
+    public void clearScreen() {  
+        System.out.print("\033[H\033[2J");  
+        System.out.flush();  
+    }  
+
+    /**
+     * wait for one input
+     */
+    private void pressAnyKeyToContinue()
+    { 
+        System.out.println("Press any key to continue...");
+        try
+        {
+            System.in.read();
+        }  
+        catch(Exception e)
+        {}  
+    }
+
+    /**
      * ask for user info to register,
      * auto login after successful register
      */
@@ -146,6 +168,7 @@ public class MovieReviewSocialNetwork
             System.out.println(test.getName() + " " + test.getReleaseYear());
         }
         movieFileManager.closeRead();
+
         /** login or register phase */
        
         /**
@@ -158,43 +181,95 @@ public class MovieReviewSocialNetwork
             System.out.println("1) Login");
             System.out.println("2) Register");
             System.out.println("3) Exit");
+            System.out.println("Your input :");
             intInput = MRSN.getOneInt();
-            if(intInput == 1)
+            switch(intInput)
             {
-                while(true)
-                {
-                    System.out.print("Please enter email :");
-                    String email = MRSN.getLineString();
-                    System.out.print("Please enter password :");
-                    String password = MRSN.getLineString();
-                    if(MRSN.login(email,password))
+                case 1:
+                    while(true)
                     {
-                        System.out.println("Login successful");
-                        break;
+                        System.out.print("Please enter email :");
+                        String email = MRSN.getLineString();
+                        System.out.print("Please enter password :");
+                        String password = MRSN.getLineString();
+                        if(MRSN.login(email,password))
+                        {
+                            System.out.println("Login successful");
+                            MRSN.pressAnyKeyToContinue();
+                            MRSN.clearScreen();
+                            break;
+                        }
+                        else
+                        {
+                            System.out.println("Invalid email/password please try again");
+                        }
                     }
-                    else
-                    {
-                        System.out.println("Invalid email/password please try again");
-                    }
-                }
-
-            }
-            /** to register */
-            else if (intInput == 2)
-            {
-                MRSN.register();
-            }
-            else if(intInput == 3)
-            {
-                System.out.println("Close Program");
-                System.exit(0);
-            }
-            else
-            {
-                System.out.println("Error :Invalid number");
+                    break;
+                case 2:
+                    MRSN.register();
+                    break;
+                case 3:
+                    System.out.println("Close Program");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Error :Invalid number");
+                    break;
             }
         }
         /** using website phase */
+        while(true)
+        {
+            System.out.println("Welcome to MRSN! Please choose your action");
+            System.out.println("1) search for...");
+            System.out.println("2) discover new things");
+            System.out.println("3) manage my reviews");
+            System.out.println("4) edit my profile");
+            System.out.println("5) write review");
+            System.out.println("6) logout");
+            System.out.println("Your input :");
+            intInput = MRSN.getOneInt();
+            switch(intInput)
+            {
+                case 1:
+                    System.out.println("\nChoose your searh option");
+                    System.out.println("1) search movie name");
+                    System.out.println("2) search reviewer name");
+                    System.out.println("3) search by category");
+                    System.out.println("Your input :");
+                    intInput = MRSN.getOneInt();
+                    System.out.println("Search for :");
+                    stringInput = MRSN.getLineString();
+                    ArrayList<Movie> movieTemp;
+                    if((movieTemp = MovieManager.getInstance().printSearch(stringInput,intInput))!=null)
+                    {
+                        System.out.println(" "+movieTemp.size()+" results found");
+                        for(int i = 0 ; i < movieTemp.size() ; i++ )
+                        {
+                            movieTemp.get(i).printMovieInfo();
+                        }
+                    }
+                    else
+                    {
+                        System.out.println(" 0 results found");
+                    }
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                default:
+                    System.out.println("Error :Invalid number");
+                    break;
+            }
+
+        }
 
 
         /** save data phase */
