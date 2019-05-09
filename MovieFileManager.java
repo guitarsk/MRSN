@@ -76,8 +76,8 @@ public class MovieFileManager extends TextFileManager
     {
         MovieFileManager movieManager = new MovieFileManager();
         // movieManager.openWrite("allMovies.txt",true);
-        // movieManager.writeMovie("[\nMOVIENAME|lionking\nGENRE|romance|action\nyear|2018\n]");
-        // movieManager.writeMovie("[\nMOVIENAME|eiei\nGENRE|romance|action\nyear|2018\n]");
+        // movieManager.writeMovie("[\nMOVIEID|1\nMOVIENAME|lionking\nGENRE|romance|action\nyear|2018\n]");
+        // movieManager.writeMovie("[\nMOVIEID|2\nMOVIENAME|eiei\nGENRE|romance|action\nyear|2018\n]");
         // movieManager.closeWrite();
         movieManager.openRead("allMovies.txt");
         Movie test = null;
@@ -87,8 +87,8 @@ public class MovieFileManager extends TextFileManager
         }
         movieManager.closeRead();
         // movieManager.openWrite("allMovies.txt",true);
-        // movieManager.writeMovie("[\nMOVIENAME|ghj\nGENRE|romance|action\nyear|2018\n]");
-        // movieManager.writeMovie("[\nMOVIENAME|dfghjkl\nGENRE|romance|action\nyear|2018\n]");
+        // movieManager.writeMovie("[\nMOVIEID|3\nMOVIENAME|ghj\nGENRE|romance|action\nyear|2018\n]");
+        // movieManager.writeMovie("[\nMOVIEID|4\nMOVIENAME|dfghjkl\nGENRE|romance|action\nyear|2018\n]");
         // movieManager.closeWrite();
     }
 }
