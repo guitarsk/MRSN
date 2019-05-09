@@ -36,18 +36,36 @@ public class MovieReviewSocialNetwork
         return number;
     }
     
+    /**
+     * ask for user info to register,
+     * auto login after successful register
+     */
     public void register()
     {
-        System.out.print("Please enter user name :");
-        String name = getLineString();
-        System.out.print("Please enter email :");
-        String email = getLineString();
-        System.out.print("Please enter password :");
-        String password = getLineString();
-        System.out.print("Please choose favorite movie genres");
-        ArrayList<String> genre = new ArrayList<String>();
-        genre.add("Action");
-        UserManager.getInstance().register(name,email,password,genre);
+        String name,email,password;
+
+        while(true)
+        {
+            System.out.print("Please enter user name :");
+            name = getLineString();
+            System.out.print("Please enter email :");
+            email = getLineString();
+            System.out.print("Please enter password :");
+            password = getLineString();
+            System.out.print("Please choose favorite movie genres");
+            ArrayList<String> genre = new ArrayList<String>();
+            genre.add("Action");
+            if(UserManager.getInstance().register(name,email,password,genre))
+            {
+                System.out.println("Register successful");
+                break;
+            }
+            else
+            {
+                System.out.println("This email is already used please try another email");
+            }
+        }
+        this.login(email,password);
     }
 
     public boolean login(String email, String password)
@@ -57,6 +75,22 @@ public class MovieReviewSocialNetwork
             return false;
         else
             return true;
+    }
+
+    /**
+     * check for user login status
+     * @return true if logged in, false if not logged in
+     */
+    public boolean checkLoginStatus()
+    {
+        if(this.currentUser == null)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
     }
 
     public void viewMovie(String movieName)
@@ -113,27 +147,52 @@ public class MovieReviewSocialNetwork
         }
         movieFileManager.closeRead();
         /** login or register phase */
-        System.out.println("Welcome to 'Movie Review Social Network!' ");
-        System.out.println("Please enter your action");
-        System.out.println("1) Login");
-        System.out.println("2) Register");
-        System.out.println("3) Exit");
-        intInput = MRSN.getOneInt();
-        if(intInput == 1)
+       
+        /**
+         * attempt to login might need some method to break out of the loop to register without successfully login
+         */
+        while(MRSN.checkLoginStatus()!=true)
         {
+            System.out.println("Welcome to 'Movie Review Social Network!' ");
+            System.out.println("Please enter your action");
+            System.out.println("1) Login");
+            System.out.println("2) Register");
+            System.out.println("3) Exit");
+            intInput = MRSN.getOneInt();
+            if(intInput == 1)
+            {
+                while(true)
+                {
+                    System.out.print("Please enter email :");
+                    String email = MRSN.getLineString();
+                    System.out.print("Please enter password :");
+                    String password = MRSN.getLineString();
+                    if(MRSN.login(email,password))
+                    {
+                        System.out.println("Login successful");
+                        break;
+                    }
+                    else
+                    {
+                        System.out.println("Invalid email/password please try again");
+                    }
+                }
 
-        }
-        else if (intInput == 2)
-        {
-
-        }
-        else if(intInput == 3)
-        {
-            System.exit(0);
-        }
-        else
-        {
-            
+            }
+            /** to register */
+            else if (intInput == 2)
+            {
+                MRSN.register();
+            }
+            else if(intInput == 3)
+            {
+                System.out.println("Close Program");
+                System.exit(0);
+            }
+            else
+            {
+                System.out.println("Error :Invalid number");
+            }
         }
         /** using website phase */
 

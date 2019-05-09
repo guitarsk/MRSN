@@ -64,6 +64,20 @@ public class UserManager
 
     public boolean register(String name,String email,String password,ArrayList<String> movieType)
     {
+        boolean duplicated = false;
+
+        //check all emails for duplication
+        for(String key : allUsers.keySet())
+        {
+            if(email.equals(key))
+            {
+                duplicated = true;
+            }
+        }
+        if(duplicated)
+        {
+            return false;
+        }
         User newUser = new User(name, email, password, movieType);
         allUsers.put(email, newUser);
         return true;
@@ -77,7 +91,7 @@ public class UserManager
     public void rewriteAllUser()
     {
         String userData = null;
-        /* iterator แล้วเรียก getDataToWrite */
+        /* iterate through data and then call getDataToWrite */
         userFileManager.writeUser(userData);
     }
 }

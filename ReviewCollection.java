@@ -53,10 +53,10 @@ public class ReviewCollection
     /** show review information 
      * @param index of review
      **/
-    public void showReview(String email, int value, int index)
+    public void showReview(String email, String value, int index)
     {
         reviews.get(index).showReview();
-        reviews.get(index).setLikeAndDislike(email, value);
+        reviews.get(index).setLikeOrDislike(email, value);
     }
 
     /**
