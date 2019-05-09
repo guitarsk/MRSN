@@ -197,7 +197,7 @@ public class Review
     public String getDataToWrite()
     {
         String data = null;
-        data = "[\nMOVIENAME|"+this.movieName+"\nTITLE|"+this.title+"\nBODY|"+this.body+"\nDATE|"+this.reviewDate+"\nRATING|"+this.rating+"\nWRITER|"+this.writer;
+        data = "[\nMOVIEID|"+this.movieID+"\nTITLE|"+this.title+"\nBODY|"+this.body+"\nDATE|"+this.reviewDate+"\nRATING|"+this.rating+"\nWRITER|"+this.writer;
         if(this.likeAndDislike.isEmpty() == false)
         {
             Iterator<Map.Entry<String,String>> it = this.likeAndDislike.entrySet().iterator();
