@@ -5,6 +5,8 @@
  *      Build project's possible framework and some implementation
  *  Modified by jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project
+ *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
+ *      9/5/2019 Implement initialize method
  * 
  */
 

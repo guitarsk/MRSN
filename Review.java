@@ -5,6 +5,8 @@
  *      Build project's possible framework and some implementation
  *  Modified by Jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project
+ *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
+ *      9/5/2019 Implement getDataToWrite() method
  * 
  */
 
@@ -16,7 +18,7 @@ import java.util.Map;
 public class Review
 {
     private int reviewID;
-    private String movieName = null;
+    private int movieID ;
     private String title = null;
     private String body = null;
     private String reviewDate;
@@ -34,11 +36,11 @@ public class Review
      * @param rating for this Review rating
      * @param writer for this Review writer's name
      */
-    public Review(String movieName,String title,String body,double rating,String writer)
+    public Review(int movieID,String title,String body,double rating,String writer)
     {
         count++;
         this.reviewID = count;
-        this.movieName = movieName;
+        this.movieID = movieID;
         this.title = title;
         this.body = body;
         this.rating = rating;
@@ -47,11 +49,11 @@ public class Review
         this.likeAndDislike = new HashMap<String,String>();
     }
 
-    public Review(String movieName,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
+    public Review(int movieID,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
     {
         count++;
         this.reviewID = count;
-        this.movieName = movieName;
+        this.movieID = movieID;
         this.title = title;
         this.body = body;
         this.rating = rate;
@@ -66,7 +68,7 @@ public class Review
      */
     public String toString()
     {
-        return "Movie:"+movieName+" Title:"+title+" by "+writer;
+        return "Title: "+this.title+" Rating: "+this.rating+" Written by: "+this.writer;
     }
 
 
@@ -102,9 +104,9 @@ public class Review
      * getter for movieName
      * @return this Review's movie
      */
-    public String getMovieName()
+    public int getMovieID()
     {
-        return this.movieName;
+        return this.movieID;
     }
 
     /**
