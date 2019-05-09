@@ -86,25 +86,36 @@ public class MovieManager
     }
 
     /* incomplete */
-    public ArrayList<Movie> printSearch(String key,int searchOption)
+    public ArrayList<Movie> search(String key,int searchOption)
     {
-        /*switch(searchOption)
+        ArrayList<Movie> movieTemp = new ArrayList<Movie>();
+        switch(searchOption)
         {
             case 1:
-                
-                break;
+                for(Movie movie : allMovies.getAllMovie().values())
+                {
+                    if(movie.getName().contains(key))
+                    {
+                        movieTemp.add(movie);
+                    }
+                }
+                return movieTemp;
             case 2:
-                break;
-            case 3:
-                break;
+                for(Movie movie : allMovies.getAllMovie().values())
+                {
+                    for(int i = 0 ; i < movie.getGenre().size() ; i++)
+                    {
+                        if(movie.getGenre().get(i).equals(key))
+                        {
+                            movieTemp.add(movie);
+                        }
+                    }
+                    
+                }
+                return movieTemp;
             default:
-                break;
+                return movieTemp;
         }
-        /** if the name exactly matched print only */
-        if(allMovies.checkMovie(key))
-        {
-
-        }*/
     }
 
     /* incomplete */

@@ -189,6 +189,14 @@ public class Review
     }
 
     /**
+     * show Review Info
+     */
+    public void printReviewInfo()
+    {
+
+    }
+
+    /**
      * need more info about file format from Guitar b4 continue implement
      * @return Data to write to file
      */
