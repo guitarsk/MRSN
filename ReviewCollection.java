@@ -5,12 +5,15 @@
  *      Build project's possible framework and some implementation
  *  Modified by jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project
- *  
+ *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
+ *      9/5/2019 Create initMatchTable() method 
  * 
  */
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
 public class ReviewCollection
 {
@@ -27,7 +30,53 @@ public class ReviewCollection
         reviews = new HashMap<Integer,Review>();
     }
 
+    public void initMatchTable()
+    {
+        Iterator<Map.Entry<Integer,Review>> it = this.reviews.entrySet().iterator();
+        while(it.hasNext())
+        {
+            Map.Entry<Integer,Review> pair = it.next();
+            Review review = pair.getValue();
+            String userEmail = review.getWriter();
+            Integer movieID = (Integer)review.getMovieID();
+            if(userMatchReview.isEmpty() == true)
+            {
+                ArrayList<Integer> reviewList = new ArrayList<Integer>();
+                reviewList.add((Integer)review.getReviewID());
+                userMatchReview.put(userEmail, reviewList);
+            }
+            else if(userMatchReview.containsKey(userEmail) == true)
+            {
+                userMatchReview.get(userEmail).add((Integer)review.getReviewID());
+            }
+            else
+            {
+                ArrayList<Integer> reviewList = new ArrayList<Integer>();
+                reviewList.add((Integer)review.getReviewID());
+                userMatchReview.put(userEmail, reviewList);
+            }
+
+            if(movieMatchReview.isEmpty() == true)
+            {
+                ArrayList<Integer> reviewList = new ArrayList<Integer>();
+                reviewList.add((Integer)review.getReviewID());
+                movieMatchReview.put(movieID, reviewList);
+            }
+            else if(movieMatchReview.containsKey(movieID) == true)
+            {
+                movieMatchReview.get(movieID).add(review.getReviewID());
+            }
+            else
+            {
+                ArrayList<Integer> reviewList = new ArrayList<Integer>();
+                reviewList.add((Integer)review.getReviewID());
+                movieMatchReview.put(movieID, reviewList);
+            }  
+        }
+    }
+
     /*** print all review */
+    /** seem like not use this */
     public void printAll()
     {
     }
@@ -40,14 +89,10 @@ public class ReviewCollection
     }
 
     /** i don't know what this do need to ask guitar */
+    /** use for rating of movie */
     public double calRating()
     {
-        double temp = 0;
-        for(int i = 0 ; i < reviews.size() ; i++ )
-        {
-            temp += reviews.get(i).getRating();
-        }
-        return temp;
+        return 0;
     }
 
     /** show review information 
@@ -55,24 +100,23 @@ public class ReviewCollection
      **/
     public void showReview(String email, String value, int index)
     {
-        reviews.get(index).showReview();
-        reviews.get(index).setLikeOrDislike(email, value);
+        
     }
 
     /**
-     * delete review from index
-     * @param index of review
+     * delete review from reviewID
+     * @param reviewID of review
      */
-    public void deleteReview(int index)
+    public void deleteReview(int reviewID)
     {
-        reviews.remove(index);
+        reviews.remove(reviewID);
     }
 
     /**
-     * edit review in index
-     * @param index of review
+     * edit title body and rating of review
+     * @param reviewID of review
      */
-    public void edit(int index)
+    public void editReview(int reviewID)
     {
         /*reviews.get(index).setBody(newBody);
         reviews.get(index).setRating(newRate);
@@ -82,9 +126,9 @@ public class ReviewCollection
     /** add new review
      * @param review new Review to add
      */
-    public void add(Review review)
+    public void addReview(Review review)
     {
-        reviews.add((Integer)review.getReviewID(),review);
+        reviews.put((Integer)review.getReviewID(),review);
     }
 
     /** get HashMap of all reviews in this class

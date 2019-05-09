@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 public class Movie
 {
-    private Integer movieID;
+    private int movieID;
     private String name = null;
     private ArrayList<String> genre ;
     private int releaseYear;
@@ -31,10 +31,18 @@ public class Movie
         this.name = name;
         this.genre = genre;
         this.releaseYear = year;
-        this.movieID=count;
     }
 
-    public Integer getMovieID()
+    public Movie(int movieID,String name, ArrayList<String> genre, int year)
+    {
+        count++;
+        this.movieID = movieID;
+        this.name = name;
+        this.genre = genre;
+        this.releaseYear = year;
+    }
+
+    public int getMovieID()
     {
         return this.movieID;
     }
@@ -73,6 +81,7 @@ public class Movie
     public double calRating()
     {
         // confused need to look for whereabout of reviewList
+        // cal from review 
         return this.rating;
     }
 
@@ -99,7 +108,7 @@ public class Movie
     public String getDataToWrite()
     {
         String data = null;
-        data = "[\nMOVIENAME|" + this.name + "\nGERNE|";
+        data = "[\nMOVIEID|" + this.movieID + "\nMOVIENAME|" + this.name + "\nGERNE|";
         for(int i = 0 ; i < this.genre.size() ; i++)
         {
             data += "|" + this.genre.get(i);

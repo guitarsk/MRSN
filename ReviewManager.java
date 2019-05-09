@@ -5,6 +5,8 @@
  *      Build project's possible framework and some implementation
  *  Modified by jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project
+ *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
+ *      9/5/2019 Implement initialize method
  * 
  */
 
@@ -49,18 +51,20 @@ public class ReviewManager
         {
             while((review = reviewFileManager.readReview())!=null)
             { 
-                allReviews.add(review);
+                allReviews.addReview(review);
             }
+            reviewFileManager.closeRead();
+            allReviews.initMatchTable();
         }
     }
 
     /**
      * add new instance of Review to allReviews 
-     * @param e new instance of Reviews
+     * @param review new instance of Reviews
      */
-    public void addNewReview(Review e)
+    public void addNewReview(Review review)
     {
-        allReviews.add(e);
+        allReviews.addReview(review);
     }
 
     /**

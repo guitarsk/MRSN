@@ -12,6 +12,7 @@ public class MovieFileManager extends TextFileManager
             lineRead = getNextLine();
             if(lineRead != null && lineRead.equalsIgnoreCase("[")==true)
             {
+                int movieID = -1;
                 String name = null;
                 ArrayList<String> genre = new ArrayList<String>();
                 int year = -1;
@@ -19,7 +20,18 @@ public class MovieFileManager extends TextFileManager
                 while(lineRead.equalsIgnoreCase("]")==false)
                 {
                     String fields[] = lineRead.split("\\|");
-                    if(fields[0].equalsIgnoreCase("MOVIENAME") && fields.length == 2)
+                    if(fields[0].equalsIgnoreCase("MOVIEID") && fields.length == 2)
+                    {
+                        try
+                        {
+                            movieID = Integer.parseInt(fields[1]);
+                        }
+                        catch (NumberFormatException nfe)
+                        {
+                            System.out.println("bad line data --> skip line");
+                        }
+                    }
+                    else if(fields[0].equalsIgnoreCase("MOVIENAME") && fields.length == 2)
                     {
                         name = fields[1];
                     }
@@ -47,8 +59,8 @@ public class MovieFileManager extends TextFileManager
                     }
                     lineRead = getNextLine();
                 }
-                if(name != null && genre.isEmpty()==false && year != -1)
-                    movie = new Movie(name, genre, year);
+                if(movieID != -1 && name != null && genre.isEmpty()==false && year != -1)
+                    movie = new Movie(movieID,name, genre, year);
             }
         }
         while(movie == null && lineRead != null);
