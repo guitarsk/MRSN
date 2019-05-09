@@ -87,25 +87,25 @@ public class ReviewFileManager extends TextFileManager
     public static void main(String arg[])
     {
         ReviewFileManager reviewFileManager = new ReviewFileManager();
-        // reviewFileManager.openWrite("allReview.txt",true);
+        // reviewFileManager.openWrite("allReviews.txt",true);
         // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez\nBODY|yeah\nDATE|Tue May 07 18:10:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez2\nBODY|yeah\nDATE|Tue May 07 18:11:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         // reviewFileManager.closeWrite();
 
 
         // test for none like or dislike
-        // reviewFileManager.openWrite("allReview.txt",true);
+        // reviewFileManager.openWrite("allReviews.txt",true);
         // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez3\nBODY|yeah\nDATE|Tue May 07 18:20:39 ICT 2019\nRATING|10.0\nWRITER|guitar\n]");
         // reviewFileManager.closeWrite();
 
-        reviewFileManager.openRead("allReview.txt");
+        reviewFileManager.openRead("allReviews.txt");
         Review test = null;
         while((test = reviewFileManager.readReview()) != null)
         {
             System.out.println(test.getReviewID()+"\n"+test.getDataToWrite());
         }
         reviewFileManager.closeRead();
-        // reviewFileManager.openWrite("allReview.txt",true);
+        // reviewFileManager.openWrite("allReviews.txt",true);
         // reviewFileManager.writeReview("[\nMOVIENAME|eiei\nTITLE|ez3\nBODY|yeah\nDATE|Tue May 07 18:20:39 ICT 2019\nRATING|10.0\nWRITER|guitar\nLIKE&DISLIKE|jardet|like\nLIKE&DISLIKE|big|like\n]");
         // reviewFileManager.closeWrite();
     }

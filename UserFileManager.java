@@ -93,7 +93,7 @@ public class UserFileManager extends TextFileManager
             }
         }
         while(follow.isEmpty() == true && lineRead != null);
-        return user;
+        return follow;
     }
 
     public void writeUser(String userData)
@@ -101,21 +101,26 @@ public class UserFileManager extends TextFileManager
         writeNextLine(userData);
     }
 
+    public void writeFollow(String followData)
+    {
+        writeNextLine(followData);
+    }
+
     public static void main(String arg[])
     {
         UserFileManager userFileManager = new UserFileManager();
-        userFileManager.openWrite("allUser.txt",true);
+        userFileManager.openWrite("allUsers.txt",true);
         userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_123@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
         userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_124@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
         userFileManager.closeWrite();
-        userFileManager.openRead("allUser.txt");
+        userFileManager.openRead("allUsers.txt");
         User test = null;
         while((test = userFileManager.readUser()) != null)
         {
             System.out.println(test.getUserName() + " " + test.getEmail());
         }
         userFileManager.closeRead();
-        userFileManager.openWrite("allUser.txt",true);
+        userFileManager.openWrite("allUsers.txt",true);
         userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_123asd@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
         userFileManager.closeWrite();
     }
