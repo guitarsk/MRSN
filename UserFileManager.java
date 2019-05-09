@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class UserFileManager extends TextFileManager
 {
@@ -55,26 +56,71 @@ public class UserFileManager extends TextFileManager
         return user;
     }
 
+    public HashMap<String,ArrayList<String>> readFollow()
+    {
+        HashMap<String,ArrayList<String>> follow = new HashMap<String,ArrayList<String>>();
+        
+        String lineRead = null;
+        
+        do
+        {
+            lineRead = getNextLine();
+            if(lineRead != null && lineRead.equalsIgnoreCase("[")==true)
+            {
+                ArrayList<String> email = new ArrayList<String>();
+                String name = null;
+                
+                lineRead = getNextLine();
+                while(lineRead.equalsIgnoreCase("]")==false)
+                {
+                    String fields[] = lineRead.split("\\|");
+                    if(fields[0].equalsIgnoreCase("USER") && fields.length == 2)
+                    {
+                        name = fields[1];
+                    }
+                    else if(fields[0].equalsIgnoreCase("FOLLOW") && fields.length == 2)
+                    {
+                        email.add(fields[1]);
+                    }
+                    else
+                    {
+                        System.out.println("bad line data --> skip line");
+                    }
+                    lineRead = getNextLine();
+                }
+                if(name != null && email.isEmpty()==false)
+                    follow.put(name, email);
+            }
+        }
+        while(follow.isEmpty() == true && lineRead != null);
+        return follow;
+    }
+
     public void writeUser(String userData)
     {
         writeNextLine(userData);
     }
 
+    public void writeFollow(String followData)
+    {
+        writeNextLine(followData);
+    }
+
     public static void main(String arg[])
     {
         UserFileManager userFileManager = new UserFileManager();
-        userFileManager.openWrite("allUser.txt",true);
+        userFileManager.openWrite("allUsers.txt",true);
         userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_123@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
         userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_124@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
         userFileManager.closeWrite();
-        userFileManager.openRead("allUser.txt");
+        userFileManager.openRead("allUsers.txt");
         User test = null;
         while((test = userFileManager.readUser()) != null)
         {
             System.out.println(test.getUserName() + " " + test.getEmail());
         }
         userFileManager.closeRead();
-        userFileManager.openWrite("allUser.txt",true);
+        userFileManager.openWrite("allUsers.txt",true);
         userFileManager.writeUser("[\nNAME|guitar\nEMAIL|tar_123asd@eiei.com\nPASSWORD|1234\nFAVTYPE|COMEMEDY|SCI-FI\n]");
         userFileManager.closeWrite();
     }

@@ -63,18 +63,18 @@ public class MovieFileManager extends TextFileManager
     public static void main(String arg[])
     {
         MovieFileManager movieManager = new MovieFileManager();
-        // movieManager.openWrite("allMovie.txt",true);
+        // movieManager.openWrite("allMovies.txt",true);
         // movieManager.writeMovie("[\nMOVIENAME|lionking\nGENRE|romance|action\nyear|2018\n]");
         // movieManager.writeMovie("[\nMOVIENAME|eiei\nGENRE|romance|action\nyear|2018\n]");
         // movieManager.closeWrite();
-        movieManager.openRead("allMovie.txt");
+        movieManager.openRead("allMovies.txt");
         Movie test = null;
         while((test = movieManager.readMovie()) != null)
         {
-            System.out.println(test.getName() + " " + test.getReleaseYear());
+            System.out.println(test.getMovieID()+"\n"+test.getDataToWrite());
         }
         movieManager.closeRead();
-        // movieManager.openWrite("allMovie.txt",true);
+        // movieManager.openWrite("allMovies.txt",true);
         // movieManager.writeMovie("[\nMOVIENAME|ghj\nGENRE|romance|action\nyear|2018\n]");
         // movieManager.writeMovie("[\nMOVIENAME|dfghjkl\nGENRE|romance|action\nyear|2018\n]");
         // movieManager.closeWrite();

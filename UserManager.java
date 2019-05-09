@@ -6,6 +6,8 @@ public class UserManager
 {
     private final String userFileName = "allUsers.txt";
 
+    private final String followFileName = "allFollows.txt";
+
     private UserFileManager userFileManager = null;
 
     private HashMap<String,User> allUsers = new HashMap<String,User>();
@@ -31,6 +33,11 @@ public class UserManager
             while((user = userFileManager.readUser())!=null)
             {
                 allUsers.put(user.getEmail(), user);
+            }
+            userFileManager.closeRead();
+            if(userFileManager.openRead(followFileName)==true)
+            {
+                
             }
         }
     }
