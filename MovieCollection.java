@@ -13,12 +13,12 @@ import java.util.HashMap;
 
 public class MovieCollection
 {
-    private HashMap<String,Movie> movies;
+    private HashMap<Integer,Movie> movies;
 
     /**unfinished need to figure out how to create hashMap of Movie in one go */
     public MovieCollection()
     {
-        movies = new HashMap<String,Movie>();
+        movies = new HashMap<Integer,Movie>();
     }
 
     /**
@@ -48,20 +48,23 @@ public class MovieCollection
      * @param movieName
      * @param movie
      */
-    public void addMovie(String movieName,Movie movie)
+    public void addMovie(Movie movie)
     {
-        movies.put(movieName,movie);
+        movies.put(movie.getMovieID(),movie);
     }
     
     /**
      * check for existing Movie
      * @param movieName name of movie
-     * @return true if found, flase if not
+     * @return true if found, false if not
      */
     public boolean checkMovie(String movieName)
     {
-        movies.containsKey(movieName);
-        return true;
+        if(movies.containsKey(movieName))
+        {
+            return true;
+        }
+        return false;
     }
     
     /**
