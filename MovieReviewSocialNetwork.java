@@ -17,9 +17,15 @@ import java.util.Scanner;
 public class MovieReviewSocialNetwork
 {
     private User currentUser=null;
+<<<<<<< HEAD
     private String state=null;
     private ArrayList<String> idTemp = null;
     
+=======
+    private boolean editUserReview = false;
+    private boolean editUserProfile = false;
+    private boolean userAddNewFollow = false;
+>>>>>>> b66c7304e5b496581a1b66dd23be263c15ad4373
     /**
      * Asks for one integer value, and returns it
      * as the function value.
@@ -180,34 +186,40 @@ public class MovieReviewSocialNetwork
 
     public void writeReview(String movieName,String title, String body,Double rate, String name)
     {
-        MovieManager.getInstance().checkMovie(movieName);
-        Movie movieToWrite = MovieManager.getInstance().getMovie(movieName);
-        Review newReview = new Review(movieName, title, body, rate, name);
-        ReviewManager.getInstance().addNewReview(newReview);
+        //if new review create call writeNewReview() in ReviewManager
+        //if new movie create call writeNewMovie() in MovieManager
     }
 
     public void menuFollowed()
     {
         currentUser.printFollowed();
-        //String email = currentUser.getFollowedEmail(index);
-        //User a = UserManager.getInstance().getUser(email);
-        //a.getOwnReview();
+        /* if add new follow set userAddNewFollow to true */
     }
 
     public void manageProfile()
     {
-        /*currentUser.setName(newName);
-        currentUser.setPassword(newPassword);*/
-        
+        /* if edit profile set editUserProfile to true */
     }
 
     public void manageReview()
     {
-        //currentUser.manageReview();
+        /* if edit review set editUserReview to true */
     }
     public void logout()
     {
-
+        currentUser = null;
+        if(userAddNewFollow == true)
+        {
+            UserManager.getInstance().rewriteAllFollow();
+        }
+        if(editUserProfile == true)
+        {
+            UserManager.getInstance().rewriteAllUser();
+        }
+        if(editUserReview == true)
+        {
+            ReviewManager.getInstance().rewriteAllReview();
+        }
     }
     public void stateChange()
     {

@@ -84,6 +84,18 @@ public class UserManager
         }
     }
 
+    public boolean writeNewUser(User newUser)
+    {
+        boolean success = false;
+        if(userFileManager.openWrite(userFileName, true)==true)
+        {
+            userFileManager.writeData(newUser.getUserDataToWrite());
+            userFileManager.closeWrite();
+            success = true;
+        }
+        return success;
+    }
+
     public boolean register(String name,String email,String password,ArrayList<String> movieType)
     {
         boolean success = true;
@@ -91,11 +103,13 @@ public class UserManager
         {
             User newUser = new User(name, email, password, movieType);
             allUsers.put(email, newUser);
+            writeNewUser(newUser);
         }
         else if(allUsers.containsKey(email)==false)
         {
             User newUser = new User(name, email, password, movieType);
             allUsers.put(email, newUser);
+            writeNewUser(newUser);
         }
         else
         {
@@ -109,10 +123,43 @@ public class UserManager
         return allUsers.get(email);
     }
 
-    public void rewriteAllUser()
+    public boolean rewriteAllUser()
     {
-        String userData = null;
-        /* iterate through data and then call getDataToWrite */
-        userFileManager.writeUser(userData);
+        String data = null;
+        boolean success = false;
+        if(userFileManager.openWrite(userFileName, false)==true)
+        {
+            Iterator<Map.Entry<String,User>> it = allUsers.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry<String,User> pair = it.next();
+                data = pair.getValue().getUserDataToWrite();
+                userFileManager.writeData(data);
+            }
+            userFileManager.closeWrite();
+            success = true;
+        }
+        return success;
     }
+
+    public boolean rewriteAllFollow()
+    {
+        String data = null;
+        boolean success = false;
+        if(userFileManager.openWrite(followFileName, false))
+        {
+            Iterator<Map.Entry<String,User>> it = allUsers.entrySet().iterator();
+            while(it.hasNext())
+            {
+                Map.Entry<String,User> pair = it.next();
+                data = pair.getValue().getFollowDataToWrite();
+                userFileManager.writeData(data);
+            }
+            userFileManager.closeWrite();
+            success = true;
+        }
+        return success;
+    }
+
+    
 }
