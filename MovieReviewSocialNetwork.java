@@ -17,15 +17,12 @@ import java.util.Scanner;
 public class MovieReviewSocialNetwork
 {
     private User currentUser=null;
-<<<<<<< HEAD
     private String state=null;
     private ArrayList<String> idTemp = null;
     
-=======
     private boolean editUserReview = false;
     private boolean editUserProfile = false;
     private boolean userAddNewFollow = false;
->>>>>>> b66c7304e5b496581a1b66dd23be263c15ad4373
     /**
      * Asks for one integer value, and returns it
      * as the function value.
