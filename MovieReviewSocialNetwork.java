@@ -17,6 +17,8 @@ import java.util.Scanner;
 public class MovieReviewSocialNetwork
 {
     private User currentUser=null;
+    private String state=null;
+    private ArrayList<String> idTemp = null;
     
     /**
      * Asks for one integer value, and returns it
@@ -207,6 +209,10 @@ public class MovieReviewSocialNetwork
     {
 
     }
+    public void stateChange()
+    {
+
+    }
 
     public static void main(String arg[]) 
     {
@@ -266,10 +272,11 @@ public class MovieReviewSocialNetwork
             System.out.println("Welcome to MRSN! Please choose your action");
             System.out.println("1) search for...");
             System.out.println("2) discover new things");
-            System.out.println("3) manage my reviews");
-            System.out.println("4) edit my profile");
-            System.out.println("5) write review");
-            System.out.println("6) logout");
+            System.out.println("3) followed");
+            System.out.println("4) manage my reviews");
+            System.out.println("5) edit my profile");
+            System.out.println("6) write review");
+            System.out.println("7) logout");
             intInput = MRSN.getOneInteger("Your input :");
             switch(intInput)
             {
