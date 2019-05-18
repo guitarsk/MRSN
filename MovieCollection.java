@@ -82,9 +82,9 @@ public class MovieCollection
      * @param movieName name of movie
      * @return true if found, false if not
      */
-    public boolean checkMovie(String movieName)
+    public boolean checkMovie(Integer movieId)
     {
-        if(movies.containsKey(movieName))
+        if(movies.containsKey(movieId))
         {
             return true;
         }
@@ -96,9 +96,9 @@ public class MovieCollection
      * @param name movie
      * @return instance of Movie
      */
-    public Movie getMovie(String name)
+    public Movie getMovie(Integer movieId)
     {
-        return movies.get(name);
+        return movies.get(movieId);
     }
 
     /**

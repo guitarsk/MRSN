@@ -81,7 +81,8 @@ public class ReviewCollection
     {
     }
     
-    /* incomplete  need specific implementation for each type of search*/
+    /** search using Reviewer name*/
+    /** may need to implement partial name search */
     public ArrayList<Integer> searchReview(String key)
     {
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
@@ -93,6 +94,33 @@ public class ReviewCollection
             }
         }
         return idTemp;
+    }
+
+    /** search using movieId*/
+    public ArrayList<Integer> searchReview(int key)
+    {
+        ArrayList<Integer> idTemp = new ArrayList<Integer>();
+        for(int i  = 0 ; i < movieMatchReview.get(key).size() ; i++)
+        {
+            idTemp.add(movieMatchReview.get(key).get(i));
+        }
+        return idTemp;
+    }
+
+    public void setLikeOrDislike(int reviewID,String email, String value)
+    {
+        reviews.get(reviewID).setLikeOrDislike(email, value);
+    }
+
+    public Object getSelect(int reviewID, String option)
+    {
+        switch(option)
+        {
+            case "email":
+                return reviews.get(reviewID).getWriter();
+            default:
+                return null;
+        }
     }
 
     /** i don't know what this do need to ask guitar */

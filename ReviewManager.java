@@ -78,18 +78,25 @@ public class ReviewManager
 
     }
 
-    public ArrayList<Integer> search(String key, int searchOption)
+    public ArrayList<Integer> search(String key)
     {
-        ArrayList<Integer> idTemp = new ArrayList<Integer>();
-        switch (searchOption) 
-        {
-            case 3:
-                return allReviews.searchReview(key);        
-            default:
-                System.out.println("Error in ReviewManager: Wrong search option");
-                return null;
-        }
+        return allReviews.searchReview(key);
     }
+
+    public ArrayList<Integer> search(int key)
+    {
+        return allReviews.searchReview(key);
+    }
+
+    public void setLikeOrDislike(int reviewID, String email, String value)
+    {
+        allReviews.setLikeOrDislike(reviewID, email, value);
+    }
+
+    public Object getSelect(int reviewID,String option)
+    {
+        return allReviews.getSelect(reviewID, option);
+    }  
 
     /**
      * save all Review in ReviewCollection to file using ReviewFileManager

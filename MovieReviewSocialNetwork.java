@@ -18,12 +18,12 @@ import com.sun.glass.ui.Size;
 
 public class MovieReviewSocialNetwork
 {
-    private User currentUser = null;
-    private String state = null;
-    private String searchState = null;
-    private Integer searchResultPage = 1;
-    private ArrayList<Integer> idTemp = null;
-    private Integer singleIdTemp = null;
+    private User currentUser = null; // keep user that logged in at the moment
+    private String state = null; // use to keep MRSN current state
+    private String searchState = null; // use in searchState and searchResultState
+    private Integer searchResultPage = 1; // current page of search result use in SearhResultState
+    private ArrayList<Integer> idTemp = null; // id of movies or reviews that has been searched
+    private Integer singleIdTemp = null; // id of movies or reviews that will show their info in movieState or reviewState
     
     private boolean editUserReview = false;
     private boolean editUserProfile = false;
@@ -160,11 +160,14 @@ public class MovieReviewSocialNetwork
                 searchResultState();
                 break;
             case "movie":
-            movieState();
+                movieState();
                 break;
             case "review":
+                reviewState();
                 break;
             case "user":
+                break;
+            case "write review":
                 break;
             case "edit":
                 break;
@@ -289,7 +292,6 @@ public class MovieReviewSocialNetwork
 
     private void searchState()
     {
-        // search func still lack select movie state and select review state
         System.out.println("\nChoose your searh option");
         System.out.println("(1) search movie name");
         System.out.println("(2) search by category");
@@ -306,7 +308,7 @@ public class MovieReviewSocialNetwork
         }
         else if(intInput == 3) // search using ReviewManager
         {
-            idTemp = ReviewManager.getInstance().search(stringInput,intInput);
+            idTemp = ReviewManager.getInstance().search(stringInput);
             state = "search result";
             searchState = "review"; 
             searchResultPage = 1; 
@@ -339,16 +341,11 @@ public class MovieReviewSocialNetwork
                 ReviewManager.getInstance().printSearch(idTemp.get(i));
             }   
         }
-        else
-        {
-            System.out.println("Error: Invalid searchState");
-        }
         System.out.println("You are in "+searchResultPage+" page");
         System.out.println("Enter your action");
         System.out.println("(1) go to previous page");
         System.out.println("(2) go to next page");
-        System.out.println("(3) back to search");
-        System.out.println("(4) select");
+        System.out.println("(3) select");
         intInput = getOneInteger("Your input:");
         switch(intInput)
         {
@@ -365,14 +362,14 @@ public class MovieReviewSocialNetwork
                     System.out.println("You are already in last page");
                 break;
             case 3:
-                state = "search";
-                break;
-            case 4:
                 intInput = getOneInteger("Enter search result number:");
                 if(((((searchResultPage-1)*5)+(intInput-1))<idTemp.size())) // chack if index out of bound
                 {
                     singleIdTemp = idTemp.get((((searchResultPage-1)*5)+(intInput-1)));
-                    state = "movie";
+                    if(searchState.equals("movie"))
+                        state = "movie";
+                    else if(searchState.equals("movie"))
+                        state = "review";
                 }
                 else
                 {
@@ -380,13 +377,80 @@ public class MovieReviewSocialNetwork
                     tryAgain("main");
                 }
                 break;
+            default:
+                System.out.println("Error :invalid input");
+                tryAgain("main");
+                break;
         }
         
     }
 
     private void movieState()
     {
-        
+        //singleIdTemp
+        MovieManager.getInstance().printSearch(singleIdTemp);
+        idTemp = ReviewManager.getInstance().search(singleIdTemp);
+        for(int i = 0 ; i < 5 ; i++)
+        {
+            ReviewManager.getInstance().printSearch(idTemp.get(i));
+        }
+        System.out.println("\nChoose your action ");
+        System.out.println("(1) read more review");
+        System.out.println("(2) write review");
+        System.out.println("(3) back to main menu");
+        intInput = getOneInteger("Enter your action :");
+        switch(intInput)
+        {
+            case 1:;
+                state = "search result";
+                searchState = "review"; 
+                searchResultPage = 1; 
+                break;
+            case 2:
+                state= "write review";
+                break;
+            case 3:
+                state = "main";
+                break;
+            default:
+                System.out.println("Error : invalid input");
+                tryAgain("main");
+        }
+    }
+
+    private void reviewState()
+    {
+        //singleIdTemp
+        ReviewManager.getInstance().printSearch(singleIdTemp);
+        System.out.println("\nChoose your action");
+        System.out.println("(1) like review");
+        System.out.println("(2) dislike review");
+        System.out.println("(3) follow reviewer");
+        System.out.println("(4) back to main menu");
+        intInput = getOneInteger("Enter your action :");
+        switch(intInput)
+        {
+            case 1:
+                ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "like");
+                System.out.println("You liked the review");
+                break;
+            case 2:
+                ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "dislike");
+                System.out.println("You disliked the review");
+                break;
+            case 3:
+                currentUser.addFollowed(UserManager.getInstance().getUser((String)ReviewManager.getInstance().getSelect(singleIdTemp, "email")));
+                System.out.println("You followed this reviewer");
+                break;
+            case 4:
+                state = "main";
+                System.out.println("Going back to main");
+                break;
+            default:
+                System.out.println("Error : invalid input");
+                tryAgain("main");
+                break;
+        }
     }
 
     /** unfinish needed save */
