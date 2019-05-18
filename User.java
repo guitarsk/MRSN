@@ -10,19 +10,19 @@ import java.util.ArrayList;
  */
 public class User
 {
-    /* name of user */
+    /** name of user */
     private String name = null;
 
-    /* email that user use for login */
+    /** email that user use for login */
     private String email = null;
 
-    /* password for login */
+    /** password for login */
     private String password = null;
 
-    /* list of user favorite movie type */
+    /** list of user favorite movie type */
     private ArrayList<String> favoriteMovieType = new ArrayList<String>();
 
-    /* list of followed by user */
+    /** list of followed by user */
     private ArrayList<User> followedList = new ArrayList<User>();
 
 
