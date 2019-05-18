@@ -1,15 +1,15 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+
 /**
  * MovieCollection collect and organize Movie object
  * 
- *  Created by Nawakanok Muengkam (Guitar) 5907050101044
+ *  Created by Nawakanok Muangkham (Guitar) 5907050101044
  *      Build project's possible framework and some implementation
  *  Modified by jarudet Wichit (Jardet) 59070501008
- *      7/5/2019 Continuing implement project
+ *      7 May 2019 Continuing implement project
  * 
  */
-
-import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MovieCollection
 {

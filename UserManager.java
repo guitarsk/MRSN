@@ -3,16 +3,30 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * This class is the singleton clss. It contains the list of all user in MRSN system.
+ * and manager all user in system. 
+ * 
+ *  Created by Nawakanok Muangkham (Guitar) 5907050101044
+ *      Build project's possible framework and some implementation.
+ *  Modified by Nawakanok Muangkham (Guitar) 5907050101044
+ *      9 May 2019 complete all of methods.
+ */
 public class UserManager
 {
+    /** user file name that contain information of all user */
     private final String userFileName = "allUsers.txt";
 
+    /** followed file name that contain information of all followed user of user */
     private final String followFileName = "allFollows.txt";
 
+    /** UserFileManager instance for read/write file */
     private UserFileManager userFileManager = null;
 
+    /** Collection of all users in MRSN system */
     private HashMap<String,User> allUsers = new HashMap<String,User>();
 
+    /** Single, private instance of the class */
     private static UserManager singletonInstance = new UserManager();
 
     private UserManager()

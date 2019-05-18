@@ -1,12 +1,12 @@
 /**
  * Review class represent a review of movie
  * 
- *  Created by Nawakanok Muengkam (Guitar) 5907050101044
+ *  Created by Nawakanok Muangkham (Guitar) 5907050101044
  *      Build project's possible framework and some implementation
  *  Modified by Jarudet Wichit (Jardet) 59070501008
- *      7/5/2019 Continuing implement project
- *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
- *      9/5/2019 Implement getDataToWrite() method
+ *      7 May 2019 Continuing implement project
+ *  Modified by Nawakanok Muangkham (Guitar) 5907050101044
+ *      9 May 2019 Implement getDataToWrite() method
  * 
  */
 
