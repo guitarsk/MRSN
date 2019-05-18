@@ -160,6 +160,7 @@ public class MovieReviewSocialNetwork
                 searchResultState();
                 break;
             case "movie":
+            movieState();
                 break;
             case "review":
                 break;
@@ -253,6 +254,7 @@ public class MovieReviewSocialNetwork
         }
     }
 
+    /** not finish still need loads of functioanlity */
     private void mainState()
     {
         System.out.println("Welcome to MRSN! Please choose your action");
@@ -285,7 +287,7 @@ public class MovieReviewSocialNetwork
             }
     }
 
-    public void searchState()
+    private void searchState()
     {
         // search func still lack select movie state and select review state
         System.out.println("\nChoose your searh option");
@@ -316,7 +318,7 @@ public class MovieReviewSocialNetwork
         } 
     }
 
-    public void searchResultState()
+    private void searchResultState()
     {
         //searchResultPage
         System.out.println(" "+idTemp.size()+" results found");
@@ -382,7 +384,12 @@ public class MovieReviewSocialNetwork
         
     }
 
-    /** unfinish need save */
+    private void movieState()
+    {
+        
+    }
+
+    /** unfinish needed save */
     private void exitState()
     {
         System.out.println("Close Program");
@@ -471,84 +478,11 @@ public class MovieReviewSocialNetwork
         MovieManager.getInstance().initialize();
         ReviewManager.getInstance().initialize();
 
-        /** login or register phase */
-        /**
-         * attempt to login might need some method to break out of the loop to register without successfully login
-         */
+        /** state change method show website UI based on MRSN current state */
         while(true)
         {
             MRSN.stateChange();
         }
-        /** using website phase */
-        while(true)
-        {
-            System.out.println("Welcome to MRSN! Please choose your action");
-            System.out.println("1) search for...");
-            System.out.println("2) discover new things");
-            System.out.println("3) followed");
-            System.out.println("4) manage my reviews");
-            System.out.println("5) edit my profile");
-            System.out.println("6) write review");
-            System.out.println("7) logout");
-            intInput = MRSN.getOneInteger("Your input :");
-            switch(intInput)
-            {
-                case 1:// search func still lack select movie state and select review state
-                    System.out.println("\nChoose your searh option");
-                    System.out.println("1) search movie name");
-                    System.out.println("2) search by category");
-                    System.out.println("3) search reviewer name");
-                    intInput = MRSN.getOneInteger("Your input :");
-                    stringInput = MRSN.getOneString("Search for :");
-                    ArrayList<Integer> idTemp;
-                    if(intInput == 1 || intInput == 2) // search using MovieManager
-                    {
-                        idTemp = MovieManager.getInstance().search(stringInput,intInput);
-                        System.out.println(" "+idTemp.size()+" results found");
-                        for(int i = 0 ; i <idTemp.size() ; i++ )
-                        {
-                            System.out.println(i+")");
-                            MovieManager.getInstance().printSearch(idTemp.get(i));
-                        }       
-                    }
-                    else if(intInput == 3) // search using ReviewManager
-                    {
-                        idTemp = ReviewManager.getInstance().search(stringInput,intInput);
-                        System.out.println(" "+idTemp.size()+" results found");
-                        for(int i = 0 ; i < idTemp.size() ; i++ )
-                        {
-                            System.out.println(i+")");
-                            ReviewManager.getInstance().printSearch(idTemp.get(i));
-                        }    
-                    }
-                    else
-                    {
-                        System.out.println("Error :Invalid number");
-                    }
-                    intInput = MRSN.getOneInteger("Select your Movie number ( enter 0 to exit ) :");
-                    if(intInput != 0)
-                    {
-                        
-                    }                    
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-                case 5:
-                    break;
-                case 6:
-                    break;
-                default:
-                    System.out.println("Error :Invalid number");
-                    break;
-            }
-
-        }
-
-
         /** save data phase */
     }
 }
