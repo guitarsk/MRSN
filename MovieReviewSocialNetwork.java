@@ -23,6 +23,7 @@ public class MovieReviewSocialNetwork
     private String searchState = null;
     private Integer searchResultPage = 1;
     private ArrayList<Integer> idTemp = null;
+    private Integer singleIdTemp = null;
     
     private boolean editUserReview = false;
     private boolean editUserProfile = false;
@@ -312,12 +313,7 @@ public class MovieReviewSocialNetwork
         {
             System.out.println("Error :Invalid number");
             tryAgain("main");
-        }
-        intInput = MRSN.getOneInteger("Select your Movie number ( enter 0 to exit ) :");
-        if(intInput != 0)
-        {
-            
-        }                    
+        } 
     }
 
     public void searchResultState()
@@ -345,11 +341,44 @@ public class MovieReviewSocialNetwork
         {
             System.out.println("Error: Invalid searchState");
         }
+        System.out.println("You are in "+searchResultPage+" page");
         System.out.println("Enter your action");
         System.out.println("(1) go to previous page");
-        System.out.println("(1) go to next page");
-        System.out.println("(1) back to search");
-        System.out.println("(1) go to previous page");
+        System.out.println("(2) go to next page");
+        System.out.println("(3) back to search");
+        System.out.println("(4) select");
+        intInput = getOneInteger("Your input:");
+        switch(intInput)
+        {
+            case 1:
+                if(searchResultPage>1)
+                    searchResultPage--;
+                else
+                    System.out.println("You are already in first page");
+                break;
+            case 2:
+                if(((searchResultPage-1)*5)<idTemp.size())
+                    searchResultPage++;
+                else
+                    System.out.println("You are already in last page");
+                break;
+            case 3:
+                state = "search";
+                break;
+            case 4:
+                intInput = getOneInteger("Enter search result number:");
+                if(((((searchResultPage-1)*5)+(intInput-1))<idTemp.size())) // chack if index out of bound
+                {
+                    singleIdTemp = idTemp.get((((searchResultPage-1)*5)+(intInput-1)));
+                    state = "movie";
+                }
+                else
+                {
+                    System.out.println("Error :invalid input");
+                    tryAgain("main");
+                }
+                break;
+        }
         
     }
 
