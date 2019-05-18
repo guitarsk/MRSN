@@ -113,6 +113,16 @@ public class User
         followedList.add(followedUser);
     }
 
+    public void removeFollowed(User unfollowedUser)
+    {
+        followedList.remove(unfollowedUser);
+    }
+
+    public int getFollowedSize()
+    {
+        return followedList.size();
+    }
+
     /**
      * Getter method use for get specific followed user in list.
      * @param index index of followed user in list.
@@ -122,6 +132,8 @@ public class User
     {
         return followedList.get(index);
     }
+
+
 
     /**
      * Return the information of user to write into file.

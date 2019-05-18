@@ -84,9 +84,9 @@ public class Review
 
     /**
      * getter for writer
-     * @return name of User who write this Review
+     * @return email of User who write this Review
      */
-    public String getWriter()
+    public String getWriterEmail()
     {
         return this.writer;
     }
