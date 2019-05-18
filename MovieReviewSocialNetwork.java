@@ -316,6 +316,7 @@ public class MovieReviewSocialNetwork
         }
         else if(intInput == 3) // search using ReviewManager
         {
+            //need to check if user name match email here
             idTemp = ReviewManager.getInstance().search(stringInput);
             state = "search result";
             searchState = "review"; 
