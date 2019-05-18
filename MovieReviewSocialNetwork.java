@@ -172,6 +172,9 @@ public class MovieReviewSocialNetwork
                 break;
             case "edit":
                 break;
+            case "followed":
+                followedState();
+                break;
             case "discover":
                 discoverState();
                 break;
@@ -264,7 +267,7 @@ public class MovieReviewSocialNetwork
     {
         System.out.println("Welcome to MRSN! Please choose your action");
             System.out.println("(1) search for...");
-            System.out.println("(2) discover new things");
+            System.out.println("(2) discover new movie");
             System.out.println("(3) followed");
             System.out.println("(4) manage my reviews");
             System.out.println("(5) edit my profile");
@@ -293,6 +296,8 @@ public class MovieReviewSocialNetwork
             }
     }
 
+
+    /** need fixes on using email in stead of username in search for review */
     private void searchState()
     {
         System.out.println("\nChoose your searh option");
@@ -323,10 +328,12 @@ public class MovieReviewSocialNetwork
         } 
     }
 
+
+    // this method need to config idTemp, searchState and searchResultPage before use
     private void searchResultState()
     {
         //searchResultPage
-        System.out.println(" "+idTemp.size()+" results found");
+        System.out.println(" "+idTemp.size()+" results");
         if(searchState.equals("movie"))
         {
             for(int i = 5*(searchResultPage-1) , j = 1; (i <idTemp.size())&&(j<6) ; i++,j++)
@@ -453,6 +460,62 @@ public class MovieReviewSocialNetwork
                 System.out.println("Error : invalid input");
                 tryAgain("main");
                 break;
+        }
+    }
+
+    private void followedState()
+    {
+        System.out.println("Your follwed list");
+        for(int i = 0, j = 0 ; i < currentUser.getFollowedSize() ; i++,j++)
+        {
+            
+            System.out.print("("+i+") "+currentUser.getFollowed(i).getUserName()+" ");
+            if(j>4)
+            {
+                System.out.print("\n");
+                j=0;
+            }
+        }
+
+        int intInput = getOneInteger("\n Enter number of User you want to see (-1 to exit)");
+        if(intInput < 0)
+        {
+            state ="main";
+        }
+        else if(intInput<currentUser.getFollowedSize())
+        {
+            User writer = currentUser.getFollowed(intInput)
+            System.out.println("What do you want to do with "+currentUser.getFollowed(intInput));
+            System.out.println("(1) see review");
+            System.out.println("(2) unfollow");
+            System.out.println("(3) back");
+            System.out.println("(4) back to main menu");
+            intInput = getOneInteger("Enter your action :");
+            switch(intInput)
+            {
+                case 1:
+                    idTemp = ReviewManager.getInstance().search(writer.getEmail());
+                    state = "search result";
+                    searchState = "review";
+                    searchResultPage = 1;
+                    break;
+                case 2:
+                    currentUser.removeFollowed(writer);
+                    System.out.println("Reviewer unfollowed");
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    state = "main";
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+            System.out.println("Invalid input");
+            tryAgain("main");
         }
     }
 

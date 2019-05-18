@@ -90,7 +90,7 @@ public class ReviewCollection
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
         for(Review review : reviews.values())
         {
-            if(review.getWriter().equals(key))
+            if(review.getWriterEmail().equals(key))
             {
                 idTemp.add(review.getReviewID());
             }
