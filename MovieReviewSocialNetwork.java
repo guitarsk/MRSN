@@ -13,6 +13,7 @@
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.Random;
 
 import com.sun.glass.ui.Size;
 
@@ -172,6 +173,7 @@ public class MovieReviewSocialNetwork
             case "edit":
                 break;
             case "discover":
+                discoverState();
                 break;
             case "manage":
                 break;
@@ -275,6 +277,7 @@ public class MovieReviewSocialNetwork
                     state = "search";
                     break;
                 case 2:
+                    state = "discover";
                     break;
                 case 3:
                     break;
@@ -451,6 +454,14 @@ public class MovieReviewSocialNetwork
                 tryAgain("main");
                 break;
         }
+    }
+
+    private void discoverState()
+    {
+        System.out.println("This is our random movie");
+        Random rand = new Random();
+        singleIdTemp = rand.nextInt(MovieManager.getInstance().size());
+        movieState();
     }
 
     /** unfinish needed save */

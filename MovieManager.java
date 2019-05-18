@@ -11,6 +11,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MovieManager
 {
@@ -58,6 +59,11 @@ public class MovieManager
     {
         allMovies.checkMovie(movieId);
         //allMovies.add(movieName, movie);
+    }
+
+    public int size()
+    {
+        return allMovies.size();
     }
 
     /**

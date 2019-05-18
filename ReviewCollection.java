@@ -15,6 +15,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import sun.net.www.content.text.plain;
+
 public class ReviewCollection
 {
     private HashMap<Integer,ArrayList<Integer>> movieMatchReview;
