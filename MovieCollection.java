@@ -91,6 +91,11 @@ public class MovieCollection
         return false;
     }
     
+    public int size()
+    {
+        return movies.size();
+    }
+
     /**
      * get instance of movie using name as key
      * @param name movie
