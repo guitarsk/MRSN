@@ -1,7 +1,26 @@
 import java.util.ArrayList;
 
+/**
+ * This class is read the information of movies from file and create movies.
+ * File format is
+ * [
+ * MOVIEID|1
+ * MOVIENAME|LEGO
+ * GENRE|ACTION|COMEDY
+ * YEAR|2002
+ * ]
+ *  | (or bitwise) use for separate fields 
+ * Created by Nawakanok Muangkham (Guitar) 59070501044
+ *      7 May 2019
+ * Modified by Nawakanok Muangkham (Guitar) 59070501044
+ *      9 May 2019 bug issue.
+ */
 public class MovieFileManager extends TextFileManager
 {
+    /**
+     * Return movie instance by read from file and create it.
+     * @return movie instance.
+     */
     public Movie readMovie()
     {
         Movie movie = null;
@@ -59,7 +78,7 @@ public class MovieFileManager extends TextFileManager
                     }
                     lineRead = getNextLine();
                 }
-                if(movieID != -1 && name != null && genre.isEmpty()==false && year != -1)
+                if(movieID != -1 && name != null && genre.isEmpty()==false && year != -1)   //check that can read all information to create movie
                     movie = new Movie(movieID,name, genre, year);
             }
         }
@@ -67,28 +86,32 @@ public class MovieFileManager extends TextFileManager
         return movie;
     }
 
+    /**
+     * Write movie data into file.
+     * @param movieData data to write into file.
+     */
     public void writeMovie(String movieData)
     {
         writeNextLine(movieData);
     }
 
-    public static void main(String arg[])
-    {
-        MovieFileManager movieManager = new MovieFileManager();
-        // movieManager.openWrite("allMovies.txt",true);
-        // movieManager.writeMovie("[\nMOVIEID|1\nMOVIENAME|lionking\nGENRE|romance|action\nyear|2018\n]");
-        // movieManager.writeMovie("[\nMOVIEID|2\nMOVIENAME|eiei\nGENRE|romance|action\nyear|2018\n]");
-        // movieManager.closeWrite();
-        movieManager.openRead("allMovies.txt");
-        Movie test = null;
-        while((test = movieManager.readMovie()) != null)
-        {
-            System.out.println(test.getMovieID()+"\n"+test.getDataToWrite());
-        }
-        movieManager.closeRead();
-        // movieManager.openWrite("allMovies.txt",true);
-        // movieManager.writeMovie("[\nMOVIEID|3\nMOVIENAME|ghj\nGENRE|romance|action\nyear|2018\n]");
-        // movieManager.writeMovie("[\nMOVIEID|4\nMOVIENAME|dfghjkl\nGENRE|romance|action\nyear|2018\n]");
-        // movieManager.closeWrite();
-    }
+    // public static void main(String arg[])
+    // {
+    //     MovieFileManager movieManager = new MovieFileManager();
+    //     // movieManager.openWrite("allMovies.txt",true);
+    //     // movieManager.writeMovie("[\nMOVIEID|1\nMOVIENAME|lionking\nGENRE|romance|action\nyear|2018\n]");
+    //     // movieManager.writeMovie("[\nMOVIEID|2\nMOVIENAME|eiei\nGENRE|romance|action\nyear|2018\n]");
+    //     // movieManager.closeWrite();
+    //     movieManager.openRead("allMovies.txt");
+    //     Movie test = null;
+    //     while((test = movieManager.readMovie()) != null)
+    //     {
+    //         System.out.println(test.getMovieID()+"\n"+test.getDataToWrite());
+    //     }
+    //     movieManager.closeRead();
+    //     // movieManager.openWrite("allMovies.txt",true);
+    //     // movieManager.writeMovie("[\nMOVIEID|3\nMOVIENAME|ghj\nGENRE|romance|action\nyear|2018\n]");
+    //     // movieManager.writeMovie("[\nMOVIEID|4\nMOVIENAME|dfghjkl\nGENRE|romance|action\nyear|2018\n]");
+    //     // movieManager.closeWrite();
+    // }
 }
