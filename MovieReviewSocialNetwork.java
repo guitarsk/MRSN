@@ -322,23 +322,22 @@ public class MovieReviewSocialNetwork
 
     public void searchResultState()
     {
-        int menuNum=1;
-        int previous=0,next=0,search=0,main=0;
+        //searchResultPage
         System.out.println(" "+idTemp.size()+" results found");
         if(searchState.equals("movie"))
         {
-            for(int i = 5*(searchResultPage-1) ; i <idTemp.size() ; i++,menuNum++ )
+            for(int i = 5*(searchResultPage-1) , j = 1; (i <idTemp.size())&&(j<6) ; i++,j++)
             {
-                System.out.println(menuNum+")");
+                System.out.println(j+")");
                 MovieManager.getInstance().printSearch(idTemp.get(i));
             }  
         }
         else if(searchState.equals("review"))
         {
             System.out.println(" "+idTemp.size()+" results found");
-            for(int i = 5*(searchResultPage-1) ; i < idTemp.size() ; i++,menuNum++)
+            for(int i = 5*(searchResultPage-1), j = 1 ; (i < idTemp.size())&&(j<6) ; i++,j++)
             {
-                System.out.println(menuNum+")");
+                System.out.println(j+")");
                 ReviewManager.getInstance().printSearch(idTemp.get(i));
             }   
         }
@@ -347,30 +346,11 @@ public class MovieReviewSocialNetwork
             System.out.println("Error: Invalid searchState");
         }
         System.out.println("Enter your action");
-        if(menuNum>1)
-        {
-            int temp = menuNum -1;
-            System.out.println("(1-"+temp+") view movie");
-        }
-        if(searchResultPage>1)
-        {
-            System.out.println("("+menuNum+") previous page");
-            previous = menuNum;
-            menuNum++;
-        }
-        double checkSize = idTemp.size();
-        if(searchResultPage<(checkSize/5))
-        {
-            System.out.println("("+menuNum+") next page");
-            next = menuNum;
-            menuNum++;
-        }
-        System.out.println("("+menuNum+") back to search");
-        search = menuNum;
-        menuNum++;
-        System.out.println("("+menuNum+") back to search");
-        main = menuNum;
-        menuNum++;
+        System.out.println("(1) go to previous page");
+        System.out.println("(1) go to next page");
+        System.out.println("(1) back to search");
+        System.out.println("(1) go to previous page");
+        
     }
 
     /** unfinish need save */
