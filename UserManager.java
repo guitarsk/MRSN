@@ -29,16 +29,25 @@ public class UserManager
     /** Single, private instance of the class */
     private static UserManager singletonInstance = new UserManager();
 
+    /**
+     * Private constructor. Nobody can create new instances.
+     */
     private UserManager()
     {
 
     }
 
+    /**
+     * Public method to return the singleton instance.
+     */
     public static UserManager getInstance()
     {
 	    return singletonInstance;
     }
 
+    /**
+     * Set up all user in system by reading data from file.
+     */
     public void initialize()
     {
         User user = null;
@@ -71,33 +80,45 @@ public class UserManager
         }
     }
 
+    /**
+     * 
+     * @param email email of user that want to login.
+     * @param password  password for login.
+     * @return if email is valid and password is match return User that login
+     *          ,otherwise return null for fail.
+     */
     public User login(String email,String password)
     {
-        if(allUsers.isEmpty()==true)
+        if(allUsers.isEmpty()==true)    //no user in system
         {
             System.out.println("Please register first");
             return null;
         }
-        else if(allUsers.containsKey(email)==true)
+        else if(allUsers.containsKey(email)==true)  //found user
         {
-            if(allUsers.get(email).login(password)==true)
+            if(allUsers.get(email).login(password)==true)   //password match
             {
                 System.out.println("Login complete");
                 return allUsers.get(email);
             }
-            else
+            else    //password in correct
             {
                 System.out.println("Incorrect password");
                 return null;
             }
         }
-        else
+        else    //invalid email
         {
             System.out.println("Invalid email address");
             return null;
         }
     }
 
+    /**
+     * Method for keep new user that register in last line of file"
+     * @param newUser user that register into system.
+     * @return  true for success, false for can't write to file.
+     */
     public boolean writeNewUser(User newUser)
     {
         boolean success = false;
@@ -110,10 +131,18 @@ public class UserManager
         return success;
     }
 
+    /**
+     * Register new user to MRSN system.
+     * @param name user name.
+     * @param email user email address.
+     * @param password password for login.
+     * @param movieType Array of favourite movie type.
+     * @return  true for success,otherwise false.
+     */
     public boolean register(String name,String email,String password,ArrayList<String> movieType)
     {
         boolean success = true;
-        if(allUsers.isEmpty() == true)
+        if(allUsers.isEmpty() == true) 
         {
             User newUser = new User(name, email, password, movieType);
             allUsers.put(email, newUser);
@@ -125,18 +154,27 @@ public class UserManager
             allUsers.put(email, newUser);
             writeNewUser(newUser);
         }
-        else
+        else    //duplicate email.
         {
             success = false;
         }
         return success;
     }
 
+    /**
+     * Getter method for get user from email.
+     * @param email email address of user.
+     * @return  user instance.
+     */
     public User getUser(String email)
     {
         return allUsers.get(email);
     }
 
+    /**
+     * Rewrite whole of user file.
+     * @return  true for success, false for can't write to file.
+     */
     public boolean rewriteAllUser()
     {
         String data = null;
@@ -156,6 +194,10 @@ public class UserManager
         return success;
     }
 
+    /**
+     * Rewrite whole of followed user file.
+     * @return true for success, false for can't write to file.
+     */
     public boolean rewriteAllFollow()
     {
         String data = null;
@@ -167,7 +209,8 @@ public class UserManager
             {
                 Map.Entry<String,User> pair = it.next();
                 data = pair.getValue().getFollowDataToWrite();
-                userFileManager.writeData(data);
+                if(data != null)    //write only when list of followedUser in not empty 
+                    userFileManager.writeData(data);
             }
             userFileManager.closeWrite();
             success = true;
