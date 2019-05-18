@@ -54,9 +54,9 @@ public class MovieManager
     }
 
     /* incomplete */
-    public void checkMovie(String movieName)
+    public void checkMovie(Integer movieId)
     {
-        allMovies.checkMovie(movieName);
+        allMovies.checkMovie(movieId);
         //allMovies.add(movieName, movie);
     }
 
@@ -65,9 +65,9 @@ public class MovieManager
      * @param movieName name of Movie to find
      * @return instance of Movie
      */
-    public Movie getMovie(String movieName)
+    public Movie getMovie(Integer movieId)
     {
-        return allMovies.getMovie(movieName);
+        return allMovies.getMovie(movieId);
     }
 
     /**
