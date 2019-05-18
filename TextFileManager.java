@@ -1,9 +1,19 @@
 import java.io.*;
 
+/**
+ * This class operate file IO for open, read, write and close.
+ * Reuse some code from TextFileReader.java that created by Aj.Sally Goldin.
+ * 
+ * Created by Nawakanok Muangkham (Guitar) 59070501044
+ *      6 May 2019
+ * 
+ */
 public class TextFileManager
 {
     /** Reader object to access the file */
     private BufferedReader reader = null;
+
+    /** Writer object to write the file */
     private BufferedWriter writer = null;
 
     /**
