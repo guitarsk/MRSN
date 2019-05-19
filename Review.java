@@ -203,7 +203,7 @@ public class Review
             Iterator<Map.Entry<String,String>> it = this.likeAndDislike.entrySet().iterator();
             while(it.hasNext())
             {
-                Map.Entry<String,String> pair = (Map.Entry)it.next();
+                Map.Entry<String,String> pair = it.next();
                 data += "\nLIKE&DISLIKE|"+pair.getKey()+"|"+pair.getValue();
             }
         }
