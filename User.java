@@ -81,6 +81,12 @@ public class User
         return true;
     }
 
+    public boolean setFavoriteMovieType(ArrayList<String> genre)
+    {
+        favoriteMovieType = genre;
+        return true;
+    }
+
     /**
      * Method for login in to MRSN system.
      * @param password password that user enter.
