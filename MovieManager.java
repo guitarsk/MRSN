@@ -122,7 +122,7 @@ public class MovieManager
     public boolean writeNewMovie(Movie newMovie)
     {
         boolean success = false;
-        if(reviewFileManager.openWrite(reviewFileName, true)==true)
+        if(movieFileManager.openWrite(movieFileName, true)==true)
         {
             movieFileManager.writeMovie(newMovie.getDataToWrite());
             movieFileManager.closeWrite();
