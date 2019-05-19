@@ -76,7 +76,7 @@ public class ReviewManager
      */
     public void deleteReview(int reviewID)
     {
-
+        allReviews.deleteReview(reviewID);
     }
 
     public ArrayList<Integer> search(String key)
@@ -98,6 +98,11 @@ public class ReviewManager
     {
         return allReviews.getSelect(reviewID, option);
     }  
+
+    public void editReview(int reviewID, String option,String text)
+    {
+        allReviews.editReview(reviewID,option,text);
+    }
 
     /**
      * save all Review in ReviewCollection to file using ReviewFileManager

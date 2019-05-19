@@ -76,6 +76,48 @@ public class MovieReviewSocialNetwork
     }
 
     /**
+     * Asks for one double value, and returns it
+     * as the function value.
+     * @param   prompt    String to print, telling which coordinate
+     * @return  the value. Exits with error if user types in
+     *          something that can't be read as an integer 
+     */
+    public double getOneDouble(String prompt)
+    {
+        double value = 0;	   
+        String inputString;
+        int readBytes = 0;
+        byte buffer[] = new byte[200]; 
+        System.out.println(prompt);
+        try
+        {
+            readBytes = System.in.read(buffer,0,200);
+	    }
+        catch (IOException ioe)
+        {
+	        System.out.println("Input/output exception - Exiting");
+	        System.exit(1);
+        }
+        inputString = new String(buffer);
+        try 
+        {
+            /* modify to work for both Windows and Linux */
+            int pos = inputString.indexOf("\r");
+            if (pos <= 0)
+                pos = inputString.indexOf("\n");
+            if (pos > 0)
+                inputString = inputString.substring(0,pos);
+            value = Double.parseDouble(inputString);
+        }
+        catch (NumberFormatException nfe) 
+        {
+	        System.out.println("Bad number entered - Exiting");
+	        System.exit(1);
+        }
+        return value;
+    }
+
+    /**
      * Asks for a string, and returns it
      * as the function value.
      * @param   prompt    String to print, telling which coordinate
@@ -188,6 +230,9 @@ public class MovieReviewSocialNetwork
                 break;
             case "manage":
                 manageState();
+                break;
+            case "edit review":
+                editReviewState();
                 break;
             case "exit":
                 exitState();
@@ -563,30 +608,15 @@ public class MovieReviewSocialNetwork
         {
             String title = getOneString("Enter title :");
             String body = getOneString("Enter body :");
-            int rating = getOneInteger("Enter rating (integer number) :");
-            Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,(double)rating,currentUser.getEmail());
+            double rating = getOneInteger("Enter rating (number) :");
+            Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
             ReviewManager.getInstance().addNewReview(newReview);
             System.out.println("Added new review returning to main...");
             state ="main";
         }
         
     }
-/*
-    private void writeReviewState()
-    {
-        System.out.println("what do you want to change?");
-        System.out.println("(1) title");
-        System.out.println("(2) body");
-        System.out.println("(3) rating");
-        System.out.println("what do you want to change?");
-        intInput = getOneInteger("Enter your action:");
-        switch(intInput)
-        {
-            case 1:
 
-        }
-    }
-*/
     /** need to figure out the design of edit page */
     private void editState()
     {
@@ -690,8 +720,67 @@ public class MovieReviewSocialNetwork
         System.out.println("(1) edit review");
         System.out.println("(2) delete my review");
         System.out.println("(3) back to main menu");
+        idTemp = ReviewManager.getInstance().search(currentUser.getEmail());
         intInput = getOneInteger("Enter your action");
+        if(intInput==1||intInput==2)
+        {
+            intInput = getOneInteger("select review to edit");
+            intInput--;
+            if(0<=intInput&&intInput<idTemp.size())
+            {
+                singleIdTemp = idTemp.get(intInput);
+                if(intInput == 1)
+                    state = "edit review";
+                else
+                    ReviewManager.getInstance().deleteReview(singleIdTemp);
 
+            }
+            else
+            {
+                tryAgain("main", "Error: invalid input");
+            }
+
+        }
+        else if(intInput ==3)
+            state = "main";
+        else
+            tryAgain("main", "Error: Invalid input");
+    }
+
+    private void editReviewState()
+    {
+        ReviewManager.getInstance().printSearch(singleIdTemp);
+        System.out.println("\nwhat do you want to change?");
+        System.out.println("(1) title");
+        System.out.println("(2) body");
+        System.out.println("(3) rating");
+        System.out.println("(4) back to main menu");
+        System.out.println("what do you want to change?");
+        intInput = getOneInteger("Enter your action:");
+        switch(intInput)
+        {
+            case 1:
+                stringInput = getOneString("Enter new title:");
+                ReviewManager.getInstance().editReview(singleIdTemp, "title", stringInput);
+                System.out.println("Title changed to "+stringInput);
+                break;
+            case 2:
+                stringInput = getOneString("Enter new body:");
+                ReviewManager.getInstance().editReview(singleIdTemp, "body", stringInput);
+                System.out.println("Body changed to "+stringInput);
+                break;
+            case 3:
+                double rating = getOneDouble("Enter new rating (number):");
+                ReviewManager.getInstance().editReview(singleIdTemp, "rating", Double.toString(rating));
+                System.out.println("Rating changed to "+ rating);
+                break;
+            case 4:
+                state = "main";
+                break;
+            default:
+                tryAgain("main", "Error: Invalid input");
+                break;
+        }
     }
 
     /** unfinish needed save */
