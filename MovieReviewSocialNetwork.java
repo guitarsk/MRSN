@@ -128,8 +128,9 @@ public class MovieReviewSocialNetwork
         {}  
     }
 
-    public void tryAgain(String newState)
+    public void tryAgain(String newState,String text)
     {
+        System.out.println(text);
         stringInput = getOneString("Do you want to try again (y/n)?");
         if(!stringInput.toLowerCase().equals("y"))
         {
@@ -167,10 +168,15 @@ public class MovieReviewSocialNetwork
                 reviewState();
                 break;
             case "user":
+                userState();
+                break;
+            case "change password":
+                changePasswordState();
                 break;
             case "write review":
                 break;
             case "edit":
+                editState();
                 break;
             case "followed":
                 followedState();
@@ -179,6 +185,7 @@ public class MovieReviewSocialNetwork
                 discoverState();
                 break;
             case "manage":
+                manageState();
                 break;
             case "exit":
                 exitState();
@@ -229,11 +236,14 @@ public class MovieReviewSocialNetwork
             else
             {
                 System.out.println("Invalid email/password");
-                tryAgain("begin");
+                tryAgain("begin","Invalid email/password");
             }
         }
     }
 
+    /** code redundancy exist here i will refacture this later
+     *  and user can keep adding category forever even if they already added that category
+     */
     /**
      * ask for user info to register,
      * auto login after successful register
@@ -248,6 +258,63 @@ public class MovieReviewSocialNetwork
         /**need fix in genre */
         System.out.print("Please choose favorite movie genres");
         ArrayList<String> genre = new ArrayList<String>();
+        System.out.println("Enter favorite category");
+        System.out.println("(1) Action (2) Adventure (3) Comedy (4) Drama");
+        System.out.println("(5) Horror (6) Music (7) Romance (8) Sci-fi");
+        do
+        {
+            intInput = getOneInteger("Enter your category number(0 to finish): ");
+            switch(intInput)
+            {
+                case 0:
+                    System.out.println("Finish adding category");
+                    break;
+                case 1:
+                    if(!genre.contains("Action"))
+                        genre.add("Action");
+                    System.out.println("Added Action");
+                    break;
+                case 2:
+                    if(!genre.contains("Adventure"))
+                        genre.add("Adventure");
+                    System.out.println("Added Adventure");
+                    break;
+                case 3:
+                    if(!genre.contains("Comedy"))
+                        genre.add("Comedy");
+                    System.out.println("Added Comedy");
+                    break;
+                case 4:
+                    if(!genre.contains("Drama"))
+                        genre.add("Drama");
+                    System.out.println("Added Drama");
+                    break;
+                case 5:
+                    if(!genre.contains("Horror"))
+                        genre.add("Horror");
+                    System.out.println("Added Horror");
+                    break;
+                case 6:
+                    if(!genre.contains("Music"))
+                        genre.add("Music");
+                    System.out.println("Added Music");
+                    break;
+                case 7:
+                    if(!genre.contains("Romance"))
+                        genre.add("Romance");
+                    System.out.println("Added Romance");
+                    break;
+                case 8:
+                    if(!genre.contains("Sci-fi"))
+                        genre.add("Sci-fi");
+                    System.out.println("Added Sci-fi");
+                    break;
+                default:
+                    System.out.println("Wrong number");
+                    break;
+            }
+
+        }while(intInput != 0);
         genre.add("Action");
         if(UserManager.getInstance().register(name,email,password,genre))
         {
@@ -257,8 +324,7 @@ public class MovieReviewSocialNetwork
         }
         else
         {
-            System.out.println("This email is already used please try another email");
-            tryAgain("begin");
+            tryAgain("begin","This email is already used please try another email");
         }
     }
 
@@ -269,10 +335,10 @@ public class MovieReviewSocialNetwork
             System.out.println("(1) search for...");
             System.out.println("(2) discover new movie");
             System.out.println("(3) followed");
-            System.out.println("(4) manage my reviews");
-            System.out.println("(5) edit my profile");
-            System.out.println("(6) write review");
-            System.out.println("(7) logout");
+            System.out.println("(4) manage my reviews");//
+            System.out.println("(5) view my profile");//
+            System.out.println("(6) write review");//
+            System.out.println("(7) logout");//
             intInput = getOneInteger("Your input :");
             switch(intInput)
             {
@@ -283,21 +349,25 @@ public class MovieReviewSocialNetwork
                     state = "discover";
                     break;
                 case 3:
+                    state = "followed";
                     break;
                 case 4:
+                    state = "manage";
                     break;
                 case 5:
+                    state = "user";
                     break;
                 case 6:
+                    state = "write review";
                     break;
+                case 7:
+                    state = "exit";
                 default:
                     System.out.println("Error :Invalid number");
                     break;
             }
     }
 
-
-    /** need fixes on using email in stead of username in search for review */
     private void searchState()
     {
         System.out.println("\nChoose your searh option");
@@ -306,7 +376,6 @@ public class MovieReviewSocialNetwork
         System.out.println("(3) search reviewer name");
         intInput = getOneInteger("Your input :");
         stringInput = getOneString("Search for :");
-        ArrayList<Integer> idTemp;
         if(intInput == 1 || intInput == 2) // search using MovieManager
         {
             idTemp = MovieManager.getInstance().search(stringInput,intInput);
@@ -316,7 +385,7 @@ public class MovieReviewSocialNetwork
         }
         else if(intInput == 3) // search using ReviewManager
         {
-            //need to check if user name match email here
+            stringInput = UserManager.getInstance().searchForEmail(stringInput);
             idTemp = ReviewManager.getInstance().search(stringInput);
             state = "search result";
             searchState = "review"; 
@@ -324,11 +393,9 @@ public class MovieReviewSocialNetwork
         }
         else
         {
-            System.out.println("Error :Invalid number");
-            tryAgain("main");
+            tryAgain("main","Error: Invalid input");
         } 
     }
-
 
     // this method need to config idTemp, searchState and searchResultPage before use
     private void searchResultState()
@@ -383,14 +450,12 @@ public class MovieReviewSocialNetwork
                         state = "review";
                 }
                 else
-                {
-                    System.out.println("Error :invalid input");
-                    tryAgain("main");
+                {;
+                    tryAgain("main","Error: Invalid input");
                 }
                 break;
             default:
-                System.out.println("Error :invalid input");
-                tryAgain("main");
+                tryAgain("main","Error: Invalid input");
                 break;
         }
         
@@ -424,8 +489,7 @@ public class MovieReviewSocialNetwork
                 state = "main";
                 break;
             default:
-                System.out.println("Error : invalid input");
-                tryAgain("main");
+                tryAgain("main","Error: Invalid input");
         }
     }
 
@@ -458,10 +522,60 @@ public class MovieReviewSocialNetwork
                 System.out.println("Going back to main");
                 break;
             default:
-                System.out.println("Error : invalid input");
-                tryAgain("main");
+                tryAgain("main", "Error: Invalid input");
                 break;
         }
+    }
+
+    private void userState()
+    {
+        currentUser.showUser();
+        System.out.println("Choose your action");
+        System.out.println("(1) edit profile");
+        System.out.println("(2) change password");
+        System.out.println("(3) back to main menu");
+        intInput = getOneInteger("Enter your action :");
+        switch(intInput)
+        {
+            case 1:
+                state = "edit";
+                break;
+            case 2:
+                state = "change password";
+                break;
+            case 3:
+                state = "main";
+                break;
+            default:
+                tryAgain("main","Error: Invalid input");
+                break;
+        }
+    }
+
+    private void changePasswordState()
+    {
+        System.out.println("You are about to change password");
+        stringInput = getOneString("Please enter your old password: ");
+        if(currentUser.login(stringInput))
+        {
+            stringInput = getOneString("Please enter your new password: ");
+            currentUser.setPassword(stringInput);
+            state = "main";
+        }
+        else
+        {
+            tryAgain("main", "Wrong password do you want to try again?");
+        }
+    }
+
+    /** need to figure out the design of edit page */
+    private void editState()
+    {
+        System.out.println("This is your old profile");
+        currentUser.showUser();
+        
+
+        
     }
 
     private void followedState()
@@ -515,8 +629,7 @@ public class MovieReviewSocialNetwork
         }
         else
         {
-            System.out.println("Invalid input");
-            tryAgain("main");
+            tryAgain("main","Error: Invalid input");
         }
     }
 
@@ -526,6 +639,17 @@ public class MovieReviewSocialNetwork
         Random rand = new Random();
         singleIdTemp = rand.nextInt(MovieManager.getInstance().size());
         movieState();
+    }
+
+    /** unfinish I'll take care of this after I write writeReviewState */
+    private void manageState()
+    {
+        System.out.println("Choose your action");
+        System.out.println("(1) edit review");
+        System.out.println("(2) delete my review");
+        System.out.println("(3) back to main menu");
+        intInput = getOneInteger("Enter your action");
+
     }
 
     /** unfinish needed save */

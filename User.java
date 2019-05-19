@@ -133,7 +133,21 @@ public class User
         return followedList.get(index);
     }
 
-
+    public void showUser()
+    {
+        System.out.println("User name :"+name);
+        System.out.println("Email :"+email);
+        System.out.println("Favorite movie type :");
+        for(int i = 0 ; i < favoriteMovieType.size() ; i++)
+        {
+            System.out.print(" "+favoriteMovieType.get(i));
+        }
+        System.out.println("Followed Reviewer :");
+        for(int i = 0 ; i < followedList.size() ; i++)
+        {
+            System.out.print(" "+ followedList.get(i));
+        }
+    }
 
     /**
      * Return the information of user to write into file.

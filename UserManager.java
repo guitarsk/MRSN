@@ -172,6 +172,22 @@ public class UserManager
     }
 
     /**
+     * enter user name and get email back
+     * @return User's email
+     */
+    public String searchForEmail(String name)
+    {
+        for(User user : allUsers.values())
+        {
+            if(user.getUserName().equals(name))
+            {
+                return user.getEmail();
+            }
+        }
+        return "not_found@thisIsDefinitelyNotExist.com";
+    }
+
+    /**
      * Rewrite whole of user file.
      * @return  true for success, false for can't write to file.
      */
