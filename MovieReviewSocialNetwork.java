@@ -671,7 +671,7 @@ public class MovieReviewSocialNetwork
         }
         else if(intInput<currentUser.getFollowedSize())
         {
-            User writer = currentUser.getFollowed(intInput)
+            User writer = currentUser.getFollowed(intInput);
             System.out.println("What do you want to do with "+currentUser.getFollowed(intInput));
             System.out.println("(1) see review");
             System.out.println("(2) unfollow");

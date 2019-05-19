@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import sun.net.www.content.text.plain;
 
 public class ReviewCollection
 {
@@ -39,7 +38,7 @@ public class ReviewCollection
         {
             Map.Entry<Integer,Review> pair = it.next();
             Review review = pair.getValue();
-            String userEmail = review.getWriter();
+            String userEmail = review.getWriterEmail();
             Integer movieID = (Integer)review.getMovieID();
             if(userMatchReview.isEmpty() == true)
             {
