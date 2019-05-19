@@ -16,6 +16,7 @@ import java.util.Scanner;
 import java.util.Random;
 
 import com.sun.glass.ui.Size;
+import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class MovieReviewSocialNetwork
 {
@@ -65,6 +66,48 @@ public class MovieReviewSocialNetwork
             if (pos > 0)
                 inputString = inputString.substring(0,pos);
             value = Integer.parseInt(inputString);
+        }
+        catch (NumberFormatException nfe) 
+        {
+	        System.out.println("Bad number entered - Exiting");
+	        System.exit(1);
+        }
+        return value;
+    }
+
+    /**
+     * Asks for one double value, and returns it
+     * as the function value.
+     * @param   prompt    String to print, telling which coordinate
+     * @return  the value. Exits with error if user types in
+     *          something that can't be read as an integer 
+     */
+    public double getOneDouble(String prompt)
+    {
+        double value = 0;	   
+        String inputString;
+        int readBytes = 0;
+        byte buffer[] = new byte[200]; 
+        System.out.println(prompt);
+        try
+        {
+            readBytes = System.in.read(buffer,0,200);
+	    }
+        catch (IOException ioe)
+        {
+	        System.out.println("Input/output exception - Exiting");
+	        System.exit(1);
+        }
+        inputString = new String(buffer);
+        try 
+        {
+            /* modify to work for both Windows and Linux */
+            int pos = inputString.indexOf("\r");
+            if (pos <= 0)
+                pos = inputString.indexOf("\n");
+            if (pos > 0)
+                inputString = inputString.substring(0,pos);
+            value = Double.parseDouble(inputString);
         }
         catch (NumberFormatException nfe) 
         {
@@ -131,7 +174,7 @@ public class MovieReviewSocialNetwork
     public void tryAgain(String newState,String text)
     {
         System.out.println(text);
-        stringInput = getOneString("Do you want to try again (y/n)?");
+        stringInput = getOneString("Do you want to try again [y/n]?");
         if(!stringInput.toLowerCase().equals("y"))
         {
             state = newState;
@@ -174,6 +217,7 @@ public class MovieReviewSocialNetwork
                 changePasswordState();
                 break;
             case "write review":
+                writeReviewState();
                 break;
             case "edit":
                 editState();
@@ -186,6 +230,9 @@ public class MovieReviewSocialNetwork
                 break;
             case "manage":
                 manageState();
+                break;
+            case "edit review":
+                editReviewState();
                 break;
             case "exit":
                 exitState();
@@ -256,66 +303,8 @@ public class MovieReviewSocialNetwork
         email = getOneString("Please enter email :");
         password = getOneString("Please enter password :");
         /**need fix in genre */
-        System.out.print("Please choose favorite movie genres");
-        ArrayList<String> genre = new ArrayList<String>();
-        System.out.println("Enter favorite category");
-        System.out.println("(1) Action (2) Adventure (3) Comedy (4) Drama");
-        System.out.println("(5) Horror (6) Music (7) Romance (8) Sci-fi");
-        do
-        {
-            intInput = getOneInteger("Enter your category number(0 to finish): ");
-            switch(intInput)
-            {
-                case 0:
-                    System.out.println("Finish adding category");
-                    break;
-                case 1:
-                    if(!genre.contains("Action"))
-                        genre.add("Action");
-                    System.out.println("Added Action");
-                    break;
-                case 2:
-                    if(!genre.contains("Adventure"))
-                        genre.add("Adventure");
-                    System.out.println("Added Adventure");
-                    break;
-                case 3:
-                    if(!genre.contains("Comedy"))
-                        genre.add("Comedy");
-                    System.out.println("Added Comedy");
-                    break;
-                case 4:
-                    if(!genre.contains("Drama"))
-                        genre.add("Drama");
-                    System.out.println("Added Drama");
-                    break;
-                case 5:
-                    if(!genre.contains("Horror"))
-                        genre.add("Horror");
-                    System.out.println("Added Horror");
-                    break;
-                case 6:
-                    if(!genre.contains("Music"))
-                        genre.add("Music");
-                    System.out.println("Added Music");
-                    break;
-                case 7:
-                    if(!genre.contains("Romance"))
-                        genre.add("Romance");
-                    System.out.println("Added Romance");
-                    break;
-                case 8:
-                    if(!genre.contains("Sci-fi"))
-                        genre.add("Sci-fi");
-                    System.out.println("Added Sci-fi");
-                    break;
-                default:
-                    System.out.println("Wrong number");
-                    break;
-            }
-
-        }while(intInput != 0);
-        genre.add("Action");
+        System.out.println("Please choose favorite movie genres");
+        ArrayList<String> genre = genreMaker();
         if(UserManager.getInstance().register(name,email,password,genre))
         {
             System.out.println("Register successful");
@@ -564,15 +553,98 @@ public class MovieReviewSocialNetwork
         }
         else
         {
-            tryAgain("main", "Wrong password do you want to try again?");
+            tryAgain("main", "Wrong password");
         }
+    }
+    private void writeReviewState()
+    {
+        boolean skip = false;
+        stringInput = getOneString("Enter movie name");
+        idTemp = MovieManager.getInstance().search(stringInput, 1);
+        
+        for(int i = 0 , j = 1 ; i < idTemp.size() ; i++,j++)
+        {
+            System.out.println(j+")");
+            MovieManager.getInstance().printSearch(idTemp.get(i));
+        }
+        System.out.println("\nChoose your action");
+        System.out.println("(1) select movie");
+        System.out.println("(2) add new movie");
+        System.out.println("(3) re-enter movie name");
+        System.out.println("(4) back to main menu");
+        intInput = getOneInteger("Enter your action :");
+        switch(intInput)
+        {
+            case 1:
+                intInput = getOneInteger("Enter movie number :");
+                if(intInput >= idTemp.size())
+                {
+                    tryAgain("main", "Error: Invalid input");
+                    break;
+                }
+                singleIdTemp = idTemp.get(intInput);
+                break;
+            case 2:
+                String name = getOneString("Enter Movie name");
+                ArrayList<String> genre = genreMaker();
+                int year = getOneInteger("Enter the year this movie released");
+                Movie newMovie = new Movie(name, genre, year);
+                MovieManager.getInstance().addMovie(newMovie);
+                singleIdTemp = newMovie.getMovieID();
+                break;
+            case 3:
+                skip = true;
+                break;
+            case 4:
+                state = "main";
+                skip = true;
+                break;
+            default:
+                tryAgain("main", "Error: Invalid input");
+                skip = true;
+                break;
+        }
+        if(!skip)
+        {
+            String title = getOneString("Enter title :");
+            String body = getOneString("Enter body :");
+            double rating = getOneInteger("Enter rating (number) :");
+            Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
+            ReviewManager.getInstance().addNewReview(newReview);
+            System.out.println("Added new review returning to main...");
+            state ="main";
+        }
+        
     }
 
     /** need to figure out the design of edit page */
     private void editState()
     {
-        System.out.println("This is your old profile");
         currentUser.showUser();
+        System.out.println("what do you want to change?");
+        System.out.println("(1) User name");
+        System.out.println("(2) Favorite movie categories");
+        System.out.println("(3) The people you followed");
+        intInput = getOneInteger("Enter your action:");
+        switch(intInput)
+        {
+            case 1:
+                stringInput = getOneString("Please enter new User name:");
+                currentUser.setName(stringInput);
+                System.out.println("User name changed to "+stringInput);
+                break;
+            case 2:
+                currentUser.setFavoriteMovieType(genreMaker());
+                System.out.println("Favorite movie category changed");
+                break;
+            case 3:
+                state = "followed";
+                break;
+            default:
+                tryAgain("user", "Error: Invalid input");
+                break;
+        }
+
         
 
         
@@ -648,8 +720,67 @@ public class MovieReviewSocialNetwork
         System.out.println("(1) edit review");
         System.out.println("(2) delete my review");
         System.out.println("(3) back to main menu");
+        idTemp = ReviewManager.getInstance().search(currentUser.getEmail());
         intInput = getOneInteger("Enter your action");
+        if(intInput==1||intInput==2)
+        {
+            intInput = getOneInteger("select review to edit");
+            intInput--;
+            if(0<=intInput&&intInput<idTemp.size())
+            {
+                singleIdTemp = idTemp.get(intInput);
+                if(intInput == 1)
+                    state = "edit review";
+                else
+                    ReviewManager.getInstance().deleteReview(singleIdTemp);
 
+            }
+            else
+            {
+                tryAgain("main", "Error: invalid input");
+            }
+
+        }
+        else if(intInput ==3)
+            state = "main";
+        else
+            tryAgain("main", "Error: Invalid input");
+    }
+
+    private void editReviewState()
+    {
+        ReviewManager.getInstance().printSearch(singleIdTemp);
+        System.out.println("\nwhat do you want to change?");
+        System.out.println("(1) title");
+        System.out.println("(2) body");
+        System.out.println("(3) rating");
+        System.out.println("(4) back to main menu");
+        System.out.println("what do you want to change?");
+        intInput = getOneInteger("Enter your action:");
+        switch(intInput)
+        {
+            case 1:
+                stringInput = getOneString("Enter new title:");
+                ReviewManager.getInstance().editReview(singleIdTemp, "title", stringInput);
+                System.out.println("Title changed to "+stringInput);
+                break;
+            case 2:
+                stringInput = getOneString("Enter new body:");
+                ReviewManager.getInstance().editReview(singleIdTemp, "body", stringInput);
+                System.out.println("Body changed to "+stringInput);
+                break;
+            case 3:
+                double rating = getOneDouble("Enter new rating (number):");
+                ReviewManager.getInstance().editReview(singleIdTemp, "rating", Double.toString(rating));
+                System.out.println("Rating changed to "+ rating);
+                break;
+            case 4:
+                state = "main";
+                break;
+            default:
+                tryAgain("main", "Error: Invalid input");
+                break;
+        }
     }
 
     /** unfinish needed save */
@@ -663,7 +794,6 @@ public class MovieReviewSocialNetwork
      * ask for user info to register,
      * auto login after successful register
      */
-
     public boolean login(String email, String password)
     {
         currentUser = UserManager.getInstance().login(email, password);
@@ -687,6 +817,69 @@ public class MovieReviewSocialNetwork
         {
             return true;
         }
+    }
+
+    private ArrayList<String> genreMaker()
+    {
+        ArrayList<String> genre = new ArrayList<String>();
+        System.out.println("Enter category");
+        System.out.println("(1) Action (2) Adventure (3) Comedy (4) Drama");
+        System.out.println("(5) Horror (6) Music (7) Romance (8) Sci-fi");
+        do
+        {
+            intInput = getOneInteger("Enter your category number(0 to finish): ");
+            switch(intInput)
+            {
+                case 0:
+                    System.out.println("Finish adding category");
+                    break;
+                case 1:
+                    if(!genre.contains("Action"))
+                        genre.add("Action");
+                    System.out.println("Added Action");
+                    break;
+                case 2:
+                    if(!genre.contains("Adventure"))
+                        genre.add("Adventure");
+                    System.out.println("Added Adventure");
+                    break;
+                case 3:
+                    if(!genre.contains("Comedy"))
+                        genre.add("Comedy");
+                    System.out.println("Added Comedy");
+                    break;
+                case 4:
+                    if(!genre.contains("Drama"))
+                        genre.add("Drama");
+                    System.out.println("Added Drama");
+                    break;
+                case 5:
+                    if(!genre.contains("Horror"))
+                        genre.add("Horror");
+                    System.out.println("Added Horror");
+                    break;
+                case 6:
+                    if(!genre.contains("Music"))
+                        genre.add("Music");
+                    System.out.println("Added Music");
+                    break;
+                case 7:
+                    if(!genre.contains("Romance"))
+                        genre.add("Romance");
+                    System.out.println("Added Romance");
+                    break;
+                case 8:
+                    if(!genre.contains("Sci-fi"))
+                        genre.add("Sci-fi");
+                    System.out.println("Added Sci-fi");
+                    break;
+                default:
+                    System.out.println("Wrong number");
+                    break;
+            }
+
+        }while(intInput != 0);
+        return genre;
     }
 
     public void viewMovie(String movieName)

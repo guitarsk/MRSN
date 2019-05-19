@@ -61,6 +61,11 @@ public class MovieManager
         //allMovies.add(movieName, movie);
     }
 
+    public void addMovie(Movie newMovie)
+    {
+        allMovies.addMovie(newMovie);
+    }
+
     public int size()
     {
         return allMovies.size();
@@ -98,9 +103,9 @@ public class MovieManager
     {
         switch(searchOption)
         {
-            case 1:
+            case 1://search using movie name
                 return allMovies.searchMovie(key);
-            case 2:
+            case 2://search using genre
                 return allMovies.searchGenre(key);
             default:
                 System.out.println("Error in MovieManager: wrong search option");

@@ -119,7 +119,7 @@ public class ReviewCollection
         switch(option)
         {
             case "email":
-                return reviews.get(reviewID).getWriter();
+                return reviews.get(reviewID).getWriterEmail();
             default:
                 return null;
         }
@@ -154,13 +154,24 @@ public class ReviewCollection
      * edit title body and rating of review
      * @param reviewID of review
      */
-    public void editReview(int reviewID)
+    public void editReview(int reviewID, String option,String text)
     {
-        /*reviews.get(index).setBody(newBody);
-        reviews.get(index).setRating(newRate);
-        reviews.get(index).setTitle(newTitle);*/
+        switch(option)
+        {
+            case "title":
+                reviews.get(reviewID).setTitle(text);
+                break;
+            case "body":
+                reviews.get(reviewID).setBody(text);
+                break;
+            case "rating":
+                reviews.get(reviewID).setRating(Double.parseDouble(text));
+            default:
+                break;
+        }
     }
 
+    /** this is not complete still need to add review to other 2 new hashmap */
     /** add new review
      * @param review new Review to add
      */
