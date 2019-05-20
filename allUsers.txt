@@ -1,0 +1,12 @@
+[
+NAME|Baka Baka
+EMAIL|guitar_sk134@hotmail.com
+PASSWORD|qwerty
+FAVTYPE|Action|Comedy|Romance
+]
+[
+NAME|asdfg
+EMAIL|jardet@qwerty.com
+PASSWORD|zxcvbn
+FAVTYPE|Action|Adventure
+]

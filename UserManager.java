@@ -91,25 +91,21 @@ public class UserManager
     {
         if(allUsers.isEmpty()==true)    //no user in system
         {
-            System.out.println("Please register first");
             return null;
         }
         else if(allUsers.containsKey(email)==true)  //found user
         {
             if(allUsers.get(email).login(password)==true)   //password match
             {
-                System.out.println("Login complete");
                 return allUsers.get(email);
             }
             else    //password in correct
             {
-                System.out.println("Incorrect password");
                 return null;
             }
         }
         else    //invalid email
         {
-            System.out.println("Invalid email address");
             return null;
         }
     }

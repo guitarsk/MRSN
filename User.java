@@ -94,7 +94,7 @@ public class User
      */
     public boolean login(String password)
     {
-        if(this.password == password)  
+        if(this.password.equals(password))  
             return true;    
         return false;
     }
@@ -143,16 +143,24 @@ public class User
     {
         System.out.println("User name :"+name);
         System.out.println("Email :"+email);
-        System.out.println("Favorite movie type :");
-        for(int i = 0 ; i < favoriteMovieType.size() ; i++)
+        if(favoriteMovieType.isEmpty() == false)
         {
-            System.out.print(" "+favoriteMovieType.get(i));
+            System.out.print("Favorite movie type :");
+            for(int i = 0 ; i < favoriteMovieType.size() ; i++)
+            {
+                System.out.print(" "+favoriteMovieType.get(i));
+            }
+            System.out.println();
         }
-        System.out.println("Followed Reviewer :");
-        for(int i = 0 ; i < followedList.size() ; i++)
+        if(followedList.isEmpty() == false)
         {
-            System.out.print(" "+ followedList.get(i));
+            System.out.println("Followed Reviewer :");
+            for(int i = 0 ; i < followedList.size() ; i++)
+            {
+                System.out.print(" "+ followedList.get(i));
+            }
         }
+        
     }
 
     /**

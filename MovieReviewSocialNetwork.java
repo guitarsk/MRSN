@@ -18,7 +18,7 @@ import java.util.Random;
 public class MovieReviewSocialNetwork
 {
     private User currentUser = null; // keep user that logged in at the moment
-    private String state = null; // use to keep MRSN current state
+    private String state = "begin"; // use to keep MRSN current state
     private String searchState = null; // use in searchState and searchResultState
     private Integer searchResultPage = 1; // current page of search result use in SearhResultState
     private ArrayList<Integer> idTemp = null; // id of movies or reviews that has been searched
@@ -66,8 +66,7 @@ public class MovieReviewSocialNetwork
         }
         catch (NumberFormatException nfe) 
         {
-	        System.out.println("Bad number entered - Exiting");
-	        System.exit(1);
+	        
         }
         return value;
     }
@@ -108,8 +107,7 @@ public class MovieReviewSocialNetwork
         }
         catch (NumberFormatException nfe) 
         {
-	        System.out.println("Bad number entered - Exiting");
-	        System.exit(1);
+	        System.out.println(nfe);
         }
         return value;
     }
@@ -159,20 +157,21 @@ public class MovieReviewSocialNetwork
      */
     public void pressAnyKeyToContinue()
     { 
-        System.out.println("Press any key to continue...");
         try
         {
-            System.in.read();
+            getOneString("Press enter to continue...");
         }  
         catch(Exception e)
-        {}  
+        {
+
+        }  
     }
 
     public void tryAgain(String newState,String text)
     {
         System.out.println(text);
         stringInput = getOneString("Do you want to try again [y/n]?");
-        if(!stringInput.toLowerCase().equals("y"))
+        if(!(stringInput.toLowerCase().startsWith("y")))
         {
             state = newState;
         }
@@ -271,20 +270,16 @@ public class MovieReviewSocialNetwork
 
     private void loginState()
     {
-        while(true)
+        String email = getOneString("Please enter email :");
+        String password = getOneString("Please enter password :");
+        if(login(email,password))
         {
-            String email = getOneString("Please enter email :");
-            String password = getOneString("Please enter password :");
-            if(login(email,password))
-            {
-                System.out.println("Login successful");
-                state = "main";
-            }
-            else
-            {
-                System.out.println("Invalid email/password");
-                tryAgain("begin","Invalid email/password");
-            }
+            System.out.println("Login successful");
+            state = "main";
+        }
+        else
+        {
+            tryAgain("begin","Invalid email/password");
         }
     }
 
@@ -309,7 +304,6 @@ public class MovieReviewSocialNetwork
         {
             System.out.println("Register successful");
             login(email,password);
-            UserManager.getInstance().writeNewUser(currentUser);
             state = "main";
         }
         else
@@ -322,40 +316,41 @@ public class MovieReviewSocialNetwork
     private void mainState()
     {
         System.out.println("Welcome to MRSN! Please choose your action");
-            System.out.println("(1) search for...");
-            System.out.println("(2) discover new movie");
-            System.out.println("(3) followed");
-            System.out.println("(4) manage my reviews");
-            System.out.println("(5) view my profile");
-            System.out.println("(6) write review");
-            System.out.println("(7) logout");
-            intInput = getOneInteger("Your input :");
-            switch(intInput)
-            {
-                case 1:// search func still lack select movie state and select review state
-                    state = "search";
-                    break;
-                case 2:
-                    state = "discover";
-                    break;
-                case 3:
-                    state = "followed";
-                    break;
-                case 4:
-                    state = "manage";
-                    break;
-                case 5:
-                    state = "user";
-                    break;
-                case 6:
-                    state = "write review";
-                    break;
-                case 7:
-                    state = "exit";
-                default:
-                    System.out.println("Error :Invalid number");
-                    break;
-            }
+        System.out.println("(1) search for...");
+        System.out.println("(2) discover new movie");
+        System.out.println("(3) followed");
+        System.out.println("(4) manage my reviews");
+        System.out.println("(5) view my profile");
+        System.out.println("(6) write review");
+        System.out.println("(7) logout");
+        intInput = getOneInteger("Your input :");
+        switch(intInput)
+        {
+            case 1:// search func still lack select movie state and select review state
+                state = "search";
+                break;
+            case 2:
+                state = "discover";
+                break;
+            case 3:
+                state = "followed";
+                break;
+            case 4:
+                state = "manage";
+                break;
+            case 5:
+                state = "user";
+                break;
+            case 6:
+                state = "write review";
+                break;
+            case 7:
+                state = "exit";
+                break;
+            default:
+                System.out.println("Error :Invalid number");
+                break;
+        }
     }
 
     private void searchState()
@@ -396,8 +391,9 @@ public class MovieReviewSocialNetwork
         {
             for(int i = 5*(searchResultPage-1) , j = 1; (i <idTemp.size())&&(j<6) ; i++,j++)
             {
-                System.out.println(j+")");
+                System.out.print(j+")");
                 MovieManager.getInstance().printSearch(idTemp.get(i));
+                System.out.println();
             }  
         }
         else if(searchState.equals("review"))
@@ -409,7 +405,7 @@ public class MovieReviewSocialNetwork
                 ReviewManager.getInstance().printSearch(idTemp.get(i));
             }   
         }
-        System.out.println("You are in "+searchResultPage+" page");
+        System.out.println("\nYou are in "+searchResultPage+" page");
         System.out.println("Enter your action");
         System.out.println("(1) go to previous page");
         System.out.println("(2) go to next page");
@@ -574,6 +570,7 @@ public class MovieReviewSocialNetwork
             System.out.println(j+")");
             MovieManager.getInstance().printSearch(idTemp.get(i));
         }
+
         System.out.println("\nChoose your action");
         System.out.println("(1) select movie");
         System.out.println("(2) add new movie to review");
@@ -629,6 +626,7 @@ public class MovieReviewSocialNetwork
         System.out.println("(1) User name");
         System.out.println("(2) Favorite movie categories");
         System.out.println("(3) The people you followed");
+        System.out.println("(4) back to main menu");
         intInput = getOneInteger("Enter your action:");
         switch(intInput)
         {
@@ -646,6 +644,9 @@ public class MovieReviewSocialNetwork
             case 3:
                 state = "followed";
                 break;
+            case 4:
+                state = "main";
+                break;
             default:
                 tryAgain("user", "Error: Invalid input");
                 break;
@@ -658,66 +659,84 @@ public class MovieReviewSocialNetwork
 
     private void followedState()
     {
-        System.out.println("Your follwed list");
-        for(int i = 0, j = 0 ; i < currentUser.getFollowedSize() ; i++,j++)
+        if(currentUser.getFollowedSize()==0)
         {
-            
-            System.out.print("("+i+") "+currentUser.getFollowed(i).getUserName()+" ");
-            if(j>4)
-            {
-                System.out.print("\n");
-                j=0;
-            }
-        }
-
-        int intInput = getOneInteger("\n Enter number of User you want to see (-1 to exit)");
-        if(intInput < 0)
-        {
-            state ="main";
-        }
-        else if(intInput<currentUser.getFollowedSize())
-        {
-            User writer = currentUser.getFollowed(intInput);
-            System.out.println("What do you want to do with "+currentUser.getFollowed(intInput));
-            System.out.println("(1) see review");
-            System.out.println("(2) unfollow");
-            System.out.println("(3) back");
-            System.out.println("(4) back to main menu");
-            intInput = getOneInteger("Enter your action :");
-            switch(intInput)
-            {
-                case 1:
-                    idTemp = ReviewManager.getInstance().search(writer.getEmail());
-                    state = "search result";
-                    searchState = "review";
-                    searchResultPage = 1;
-                    break;
-                case 2:
-                    currentUser.removeFollowed(writer);
-                    userAddNewFollow = true;
-                    System.out.println("Reviewer unfollowed");
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    state = "main";
-                    break;
-                default:
-                    break;
-            }
+            System.out.println("You did not follow anybody");
+            state = "main";
         }
         else
         {
-            tryAgain("main","Error: Invalid input");
+            System.out.println("Your follwed list");
+            for(int i = 0, j = 0 ; i < currentUser.getFollowedSize() ; i++,j++)
+            {
+                
+                System.out.print("("+i+") "+currentUser.getFollowed(i).getUserName()+" ");
+                if(j>4)
+                {
+                    System.out.print("\n");
+                    j=0;
+                }
+            }
+
+            int intInput = getOneInteger("\n Enter number of User you want to see (-1 to exit)");
+            if(intInput < 0)
+            {
+                state ="main";
+            }
+            else if(intInput<currentUser.getFollowedSize())
+            {
+                User writer = currentUser.getFollowed(intInput);
+                System.out.println("What do you want to do with "+currentUser.getFollowed(intInput));
+                System.out.println("(1) see review");
+                System.out.println("(2) unfollow");
+                System.out.println("(3) back");
+                System.out.println("(4) back to main menu");
+                intInput = getOneInteger("Enter your action :");
+                switch(intInput)
+                {
+                    case 1:
+                        idTemp = ReviewManager.getInstance().search(writer.getEmail());
+                        state = "search result";
+                        searchState = "review";
+                        searchResultPage = 1;
+                        break;
+                    case 2:
+                        currentUser.removeFollowed(writer);
+                        userAddNewFollow = true;
+                        System.out.println("Reviewer unfollowed");
+                        break;
+                    case 3:
+                        break;
+                    case 4:
+                        state = "main";
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                tryAgain("main","Error: Invalid input");
+            }
         }
+        
     }
 
     private void discoverState()
     {
-        System.out.println("This is our random movie");
-        Random rand = new Random();
-        singleIdTemp = rand.nextInt(MovieManager.getInstance().size());
-        movieState();
+        int totalMovie = MovieManager.getInstance().size();
+        if(totalMovie == 0)
+        {
+            System.out.println("no movie found");
+            state = "main";
+        }
+        else
+        {
+            System.out.println("This is our random movie");
+            Random rand = new Random();
+            singleIdTemp = rand.nextInt(totalMovie);
+            movieState();
+        }
     }
 
     /** unfinish I'll take care of this after I write writeReviewState */
@@ -834,12 +853,13 @@ public class MovieReviewSocialNetwork
 
     private void writeReview()
     {
-            String title = getOneString("Enter title :");
-            String body = getOneString("Enter body :");
-            double rating = getOneInteger("Enter rating (number) :");
-            Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
-            ReviewManager.getInstance().addNewReview(newReview);
-            System.out.println("Added new review returning to main...");
+        String title = getOneString("Enter title :");
+        String body = getOneString("Enter body :");
+        double rating = getOneDouble("Enter rating (number) :");
+        Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
+        ReviewManager.getInstance().addNewReview(newReview);
+        ReviewManager.getInstance().writeNewReview(newReview);
+        System.out.println("Added new review returning to main...");
     }
 
     private ArrayList<String> genreMaker()
@@ -928,6 +948,7 @@ public class MovieReviewSocialNetwork
         UserManager.getInstance().initialize();
         MovieManager.getInstance().initialize();
         ReviewManager.getInstance().initialize();
+
 
         /** state change method show website UI based on MRSN current state */
         while(true)

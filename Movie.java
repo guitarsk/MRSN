@@ -116,7 +116,7 @@ public class Movie
     public String getDataToWrite()
     {
         String data = null;
-        data = "[\nMOVIEID|" + this.movieID + "\nMOVIENAME|" + this.name + "\nGERNE|";
+        data = "[\nMOVIEID|" + this.movieID + "\nMOVIENAME|" + this.name + "\nGENRE";
         for(int i = 0 ; i < this.genre.size() ; i++)
         {
             data += "|" + this.genre.get(i);

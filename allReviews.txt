@@ -1,0 +1,8 @@
+[
+MOVIEID|2
+TITLE|qwert
+BODY|sadasd
+DATE|Mon May 20 18:24:08 ICT 2019
+RATING|9.9
+WRITER|guitar_sk134@hotmail.com
+]
