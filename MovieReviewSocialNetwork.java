@@ -12,11 +12,8 @@
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Random;
 
-import com.sun.glass.ui.Size;
-import com.sun.xml.internal.bind.v2.runtime.unmarshaller.XsiNilLoader.Array;
 
 public class MovieReviewSocialNetwork
 {
@@ -909,34 +906,6 @@ public class MovieReviewSocialNetwork
         return genre;
     }
 
-    public void viewMovie(String movieName)
-    {
-        MovieManager.getInstance().printAll();
-        MovieManager.getInstance().getMovie(movieName).printReviewList();
-        //MovieManager.getInstance().getMovie(movieName).getReview(index);
-    }
-
-    public void writeReview(String movieName,String title, String body,Double rate, String name)
-    {
-        //if new review create call writeNewReview() in ReviewManager
-        //if new movie create call writeNewMovie() in MovieManager
-    }
-
-    public void menuFollowed()
-    {
-        currentUser.printFollowed();
-        /* if add new follow set userAddNewFollow to true */
-    }
-
-    public void manageProfile()
-    {
-        /* if edit profile set editUserProfile to true */
-    }
-
-    public void manageReview()
-    {
-        /* if edit review set editUserReview to true */
-    }
     public void logout()
     {
         currentUser = null;
