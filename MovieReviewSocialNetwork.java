@@ -839,7 +839,6 @@ public class MovieReviewSocialNetwork
             double rating = getOneInteger("Enter rating (number) :");
             Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
             ReviewManager.getInstance().addNewReview(newReview);
-            ReviewManager.getInstance().addNewReview(newReview);
             System.out.println("Added new review returning to main...");
     }
 
