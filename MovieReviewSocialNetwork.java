@@ -641,7 +641,7 @@ public class MovieReviewSocialNetwork
         System.out.println("You are in write review page");
         stringInput = getOneString("Enter movie name you want to review");
         idTemp = MovieManager.getInstance().search(stringInput, 1);
-        
+        System.out.println();
         if(idTemp.size()==0)
         {
             System.out.println("**Movie not found you can add new movie or exit**");
@@ -1041,7 +1041,7 @@ public class MovieReviewSocialNetwork
 
     private void writeReview()
     {
-        System.out.println("You are creating review");
+        System.out.println("\nYou are creating review");
         String title = getOneString("Enter review title :");
         String body = getOneString("Enter review body :");
         double rating;
