@@ -89,6 +89,7 @@ public class UserManager
      */
     public User login(String email,String password)
     {
+        email = email.toLowerCase();
         if(allUsers.isEmpty()==true)    //no user in system
         {
             return null;
@@ -138,6 +139,7 @@ public class UserManager
     public boolean register(String name,String email,String password,ArrayList<String> movieType)
     {
         boolean success = true;
+        email = email.toLowerCase();
         if(allUsers.isEmpty() == true) 
         {
             User newUser = new User(name, email, password, movieType);

@@ -92,7 +92,6 @@ public class ReviewCollection
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
         if(movieMatchReview.containsKey(key))
         {
-            System.out.println("JARDET DUBGGING *********** "+ movieMatchReview.get(key).size());
             for(int i  = 0 ; i < movieMatchReview.get(key).size() ; i++)
             {
                 idTemp.add(movieMatchReview.get(key).get(i));
@@ -102,9 +101,9 @@ public class ReviewCollection
         return idTemp;
     }
 
-    public void setLikeOrDislike(int reviewID,String email, String value)
+    public boolean setLikeOrDislike(int reviewID,String email, String value)
     {
-        reviews.get(reviewID).setLikeOrDislike(email, value);
+       return  reviews.get(reviewID).setLikeOrDislike(email, value);
     }
 
     public Object getSelect(int reviewID, String option)

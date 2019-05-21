@@ -164,8 +164,9 @@ public class Review
      * each new setLikeAndDislike will overwrite old setting 
      * @param email of user who set like or dislike
      * @param value this can either be like or dislike
+     * @return true if like/dislike successful, false if already do
      */
-    public void setLikeOrDislike(String email,String value)
+    public boolean setLikeOrDislike(String email,String value)
     {
         if(likeAndDislike.isEmpty() == true)
         {
@@ -179,15 +180,14 @@ public class Review
             }
             else
             {
-                System.out.println("You already "+value+" this review");
-                return;
+                return false;
             }
         }
         else
         {
             likeAndDislike.put(email, value);
         }
-        System.out.println("You "+value+" this review");
+        return true;
     }
 
     /**

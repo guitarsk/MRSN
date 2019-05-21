@@ -88,9 +88,9 @@ public class ReviewManager
         return allReviews.searchReview(key);
     }
 
-    public void setLikeOrDislike(int reviewID, String email, String value)
+    public boolean setLikeOrDislike(int reviewID, String email, String value)
     {
-        allReviews.setLikeOrDislike(reviewID, email, value);
+        return allReviews.setLikeOrDislike(reviewID, email, value);
     }
 
     public Object getSelect(int reviewID,String option)

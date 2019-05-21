@@ -22,3 +22,9 @@ EMAIL|dummy@mail.com
 PASSWORD|5555
 FAVTYPE|Adventure|Horror|Music
 ]
+[
+NAME|test Man
+EMAIL|test@gmail.com
+PASSWORD|1
+FAVTYPE|Adventure|Music
+]

@@ -458,7 +458,7 @@ public class MovieReviewSocialNetwork
                 break;
             case 3:
                 intInput = getOneInteger("Enter search result number:");
-                if(((((searchResultPage-1)*5)+(intInput-1))<idTemp.size())) // chack if index out of bound
+                if(((((searchResultPage-1)*5)+(intInput-1))<idTemp.size()) && ((((searchResultPage-1)*5)+(intInput-1)) >= 0)) // chack if index out of bound
                 {
                     singleIdTemp = idTemp.get((((searchResultPage-1)*5)+(intInput-1)));
                     if(searchState.equals("movie"))
@@ -467,7 +467,7 @@ public class MovieReviewSocialNetwork
                         state = "review";
                 }
                 else
-                {;
+                {
                     tryAgain("main","Error: Invalid input");
                 }
                 break;
@@ -541,9 +541,14 @@ public class MovieReviewSocialNetwork
             case 1:
                 if(confirmation("like review"))
                 {
-                    ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "like");
-                    editUserReview = true;
-                    System.out.println("You liked the review");
+                    if(ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "like"))
+                    {
+                        editUserReview = true;
+                        System.out.println("You liked the review");
+                    }
+                    else
+                        System.out.println("You already liked this review");
+                    
                 }
                 else
                     System.out.println("Cancel like review");
@@ -551,9 +556,14 @@ public class MovieReviewSocialNetwork
             case 2:
                 if(confirmation("dislike review"))
                 {
-                    ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "dislike");
-                    editUserReview = true;
-                    System.out.println("You disliked the review");
+                    if(ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "dislike"))
+                    {
+                        editUserReview = true;
+                        System.out.println("You disliked the review");
+                    }
+                    else
+                        System.out.println("You already disliked this review");
+                    
                 }
                 else 
                     System.out.println("Cancel dislike review");
@@ -779,10 +789,10 @@ public class MovieReviewSocialNetwork
         else
         {
             System.out.println("Your follwed list");
-            for(int i = 0, j = 0 ; i < currentUser.getFollowedSize() ; i++,j++)
+            for(int i = 0, j = 0, k = 1 ; i < currentUser.getFollowedSize() ; i++,j++,k++)
             {
                 
-                System.out.print("("+i+") "+currentUser.getFollowed(i).getUserName()+" ");
+                System.out.print("("+k+") "+currentUser.getFollowed(i).getUserName()+" ");
                 if(j>4)
                 {
                     System.out.print("\n");
@@ -790,7 +800,8 @@ public class MovieReviewSocialNetwork
                 }
             }
 
-            int intInput = getOneInteger("\n Enter number of User you want to see (-1 to exit)");
+            intInput = getOneInteger("\n Enter number of User you want to see (0 to exit)");
+            intInput--;
             if(intInput < 0)
             {
                 state ="main";
@@ -813,7 +824,7 @@ public class MovieReviewSocialNetwork
                         searchResultPage = 1;
                         break;
                     case 2:
-                        if(confirmation("unfollow "+writer))
+                        if(confirmation("unfollow "+writer.getUserName()))
                         {
                             currentUser.removeFollowed(writer);
                             userAddNewFollow = true;
@@ -990,7 +1001,7 @@ public class MovieReviewSocialNetwork
         searchResultPage = 1; 
         idTemp = null;
         singleIdTemp = null;
-        
+        2
         editUserReview = false;
         editUserProfile = false;
         userAddNewFollow = false;
