@@ -55,13 +55,6 @@ public class MovieManager
         
     }
 
-    /* incomplete */
-    public void checkMovie(Integer movieId)
-    {
-        allMovies.checkMovie(movieId);
-        //allMovies.add(movieName, movie);
-    }
-
     public void addMovie(Movie newMovie)
     {
         allMovies.addMovie(newMovie);

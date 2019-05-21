@@ -4,7 +4,7 @@ import java.util.HashMap;
 /**
  * MovieCollection collect and organize Movie object
  * 
- *  Created by Nawakanok Muangkham (Guitar) 5907050101044
+ *  Created by Nawakanok Muangkham (Guitar) 59070501044
  *      Build project's possible framework and some implementation
  *  Modified by jarudet Wichit (Jardet) 59070501008
  *      7 May 2019 Continuing implement project
@@ -15,7 +15,9 @@ public class MovieCollection
 {
     private HashMap<Integer,Movie> movies;
 
-    /**unfinished need to figure out how to create hashMap of Movie in one go */
+    /**
+     * Constructor for create MovieCollection instance.
+     */
     public MovieCollection()
     {
         movies = new HashMap<Integer,Movie>();
@@ -53,11 +55,9 @@ public class MovieCollection
         return idTemp;
     }
 
-
     /**
-     * add new Movie to List
-     * @param movieName
-     * @param movie
+     * Add new movie to list.
+     * @param movie new movie instance.
      */
     public void addMovie(Movie movie)
     {
@@ -65,28 +65,18 @@ public class MovieCollection
     }
     
     /**
-     * check for existing Movie
-     * @param movieName name of movie
-     * @return true if found, false if not
+     * Return total number of movies in collection.
+     * @return size of movie collection.
      */
-    public boolean checkMovie(Integer movieId)
-    {
-        if(movies.containsKey(movieId))
-        {
-            return true;
-        }
-        return false;
-    }
-    
     public int size()
     {
         return movies.size();
     }
 
     /**
-     * get instance of movie using name as key
-     * @param name movie
-     * @return instance of Movie
+     * get instance of movie using movie id as key.
+     * @param movieId movie id.
+     * @return instance of Movie.
      */
     public Movie getMovie(Integer movieId)
     {
@@ -94,14 +84,9 @@ public class MovieCollection
     }
 
     /**
-     * get all movies from MovieCollection
-     * @return all movies
+     * Show infomation of selected movie.
+     * @param id of movie that want to show info.
      */
-    public HashMap<Integer,Movie> getAllMovie()
-    {
-        return this.movies;
-    }
-
     public void showMovie(Integer id)
     {
         movies.get(id).showMovie();
