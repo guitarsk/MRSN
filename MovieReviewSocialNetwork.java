@@ -649,7 +649,17 @@ public class MovieReviewSocialNetwork
                 break;
             case 2:
                 String name = getOneString("Enter Movie name");
-                ArrayList<String> genre = genreMaker();
+                ArrayList<String> genre;
+                
+                while(true)
+                {
+                    genre = genreMaker();
+                    if(genre.size()==0)
+                        System.out.println("Movie should have atleast one category");
+                    else
+                        break;
+                }
+                
                 int year = getOneInteger("Enter the year this movie released");
                 if(confirmation("add new movie"))
                 {
