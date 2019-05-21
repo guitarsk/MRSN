@@ -1,4 +1,8 @@
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
+
 /**
  *  MovieReviewSocialnetwork is facade class for MRSN project
  * 
@@ -6,14 +10,10 @@
  *      Build project's possible framework and some implementation
  *  Modified by Jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project  
+ *      21/5/2019 Finalize the design
  * 
  *  Borrow method getOneInteger() and getOneString() from Prof.Sally Goldin
  */
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Random;
-
 
 public class MovieReviewSocialNetwork
 {
@@ -24,12 +24,12 @@ public class MovieReviewSocialNetwork
     private ArrayList<Integer> idTemp = null; // id of movies or reviews that has been searched
     private Integer singleIdTemp = null; // id of movies or reviews that will show their info in movieState or reviewState
     
-    private boolean editUserReview = false;
-    private boolean editUserProfile = false;
-    private boolean userAddNewFollow = false;
+    private boolean editUserReview = false; // flag to detect the need to rewrite the entire allReviews.txt
+    private boolean editUserProfile = false; // flag to detect the need to rewrite the entire allUsers.txt
+    private boolean userAddNewFollow = false; // flag to detect the need to rewrite the entire allFollows.txt
 
-    private Integer intInput = null;
-    private String stringInput = null;
+    private Integer intInput = null; // central temp variable for input integer value
+    private String stringInput = null; // central temp variable for input String value
     /**
      * Asks for one integer value, and returns it
      * as the function value.
@@ -95,7 +95,7 @@ public class MovieReviewSocialNetwork
 	        System.exit(1);
         }
         inputString = new String(buffer);
-        try 
+        try
         {
             /* modify to work for both Windows and Linux */
             int pos = inputString.indexOf("\r");
@@ -153,13 +153,13 @@ public class MovieReviewSocialNetwork
     }  
 
     /**
-     * wait for one input
+     * wait for enter
      */
     public void pressEnterToContinue()
     { 
         try
         {
-            getOneString("Press enter to continue...");
+            getOneString("\nPress enter to continue...");
         }  
         catch(Exception e)
         {
@@ -167,6 +167,11 @@ public class MovieReviewSocialNetwork
         }  
     }
 
+    /**
+     * ask user for confirmation if input not start with  y MRSN will change to new state 
+     * @param newState the state that MRSN will change to (usually main)
+     * @param text to show to user (usually error warning)
+     */
     public void tryAgain(String newState,String text)
     {
         System.out.println(text);
@@ -177,6 +182,11 @@ public class MovieReviewSocialNetwork
         }
     }
 
+    /**
+     * this is tryAgain() but more primitive it will not change MRSN state
+     * @param text to show to user (usually the thing user are about to do)
+     * @return true if user enter something start with y
+     */
     public boolean confirmation(String text)
     {
         String temp = getOneString("Confirm "+text+"[y/n]?");
@@ -186,6 +196,10 @@ public class MovieReviewSocialNetwork
             return false;
     }
 
+    /**
+     * most crucial method, check state of MRSN
+     * show output, receive input based on MRSN state 
+     */
     public void stateChange()
     {
         clearScreen();
@@ -251,6 +265,7 @@ public class MovieReviewSocialNetwork
                 System.out.println("Error: Invalid state change");
                 break;
         }
+
         pressEnterToContinue();
     }
 
@@ -282,6 +297,11 @@ public class MovieReviewSocialNetwork
         }
     }
 
+    /**
+     * receive input email and password
+     * then try to login using login()
+     * which using UserManager
+     */
     private void loginState()
     {
         String email = getOneString("Please enter email :");
@@ -297,9 +317,6 @@ public class MovieReviewSocialNetwork
         }
     }
 
-    /** code redundancy exist here i will refacture this later
-     *  and user can keep adding category forever even if they already added that category
-     */
     /**
      * ask for user info to register,
      * auto login after successful register
@@ -308,8 +325,8 @@ public class MovieReviewSocialNetwork
     {
         String name,email,password;
         email = getOneString("Please enter email :");
-        if(UserManager.getInstance().checkEmail(email)==false)
-        {
+        if(UserManager.getInstance().checkEmail(email)==false) // check if email already in use
+        {    
             name = getOneString("Please enter user name :");
             password = getOneString("Please enter password :");
             System.out.println("Please choose favorite movie genres");
@@ -333,7 +350,9 @@ public class MovieReviewSocialNetwork
        
     }
 
-    /** not finish still need loads of functioanlity */
+    /** 
+     * main page to let user choose their action 
+     */
     private void mainState()
     {
         System.out.println("Welcome to MRSN! Please choose your action");
@@ -378,6 +397,9 @@ public class MovieReviewSocialNetwork
         }
     }
 
+    /**
+     * 
+     */
     private void searchState()
     {
         System.out.println("\nChoose your searh option");
@@ -1083,44 +1105,28 @@ public class MovieReviewSocialNetwork
                     System.out.println("Finish adding category");
                     break;
                 case 1:
-                    if(!genre.contains("Action"))
-                        genre.add("Action");
-                    System.out.println("Added Action");
+                    genreAdder("Action", genre);                        
                     break;
                 case 2:
-                    if(!genre.contains("Adventure"))
-                        genre.add("Adventure");
-                    System.out.println("Added Adventure");
+                    genreAdder("Adventure", genre); 
                     break;
                 case 3:
-                    if(!genre.contains("Comedy"))
-                        genre.add("Comedy");
-                    System.out.println("Added Comedy");
+                    genreAdder("Comedy", genre); 
                     break;
                 case 4:
-                    if(!genre.contains("Drama"))
-                        genre.add("Drama");
-                    System.out.println("Added Drama");
+                    genreAdder("Drama", genre); 
                     break;
                 case 5:
-                    if(!genre.contains("Horror"))
-                        genre.add("Horror");
-                    System.out.println("Added Horror");
+                    genreAdder("Horror", genre); 
                     break;
                 case 6:
-                    if(!genre.contains("Music"))
-                        genre.add("Music");
-                    System.out.println("Added Music");
+                    genreAdder("Music", genre); 
                     break;
                 case 7:
-                    if(!genre.contains("Romance"))
-                        genre.add("Romance");
-                    System.out.println("Added Romance");
+                    genreAdder("Romance", genre); 
                     break;
                 case 8:
-                    if(!genre.contains("Sci-fi"))
-                        genre.add("Sci-fi");
-                    System.out.println("Added Sci-fi");
+                    genreAdder("Sci-fi", genre); 
                     break;
                 default:
                     System.out.println("Wrong number");
@@ -1129,6 +1135,19 @@ public class MovieReviewSocialNetwork
 
         }while(intInput != 0);
         return genre;
+    }
+
+    private void genreAdder(String genre, ArrayList<String> genres)
+    {
+        if(genres.contains(genre))
+        {
+            System.out.println("You already added "+ genre);
+        }
+        else
+        {
+            genres.add(genre);
+            System.out.println("Added "+genre);
+        }
     }
 
     public static void main(String arg[]) 
