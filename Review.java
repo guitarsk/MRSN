@@ -1,42 +1,58 @@
-/**
- * Review class represent a review of movie
- * 
- *  Created by Nawakanok Muangkham (Guitar) 5907050101044
- *      Build project's possible framework and some implementation
- *  Modified by Jarudet Wichit (Jardet) 59070501008
- *      7 May 2019 Continuing implement project
- *  Modified by Nawakanok Muangkham (Guitar) 5907050101044
- *      9 May 2019 Implement getDataToWrite() method
- * 
- */
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+/**
+ * Review class represent a review of movie
+ * 
+ *  Created by Nawakanok Muangkham (Guitar) 59070501044
+ *      Build project's possible framework and some implementation
+ *  Modified by Jarudet Wichit (Jardet) 59070501008
+ *      7 May 2019 Continuing implement project
+ *  Modified by Nawakanok Muangkham (Guitar) 59070501044
+ *      9 May 2019 Implement getDataToWrite() method
+ * 
+ */
 public class Review
 {
+    /** ID of this review */
     private int reviewID;
+
+    /** ID of movie that this review refer */
     private int movieID ;
+
+    /** Title of review */
     private String title = null;
+
+    /** Body of review */
     private String body = null;
+
+    /** Date that this review was created */
     private String reviewDate;
+
+    /** Rating of this review */
     private double rating = 0;
-    private String writer=null; // writer's email
+
+    /** Email of user that write this review */
+    private String writerEmail=null;
+
+    /** Collection of like / dislike of this review */
     private HashMap<String,String> likeAndDislike;
-    private static int count = 0; // use to create review ID
+
+    /** use for grow of reviewID */
+    private static int count = 0;
 
 
     /**
-     * You know what this do
-     * @param movieName for this Review movieName
+     * Constructor for create review instance.
+     * @param movieID of movie that review refer
      * @param title for this Review title
      * @param body for this Review body
      * @param rating for this Review rating
-     * @param writer for this Review writer's name
+     * @param writerEmail for this Review writer's email
      */
-    public Review(int movieID,String title,String body,double rating,String writer)
+    public Review(int movieID,String title,String body,double rating,String writerEmail)
     {
         count++;
         this.reviewID = count;
@@ -44,34 +60,33 @@ public class Review
         this.title = title;
         this.body = body;
         this.rating = rating;
-        this.writer = writer;
+        this.writerEmail = writerEmail;
         this.reviewDate = new Date().toString();
         this.likeAndDislike = new HashMap<String,String>();
     }
 
-    public Review(int movieID,String title,String body,String date, double rate,String writer, HashMap<String,String> likeAndDislike)
+    /**
+     * Constructor for create review instance that was read from file.
+     * @param movieID of movie that review refer
+     * @param title for this Review title
+     * @param body for this Review body
+     * @param date that this review was created
+     * @param rating for this Review rating
+     * @param writerEmail for this Review writer's email
+     * @param likeAndDislike of this review
+     */
+    public Review(int movieID,String title,String body,String date, double rating,String writerEmail, HashMap<String,String> likeAndDislike)
     {
         count++;
         this.reviewID = count;
         this.movieID = movieID;
         this.title = title;
         this.body = body;
-        this.rating = rate;
-        this.writer = writer;
+        this.rating = rating;
+        this.writerEmail = writerEmail;
         this.reviewDate = date;
         this.likeAndDislike = likeAndDislike;
     }
-
-    /**
-     * return basic info of this Review
-     * @return review info
-     */
-    public String toString()
-    {
-        return "Title: "+this.title+" Rating: "+this.rating+" Written by: "+this.writer;
-    }
-
-
 
     /**
      * getter for reviewDate
@@ -88,12 +103,12 @@ public class Review
      */
     public String getWriterEmail()
     {
-        return this.writer;
+        return this.writerEmail;
     }
 
     /**
      * getter for rating
-     * @return rating for movie in this Review
+     * @return rating of this Review
      */
     public double getRating()
     {
@@ -101,8 +116,8 @@ public class Review
     }
 
     /**
-     * getter for movieName
-     * @return this Review's movie
+     * getter for movieID
+     * @return movieID that this review refer.
      */
     public int getMovieID()
     {
@@ -125,7 +140,7 @@ public class Review
     {
         System.out.println("<<"+this.title+">>");
         System.out.println("Movie name: "+MovieManager.getInstance().getMovie(movieID).getName());
-        System.out.println("Writer: "+UserManager.getInstance().getUser(this.writer).getUserName());
+        System.out.println("Writer: "+UserManager.getInstance().getUser(this.writerEmail).getUserName());
         System.out.println("Rating: "+this.rating);
         System.out.println("Review date: "+this.reviewDate);
         System.out.println("Body: "+this.body);
@@ -191,13 +206,14 @@ public class Review
     }
 
     /**
-     * need more info about file format from Guitar b4 continue implement
+     * Getter for get data to write into the file
      * @return Data to write to file
      */
     public String getDataToWrite()
     {
         String data = null;
-        data = "[\nMOVIEID|"+this.movieID+"\nTITLE|"+this.title+"\nBODY|"+this.body+"\nDATE|"+this.reviewDate+"\nRATING|"+this.rating+"\nWRITER|"+this.writer;
+        data = "[\nMOVIEID|"+this.movieID+"\nTITLE|"+this.title+"\nBODY|"+this.body+"\nDATE|"+this.reviewDate;
+        data += "\nRATING|"+this.rating+"\nWRITER|"+this.writerEmail;
         if(this.likeAndDislike.isEmpty() == false)
         {
             Iterator<Map.Entry<String,String>> it = this.likeAndDislike.entrySet().iterator();

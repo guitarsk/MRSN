@@ -1,13 +1,15 @@
+import java.util.ArrayList;
+
 /**
  * Movie class represent a movie
  * 
- * Created by Nawakanok Muengkam (Guitar) 5907050101044
+ * Created by Nawakanok Muangkham (Guitar) 59070501044
  *      Build project's possible framework and some implementation
  *  Modified by jarudet Wichit (Jardet) 59070501008
- *      7/5/2019 Continuing implement project
+ *      7 May 2019 Continuing implement project
+ *  Modified by Nawakanok Muangkham (Guitar) 59070501044
+ *      9 May 2019 implement getDataToWrite method
  */
-
-import java.util.ArrayList;
 
 public class Movie
 {
@@ -19,7 +21,7 @@ public class Movie
     private static int count = 0;
 
     /**
-     * create instance of Movie
+     * Constructor for create instance of Movie
      * @param name name for this Movie
      * @param genre of this movie 
      * @param year this movie created
@@ -33,6 +35,13 @@ public class Movie
         this.releaseYear = year;
     }
 
+    /**
+     * Constructor for create instance of Movie when read it from file.
+     * @param movieID   movie id of this movie.
+     * @param name  name for this Movie.
+     * @param genre of this movie .
+     * @param year this movie created.
+     */
     public Movie(int movieID,String name, ArrayList<String> genre, int year)
     {
         count++;
@@ -42,6 +51,10 @@ public class Movie
         this.releaseYear = year;
     }
 
+    /**
+     * Getter method for movie id.
+     * @return  movie id of this movie.
+     */
     public int getMovieID()
     {
         return this.movieID;
@@ -75,20 +88,11 @@ public class Movie
     }
 
     /**
-     * calculate this Movie rating and return average
-     * @return this Movie's average rating
+     * calculate this Movie rating from average rating of all review of this movie.
      */
-    public void calRating()
+    private void calMovieRating()
     {
         this.rating = ReviewManager.getInstance().calMovieRating(movieID);
-    }
-
-    /**
-     * print first 5 recent reviews of this Movie
-     */
-    public void printReviewList()
-    {
-
     }
 
     /**
@@ -96,7 +100,7 @@ public class Movie
      */
     public void showMovie()
     {
-        calRating();
+        calMovieRating();
         System.out.println(name+" ("+releaseYear+")");
         System.out.println("Rating :"+this.rating);
         System.out.print("Genre :");
@@ -108,8 +112,8 @@ public class Movie
     }
 
     /**
-     * get one line of data to write to file need more info from Guitar
-     * @return one line of String
+     * Return the information of movie to write in file.
+     * @return String of movie info
      */
     public String getDataToWrite()
     {

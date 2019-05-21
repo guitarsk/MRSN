@@ -1,34 +1,40 @@
+import java.util.ArrayList;
+
 /**
  * MovieManager act as a central control of Movie
  * 
- *  Created by Nawakanok Muengkam (Guitar) 5907050101044
+ *  Created by Nawakanok Muangkham (Guitar) 59070501044
  *      Build project's possible framework and some implementation
  *  Modified by jarudet Wichit (Jardet) 59070501008
- *      7/5/2019 Continuing implement project
- *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
- *      9/5/2019 Implement initialize method
+ *      7 May 2019 Continuing implement project
+ *  Modified by Nawakanok Muangkham (Guitar) 59070501044
+ *      9 May 2019 Implement initialize method
  * 
  */
-
-import java.util.ArrayList;
-
 public class MovieManager
 {
+    /** String of file name */
     private final String movieFileName = "allMovies.txt";
 
+    /** Instance for manage movie file */
     private MovieFileManager movieFileManager = null;
 
+    /** Collection of all movies in system */
     private MovieCollection allMovies;
 
+    /** Single instance of MovieManager */
     private static MovieManager singletonInstance = new MovieManager();
 
+    /**
+     * Private constructor to prevent to create another instance of class.
+     */
     private MovieManager()
     {
 
     }
 
     /**
-     * get instance of MovieManager
+     * Get instance of MovieManager
      * @return MovieManager
      */
     public static MovieManager getInstance()
@@ -37,7 +43,7 @@ public class MovieManager
     }
 
     /**
-     * initialize value inside MovieManager
+     * Initialize MovieCollection inside MovieManager
      */
     public void initialize()
     {
@@ -52,43 +58,34 @@ public class MovieManager
             }
             movieFileManager.closeRead();
         }
-        
     }
 
-    /* incomplete */
-    public void checkMovie(Integer movieId)
-    {
-        allMovies.checkMovie(movieId);
-        //allMovies.add(movieName, movie);
-    }
-
+    /**
+     * Add new movie to MovieCollection.
+     * @param newMovie to add in MovieCollection.
+     */
     public void addMovie(Movie newMovie)
     {
         allMovies.addMovie(newMovie);
     }
 
+    /**
+     * Return Total movie in collection.
+     * @return size of MovieCollection.
+     */
     public int size()
     {
         return allMovies.size();
     }
 
     /**
-     * get instance of Movie from MovieCollection
-     * @param movieName name of Movie to find
-     * @return instance of Movie
+     * get instance of Movie from MovieCollection.
+     * @param movieId id of Movie to find.
+     * @return instance of Movie.
      */
     public Movie getMovie(Integer movieId)
     {
         return allMovies.getMovie(movieId);
-    }
-
-    /**
-     * get path for Movie file
-     * @return path for Movie file
-     */
-    public String getMovieFileName()
-    {
-        return movieFileName;
     }
 
     /* incomplete */
@@ -111,7 +108,11 @@ public class MovieManager
         allMovies.showMovie(id);
     }
 
-
+    /**
+     * Write new movie in to file.
+     * @param newMovie new movie instance.
+     * @return true for success write in to file, false for error occur.
+     */
     public boolean writeNewMovie(Movie newMovie)
     {
         boolean success = false;
