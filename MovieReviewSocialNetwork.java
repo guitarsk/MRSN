@@ -1,3 +1,6 @@
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Random;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +9,7 @@ import java.util.Random;
 /**
  *  MovieReviewSocialnetwork is facade class for MRSN project
  * 
- * Created by Nawakanok Muengkam (Guitar) 5907050101044
+ * Created by Nawakanok Muangkham (Guitar) 59070501044
  *      Build project's possible framework and some implementation
  *  Modified by Jarudet Wichit (Jardet) 59070501008
  *      7/5/2019 Continuing implement project  
@@ -37,7 +40,7 @@ public class MovieReviewSocialNetwork
      * @return  the value. Exits with error if user types in
      *          something that can't be read as an integer 
      */
-    public int getOneInteger(String prompt)
+    private int getOneInteger(String prompt)
     {
         int value = 0;	   
         String inputString;
@@ -78,7 +81,7 @@ public class MovieReviewSocialNetwork
      * @return  the value. Exits with error if user types in
      *          something that can't be read as an integer 
      */
-    public double getOneDouble(String prompt)
+    private double getOneDouble(String prompt)
     {
         double value = 0;	   
         String inputString;
@@ -118,7 +121,7 @@ public class MovieReviewSocialNetwork
      * @param   prompt    String to print, telling which coordinate
      * @return  the string value entered, without a newline 
      */
-    public String getOneString(String prompt)
+    private String getOneString(String prompt)
     {	   
         String inputString;
         int readBytes = 0;
@@ -155,7 +158,7 @@ public class MovieReviewSocialNetwork
     /**
      * wait for enter
      */
-    public void pressEnterToContinue()
+    private void pressEnterToContinue()
     { 
         try
         {
@@ -1026,7 +1029,6 @@ public class MovieReviewSocialNetwork
         editUserReview = false;
         editUserProfile = false;
         userAddNewFollow = false;
-
         intInput = null;
         stringInput = null;
         System.out.println("You are now logout");
@@ -1036,29 +1038,13 @@ public class MovieReviewSocialNetwork
      * ask for user info to register,
      * auto login after successful register
      */
-    public boolean login(String email, String password)
+    private boolean login(String email, String password)
     {
         currentUser = UserManager.getInstance().login(email, password);
         if(currentUser==null)
             return false;
         else
             return true;
-    }
-
-    /**
-     * check for user login status
-     * @return true if logged in, false if not logged in
-     */
-    public boolean checkLoginStatus()
-    {
-        if(this.currentUser == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
     }
 
     private void writeReview()
