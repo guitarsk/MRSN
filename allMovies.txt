@@ -45,4 +45,9 @@ MOVIEID|8
 MOVIENAME|pika7
 GENRE|Sci-fi|Adventure
 YEAR|2019
+][
+MOVIEID|9
+MOVIENAME|mother
+GENRE|Horror
+YEAR|1982
 ]

@@ -434,6 +434,7 @@ public class MovieReviewSocialNetwork
         System.out.println("(1) go to previous page");
         System.out.println("(2) go to next page");
         System.out.println("(3) select");
+        System.out.println("(4) back to main menu");
         intInput = getOneInteger("Your input:");
         switch(intInput)
         {
@@ -464,6 +465,10 @@ public class MovieReviewSocialNetwork
                     tryAgain("main","Error: Invalid input");
                 }
                 break;
+            case 4:
+                System.out.println("Going to main menu...");
+                state = "main";
+                break;
             default:
                 tryAgain("main","Error: Invalid input");
                 break;
@@ -476,11 +481,20 @@ public class MovieReviewSocialNetwork
         //singleIdTemp
         MovieManager.getInstance().printSearch(singleIdTemp);
         idTemp = ReviewManager.getInstance().search(singleIdTemp);
-        for(int i = 0 ; i < 5 ; i++)
+        System.out.println();
+        if(idTemp.size() == 0)
         {
-            ReviewManager.getInstance().printSearch(idTemp.get(i));
+            System.out.println("This movie don't have any reviews");
         }
-        System.out.println("\nChoose your action ");
+        else
+        {
+            for(int i = 0 ; (i < 5) && (i<idTemp.size()); i++)
+            {
+                ReviewManager.getInstance().printSearch(idTemp.get(i));
+            }
+        }
+        
+        System.out.println("\nChoose your a1ction ");
         System.out.println("(1) read more review");
         System.out.println("(2) write review");
         System.out.println("(3) back to main menu");
@@ -650,7 +664,7 @@ public class MovieReviewSocialNetwork
             case 2:
                 String name = getOneString("Enter Movie name");
                 ArrayList<String> genre;
-                
+
                 while(true)
                 {
                     genre = genreMaker();
@@ -823,7 +837,7 @@ public class MovieReviewSocialNetwork
         else
         {
             System.out.println("This is our random movie");
-            Random rand = new Random();
+            Random rand = new Random(totalMovie);
             singleIdTemp = rand.nextInt(totalMovie);
             movieState();
         }
@@ -839,7 +853,7 @@ public class MovieReviewSocialNetwork
         }
         else
         {
-            System.out.println("ํYou have "+idTemp.size()+" reviews");
+            System.out.println("You have "+idTemp.size()+" reviews");
             for(int i = 0, j = 1 ; i < idTemp.size(); i++,j++)
             {
                 System.out.println(j+")");
@@ -853,12 +867,12 @@ public class MovieReviewSocialNetwork
             int action = getOneInteger("Enter your action");
             if(action==1||action==2)
             {
-                intInput = getOneInteger("select review to edit");
+                intInput = getOneInteger("select review to edit/delete");
                 intInput--;
                 if(0<=intInput&&intInput<idTemp.size())
                 {
                     singleIdTemp = idTemp.get(intInput);
-                    if(intInput == 1)
+                    if(action == 1)
                         state = "edit review";
                     else
                     {

@@ -10,3 +10,9 @@ EMAIL|jardet@qwerty.com
 PASSWORD|zxcvbn
 FAVTYPE|Action|Adventure
 ]
+[
+NAME|jardet
+EMAIL|jarude555@gmail.com
+PASSWORD|1234
+FAVTYPE|Horror|Music|Comedy|Drama
+]
