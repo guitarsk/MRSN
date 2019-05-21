@@ -606,13 +606,22 @@ public class MovieReviewSocialNetwork
     private void writeReviewState()
     {
         boolean skip = false;
+        
         stringInput = getOneString("Enter movie name");
         idTemp = MovieManager.getInstance().search(stringInput, 1);
         
-        for(int i = 0 , j = 1 ; i < idTemp.size() ; i++,j++)
+        if(idTemp.size()==0)
         {
-            System.out.println(j+")");
-            MovieManager.getInstance().printSearch(idTemp.get(i));
+            System.out.println("**Movie not found you can add new movie or exit**");
+        }
+        else
+        {
+            for(int i = 0 , j = 1 ; i < idTemp.size() ; i++,j++)
+            {
+                System.out.println(j+")");
+                MovieManager.getInstance().printSearch(idTemp.get(i));
+                System.out.println();
+            }
         }
 
         System.out.println("\nChoose your action");
@@ -624,10 +633,16 @@ public class MovieReviewSocialNetwork
         switch(intInput)
         {
             case 1:
-                intInput = getOneInteger("Enter movie number :");
-                if(intInput >= idTemp.size())
+                intInput = getOneInteger("Enter movie number[0 to back] :");
+                intInput--;
+                if(intInput == -1)
+                {
+                    break;
+                }
+                else if(intInput < -1 || intInput >= idTemp.size())
                 {
                     tryAgain("main", "Error: Invalid input");
+                    skip = true;
                     break;
                 }
                 singleIdTemp = idTemp.get(intInput);
