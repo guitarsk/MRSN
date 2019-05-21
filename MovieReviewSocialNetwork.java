@@ -34,7 +34,7 @@ public class MovieReviewSocialNetwork
      * @return  the value. Exits with error if user types in
      *          something that can't be read as an integer 
      */
-    public int getOneInteger(String prompt)
+    private int getOneInteger(String prompt)
     {
         int value = 0;	   
         String inputString;
@@ -75,7 +75,7 @@ public class MovieReviewSocialNetwork
      * @return  the value. Exits with error if user types in
      *          something that can't be read as an integer 
      */
-    public double getOneDouble(String prompt)
+    private double getOneDouble(String prompt)
     {
         double value = 0;	   
         String inputString;
@@ -115,7 +115,7 @@ public class MovieReviewSocialNetwork
      * @param   prompt    String to print, telling which coordinate
      * @return  the string value entered, without a newline 
      */
-    public String getOneString(String prompt)
+    private String getOneString(String prompt)
     {	   
         String inputString;
         int readBytes = 0;
@@ -152,7 +152,7 @@ public class MovieReviewSocialNetwork
     /**
      * wait for one input
      */
-    public void pressEnterToContinue()
+    private void pressEnterToContinue()
     { 
         try
         {
@@ -164,7 +164,7 @@ public class MovieReviewSocialNetwork
         }  
     }
 
-    public void tryAgain(String newState,String text)
+    private void tryAgain(String newState,String text)
     {
         System.out.println(text);
         stringInput = getOneString("Do you want to try again [y/n]?");
@@ -174,7 +174,7 @@ public class MovieReviewSocialNetwork
         }
     }
 
-    public boolean confirmation(String text)
+    private boolean confirmation(String text)
     {
         String temp = getOneString("Confirm "+text+"[y/n]?");
         if(temp.toLowerCase().startsWith("y"))
@@ -1011,29 +1011,13 @@ public class MovieReviewSocialNetwork
      * ask for user info to register,
      * auto login after successful register
      */
-    public boolean login(String email, String password)
+    private boolean login(String email, String password)
     {
         currentUser = UserManager.getInstance().login(email, password);
         if(currentUser==null)
             return false;
         else
             return true;
-    }
-
-    /**
-     * check for user login status
-     * @return true if logged in, false if not logged in
-     */
-    public boolean checkLoginStatus()
-    {
-        if(this.currentUser == null)
-        {
-            return false;
-        }
-        else
-        {
-            return true;
-        }
     }
 
     private void writeReview()
