@@ -840,7 +840,7 @@ public class MovieReviewSocialNetwork
         else
         {
             System.out.println("ํYou have "+idTemp.size()+" reviews");
-            for(int i = 0, j = 1 ; (i < idTemp.size(); i++,j++)
+            for(int i = 0, j = 1 ; i < idTemp.size(); i++,j++)
             {
                 System.out.println(j+")");
                 ReviewManager.getInstance().printSearch(idTemp.get(i));
