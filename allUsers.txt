@@ -28,3 +28,9 @@ EMAIL|test@gmail.com
 PASSWORD|1
 FAVTYPE|Adventure|Music
 ]
+[
+NAME|Mr.Elon
+EMAIL|elon_da_man@goodmail.com
+PASSWORD|space
+FAVTYPE|Sci-fi|Adventure
+]

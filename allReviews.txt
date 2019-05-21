@@ -15,3 +15,28 @@ RATING|10.0
 WRITER|jarude555@gmail.com
 LIKE&DISLIKE|guitar_sk134@hotmail.com|dislike
 ]
+[
+MOVIEID|10
+TITLE|Mediocre lid film
+BODY|I don't know what to complaint but this film don't deserve a compliment either
+DATE|Tue May 21 21:07:36 ICT 2019
+RATING|7.0
+WRITER|jarude555@gmail.com
+LIKE&DISLIKE|jarude555@gmail.com|like
+]
+[
+MOVIEID|10
+TITLE|This is great
+BODY|best animation ever
+DATE|Tue May 21 21:10:11 ICT 2019
+RATING|10.0
+WRITER|jarude555@gmail.com
+]
+[
+MOVIEID|11
+TITLE|absolute mustard piece
+BODY|tomato potato americano what's more?
+DATE|Tue May 21 21:21:51 ICT 2019
+RATING|8.0
+WRITER|elon_da_man@goodmail.com
+]

@@ -57,3 +57,15 @@ MOVIENAME|John Wick 3
 GENRE|Action|Adventure
 YEAR|2019
 ]
+[
+MOVIEID|10
+MOVIENAME|Madacascar
+GENRE|Comedy|Adventure
+YEAR|2009
+]
+[
+MOVIEID|11
+MOVIENAME|Hell Boi
+GENRE|Action|Comedy
+YEAR|2019
+]
