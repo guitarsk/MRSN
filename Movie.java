@@ -78,9 +78,9 @@ public class Movie
      * calculate this Movie rating and return average
      * @return this Movie's average rating
      */
-    public double calRating()
+    public void calRating()
     {
-        return this.rating = ReviewManager.getInstance().calMovieRating(movieID);
+        this.rating = ReviewManager.getInstance().calMovieRating(movieID);
     }
 
     /**
@@ -96,9 +96,9 @@ public class Movie
      */
     public void showMovie()
     {
-        
+        calRating();
         System.out.println(name+" ("+releaseYear+")");
-        System.out.println("Rating :"+calRating());
+        System.out.println("Rating :"+this.rating);
         System.out.print("Genre :");
         for(int i = 0 ; i < genre.size() ; i++)
         {
