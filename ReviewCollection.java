@@ -42,7 +42,7 @@ public class ReviewCollection
         }
         else if(movieMatchReview.containsKey(movieID) == true)
         {
-            movieMatchReview.get(movieID).add(review.getReviewID());
+            movieMatchReview.get(movieID).add((Integer)review.getReviewID());
         }
         else
         {
@@ -71,22 +71,7 @@ public class ReviewCollection
             reviewList.add((Integer)review.getReviewID());
             userMatchReview.put(userEmail, reviewList);
         }
-    }
-
-    public void initMatchTable()
-    {
-        Iterator<Map.Entry<Integer,Review>> it = this.reviews.entrySet().iterator();
-        while(it.hasNext())
-        {
-            Map.Entry<Integer,Review> pair = it.next();
-            Review review = pair.getValue();
-
-            userAddMatchTable(review);
-            movieAddMatchTable(review);
-        }
-    }
-
-    
+    }    
     
     /** search using Reviewer name*/
     /** may need to implement partial name search */

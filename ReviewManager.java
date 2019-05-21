@@ -57,7 +57,6 @@ public class ReviewManager
                 allReviews.addReview(review);
             }
             reviewFileManager.closeRead();
-            allReviews.initMatchTable();
         }
     }
 
