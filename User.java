@@ -3,9 +3,9 @@ import java.util.ArrayList;
 /**
  * This class represent user profile and followed user in MRSN system 
  * 
- *  Created by Nawakanok Muangkham (Guitar) 5907050101044
+ *  Created by Nawakanok Muangkham (Guitar) 59070501044
  *      Build project's possible framework and some implementation
- *  Modified by Nawakanok Muangkham (Guitar) 5907050101044
+ *  Modified by Nawakanok Muangkham (Guitar) 59070501044
  *      9 May 2019 complete all of methods
  */
 public class User
@@ -100,7 +100,7 @@ public class User
     }
 
     /**
-     * Print list of email of all anothor users that this user followed.
+     * Print list of username of all anothor users that this user followed.
      */
     public void printFollowed()
     {
