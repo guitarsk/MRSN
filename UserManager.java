@@ -7,9 +7,9 @@ import java.util.Map;
  * This class is the singleton clss. It contains the list of all user in MRSN system.
  * and manager all user in system. 
  * 
- *  Created by Nawakanok Muangkham (Guitar) 5907050101044
+ *  Created by Nawakanok Muangkham (Guitar) 59070501044
  *      Build project's possible framework and some implementation.
- *  Modified by Nawakanok Muangkham (Guitar) 5907050101044
+ *  Modified by Nawakanok Muangkham (Guitar) 59070501044
  *      9 May 2019 complete all of methods.
  */
 public class UserManager
@@ -109,23 +109,6 @@ public class UserManager
         {
             return null;
         }
-    }
-
-    /**
-     * Method for keep new user that register in last line of file"
-     * @param newUser user that register into system.
-     * @return  true for success, false for can't write to file.
-     */
-    public boolean writeNewUser(User newUser)
-    {
-        boolean success = false;
-        if(userFileManager.openWrite(userFileName, true)==true)
-        {
-            userFileManager.writeData(newUser.getUserDataToWrite());
-            userFileManager.closeWrite();
-            success = true;
-        }
-        return success;
     }
 
     /**
@@ -236,6 +219,23 @@ public class UserManager
                 if(data != null)    //write only when list of followedUser in not empty 
                     userFileManager.writeData(data);
             }
+            userFileManager.closeWrite();
+            success = true;
+        }
+        return success;
+    }
+
+    /**
+     * Method for keep new user that register in last line of file"
+     * @param newUser user that register into system.
+     * @return  true for success, false for can't write to file.
+     */
+    public boolean writeNewUser(User newUser)
+    {
+        boolean success = false;
+        if(userFileManager.openWrite(userFileName, true)==true)
+        {
+            userFileManager.writeData(newUser.getUserDataToWrite());
             userFileManager.closeWrite();
             success = true;
         }
