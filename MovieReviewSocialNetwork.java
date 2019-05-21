@@ -694,7 +694,7 @@ public class MovieReviewSocialNetwork
                 ArrayList<String> tempGenre = genreMaker();
                 if(confirmation("change favorite genre"))
                 {
-                    currentUser.setFavoriteMovieType(temp);
+                    currentUser.setFavoriteMovieType(tempGenre);
                     editUserProfile = true;
                     System.out.println("Favorite movie category changed");
                 }
