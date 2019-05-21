@@ -80,9 +80,7 @@ public class Movie
      */
     public double calRating()
     {
-        // confused need to look for whereabout of reviewList
-        // cal from review 
-        return this.rating;
+        return this.rating = ReviewManager.getInstance().calMovieRating(movieID);
     }
 
     /**
@@ -100,7 +98,7 @@ public class Movie
     {
         
         System.out.println(name+" ("+releaseYear+")");
-        System.out.println("Rating :"+rating);
+        System.out.println("Rating :"+calRating());
         System.out.print("Genre :");
         for(int i = 0 ; i < genre.size() ; i++)
         {

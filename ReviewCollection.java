@@ -120,9 +120,23 @@ public class ReviewCollection
 
     /** i don't know what this do need to ask guitar */
     /** use for rating of movie */
-    public double calRating()
+    public double calMovieRating(int movieID)
     {
-        return 0;
+        double rating = 0;
+        int reviewID = -1;
+        int i = 0 ;
+        
+        if(movieMatchReview.containsKey(movieID) == true)
+        {
+            int totalReview = movieMatchReview.get(movieID).size();
+            for( i = 0 ; i < totalReview ; i++)
+            {
+                reviewID = movieMatchReview.get(movieID).get(i);
+                rating += reviews.get(reviewID).getRating();
+            }
+            rating = rating/totalReview;
+        }
+        return rating;
     }
 
     /** show review information 

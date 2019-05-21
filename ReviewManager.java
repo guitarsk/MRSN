@@ -96,7 +96,12 @@ public class ReviewManager
     public Object getSelect(int reviewID,String option)
     {
         return allReviews.getSelect(reviewID, option);
-    }  
+    }
+    
+    public double calMovieRating(int movieID)
+    {
+        return allReviews.calMovieRating(movieID);
+    }
 
     public void editReview(int reviewID, String option,String text)
     {

@@ -91,14 +91,6 @@ public class MovieManager
         return movieFileName;
     }
 
-    /**
-     * print all Movie
-     */
-    public void printAll()
-    {
-        allMovies.printAll();
-    }
-
     /* incomplete */
     public ArrayList<Integer> search(String key,int searchOption)
     {
@@ -119,11 +111,6 @@ public class MovieManager
         allMovies.showMovie(id);
     }
 
-    /* incomplete */
-    public void printSort()
-    {
-
-    }
 
     public boolean writeNewMovie(Movie newMovie)
     {

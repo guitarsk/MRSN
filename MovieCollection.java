@@ -21,13 +21,6 @@ public class MovieCollection
         movies = new HashMap<Integer,Movie>();
     }
 
-    /**
-     * print all movie
-     */
-    public void printAll()
-    {
-        
-    }
 
     /* incomplete */
     public ArrayList<Integer> searchMovie(String key)
@@ -60,12 +53,6 @@ public class MovieCollection
         return idTemp;
     }
 
-    /* incomplete */
-    public MovieCollection sortMovie(String key)
-    {
-        MovieCollection newList = new MovieCollection();
-        return newList;
-    }
 
     /**
      * add new Movie to List
