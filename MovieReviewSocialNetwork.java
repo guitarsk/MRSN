@@ -1054,7 +1054,7 @@ public class MovieReviewSocialNetwork
         /** state change method show website UI based on MRSN current state */
         while(true)
         {
-            //MRSN.stateChange();
+            MRSN.stateChange();
         }
         /** save data phase */
     }
