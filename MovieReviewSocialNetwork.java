@@ -804,46 +804,61 @@ public class MovieReviewSocialNetwork
         }
     }
 
-    /** unfinish I'll take care of this after I write writeReviewState */
     private void manageState()
     {
-        System.out.println("Choose your action");
-        System.out.println("(1) edit review");
-        System.out.println("(2) delete my review");
-        System.out.println("(3) back to main menu");
         idTemp = ReviewManager.getInstance().search(currentUser.getEmail());
-        intInput = getOneInteger("Enter your action");
-        if(intInput==1||intInput==2)
+        if(idTemp.size()==0)
         {
-            intInput = getOneInteger("select review to edit");
-            intInput--;
-            if(0<=intInput&&intInput<idTemp.size())
+            System.out.println("You did not write any review returning to main...");
+            state = "main";
+        }
+        else
+        {
+            System.out.println("ํYou have "+idTemp.size()+" reviews");
+            for(int i = 0, j = 1 ; (i < idTemp.size(); i++,j++)
             {
-                singleIdTemp = idTemp.get(intInput);
-                if(intInput == 1)
-                    state = "edit review";
+                System.out.println(j+")");
+                ReviewManager.getInstance().printSearch(idTemp.get(i));
+            }  
+            System.out.println("\nChoose your action");
+            System.out.println("(1) edit review");
+            System.out.println("(2) delete my review");
+            System.out.println("(3) back to main menu");
+            
+            int action = getOneInteger("Enter your action");
+            if(action==1||action==2)
+            {
+                intInput = getOneInteger("select review to edit");
+                intInput--;
+                if(0<=intInput&&intInput<idTemp.size())
+                {
+                    singleIdTemp = idTemp.get(intInput);
+                    if(intInput == 1)
+                        state = "edit review";
+                    else
+                    {
+                        if(confirmation("delete review"))
+                        {
+                            ReviewManager.getInstance().deleteReview(singleIdTemp);
+                            editUserReview = true;
+                            System.out.println("Review deleted");
+                        }
+                        else
+                            System.out.println("Cancel delete review");
+                    }
+                }
                 else
                 {
-                    if(confirmation("delete review"))
-                    {
-                        ReviewManager.getInstance().deleteReview(singleIdTemp);
-                        editUserReview = true;
-                        System.out.println("Review deleted");
-                    }
-                    else
-                        System.out.println("Cancel delete review");
+                    tryAgain("main", "Error: invalid input");
                 }
-            }
-            else
-            {
-                tryAgain("main", "Error: invalid input");
-            }
 
+            }
+            else if(action ==3)
+                state = "main";
+            else
+                tryAgain("main", "Error: Invalid input");
         }
-        else if(intInput ==3)
-            state = "main";
-        else
-            tryAgain("main", "Error: Invalid input");
+        
     }
 
     private void editReviewState()
