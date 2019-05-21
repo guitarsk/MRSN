@@ -168,6 +168,16 @@ public class UserManager
     }
 
     /**
+     * check if allUsers has key
+     * @param email is a key
+     * @return true if has
+     */
+    public boolean checkEmail(String email)
+    {
+        return allUsers.containsKey(email);
+    }
+
+    /**
      * enter user name and get email back
      * @return User's email
      */

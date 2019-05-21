@@ -155,7 +155,7 @@ public class MovieReviewSocialNetwork
     /**
      * wait for one input
      */
-    public void pressAnyKeyToContinue()
+    public void pressEnterToContinue()
     { 
         try
         {
@@ -171,10 +171,19 @@ public class MovieReviewSocialNetwork
     {
         System.out.println(text);
         stringInput = getOneString("Do you want to try again [y/n]?");
-        if(!(stringInput.toLowerCase().startsWith("y")))
+        if(stringInput.toLowerCase().startsWith("y") == false)
         {
             state = newState;
         }
+    }
+
+    public boolean confirmation(String text)
+    {
+        String temp = getOneString("Confirm "+text+"[y/n]?");
+        if(temp.toLowerCase().startsWith("y"))
+            return true;
+        else
+            return false;
     }
 
     public void stateChange()
@@ -230,14 +239,19 @@ public class MovieReviewSocialNetwork
             case "edit review":
                 editReviewState();
                 break;
+            case "logout":
+                logoutState();
+                break;
             case "exit":
-                exitState();
+                logoutState();
+                System.out.println("Close Program");
+                System.exit(0);
                 break;
             default:
                 System.out.println("Error: Invalid state change");
                 break;
         }
-        pressAnyKeyToContinue();
+        pressEnterToContinue();
     }
 
     /** 
@@ -293,23 +307,30 @@ public class MovieReviewSocialNetwork
     private void registerState()
     {
         String name,email,password;
-
-        name = getOneString("Please enter user name :");
         email = getOneString("Please enter email :");
-        password = getOneString("Please enter password :");
-        /**need fix in genre */
-        System.out.println("Please choose favorite movie genres");
-        ArrayList<String> genre = genreMaker();
-        if(UserManager.getInstance().register(name,email,password,genre))
+        if(UserManager.getInstance().checkEmail(email)==false)
         {
-            System.out.println("Register successful");
-            login(email,password);
+            name = getOneString("Please enter user name :");
+            password = getOneString("Please enter password :");
+            System.out.println("Please choose favorite movie genres");
+            ArrayList<String> genre = genreMaker();
+            if(confirmation("registration"))
+            {
+                UserManager.getInstance().register(name,email,password,genre);
+                System.out.println("Register successful");
+                login(email,password);
+            }
+            else
+            {
+                System.out.println("Registration cancel back to main menu...");
+            }
             state = "main";
         }
         else
         {
             tryAgain("begin","This email is already used please try another email");
         }
+       
     }
 
     /** not finish still need loads of functioanlity */
@@ -323,10 +344,11 @@ public class MovieReviewSocialNetwork
         System.out.println("(5) view my profile");
         System.out.println("(6) write review");
         System.out.println("(7) logout");
+        System.out.println("(8) exit");
         intInput = getOneInteger("Your input :");
         switch(intInput)
         {
-            case 1:// search func still lack select movie state and select review state
+            case 1:
                 state = "search";
                 break;
             case 2:
@@ -345,6 +367,9 @@ public class MovieReviewSocialNetwork
                 state = "write review";
                 break;
             case 7:
+                state = "logout";
+                break;
+            case 8:
                 state = "exit";
                 break;
             default:
@@ -385,8 +410,7 @@ public class MovieReviewSocialNetwork
     // this method need to config idTemp, searchState and searchResultPage before use
     private void searchResultState()
     {
-        //searchResultPage
-        System.out.println(" "+idTemp.size()+" results");
+        System.out.println("     "+idTemp.size()+" results");
         if(searchState.equals("movie"))
         {
             for(int i = 5*(searchResultPage-1) , j = 1; (i <idTemp.size())&&(j<6) ; i++,j++)
@@ -493,19 +517,34 @@ public class MovieReviewSocialNetwork
         switch(intInput)
         {
             case 1:
-                ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "like");
-                editUserReview = true;
-                System.out.println("You liked the review");
+                if(confirmation("like review"))
+                {
+                    ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "like");
+                    editUserReview = true;
+                    System.out.println("You liked the review");
+                }
+                else
+                    System.out.println("Cancel like review");
                 break;
             case 2:
-                ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "dislike");
-                editUserReview = true;
-                System.out.println("You disliked the review");
-                break;
+                if(confirmation("dislike review"))
+                {
+                    ReviewManager.getInstance().setLikeOrDislike(singleIdTemp,currentUser.getEmail(), "dislike");
+                    editUserReview = true;
+                    System.out.println("You disliked the review");
+                }
+                else 
+                    System.out.println("Cancel dislike review");
+                    break;
             case 3:
-                currentUser.addFollowed(UserManager.getInstance().getUser((String)ReviewManager.getInstance().getSelect(singleIdTemp, "email")));
-                userAddNewFollow = true;
-                System.out.println("You followed this reviewer");
+                if(confirmation("follow User"))
+                {
+                    currentUser.addFollowed(UserManager.getInstance().getUser((String)ReviewManager.getInstance().getSelect(singleIdTemp, "email")));
+                    userAddNewFollow = true;
+                    System.out.println("You followed this reviewer");
+                }
+                else 
+                    System.out.println("Cancel follow reviewer");
                 break;
             case 4:
                 state = "main";
@@ -546,12 +585,17 @@ public class MovieReviewSocialNetwork
     {
         System.out.println("You are about to change password");
         stringInput = getOneString("Please enter your old password: ");
-        if(currentUser.login(stringInput))
+        if(UserManager.getInstance().login(currentUser.getEmail(),stringInput) != null)
         {
             stringInput = getOneString("Please enter your new password: ");
-            currentUser.setPassword(stringInput);
-            editUserProfile = true;
-            System.out.println("Password changed");
+            if(confirmation("change password"))
+            {
+                currentUser.setPassword(stringInput);
+                editUserProfile = true;
+                System.out.println("Password changed");
+            }
+            else
+                System.out.println("Cancel change password returning to main...");
             state = "main";
         }
         else
@@ -592,11 +636,16 @@ public class MovieReviewSocialNetwork
                 String name = getOneString("Enter Movie name");
                 ArrayList<String> genre = genreMaker();
                 int year = getOneInteger("Enter the year this movie released");
-                Movie newMovie = new Movie(name, genre, year);
-                MovieManager.getInstance().addMovie(newMovie);
-                MovieManager.getInstance().writeNewMovie(newMovie);
-                System.out.println("New movie added");
-                singleIdTemp = newMovie.getMovieID();
+                if(confirmation("add new movie"))
+                {
+                    Movie newMovie = new Movie(name, genre, year);
+                    MovieManager.getInstance().addMovie(newMovie);
+                    MovieManager.getInstance().writeNewMovie(newMovie);
+                    System.out.println("New movie added");
+                    singleIdTemp = newMovie.getMovieID();
+                }
+                else
+                    System.out.println("Cancel adding new movie");
                 break;
             case 3:
                 skip = true;
@@ -632,14 +681,25 @@ public class MovieReviewSocialNetwork
         {
             case 1:
                 stringInput = getOneString("Please enter new User name:");
-                currentUser.setName(stringInput);
-                editUserProfile = true;
-                System.out.println("User name changed to "+stringInput);
+                if(confirmation("changing user name"))
+                {
+                    currentUser.setName(stringInput);
+                    editUserProfile = true;
+                    System.out.println("User name changed to "+stringInput);
+                }
+                else 
+                    System.out.println("Cancel change user name");
                 break;
             case 2:
-                currentUser.setFavoriteMovieType(genreMaker());
-                editUserProfile = true;
-                System.out.println("Favorite movie category changed");
+                ArrayList<String> tempGenre = genreMaker();
+                if(confirmation("change favorite genre"))
+                {
+                    currentUser.setFavoriteMovieType(temp);
+                    editUserProfile = true;
+                    System.out.println("Favorite movie category changed");
+                }
+                else
+                    System.out.println("Cancel change favorite genres");                
                 break;
             case 3:
                 state = "followed";
@@ -701,9 +761,14 @@ public class MovieReviewSocialNetwork
                         searchResultPage = 1;
                         break;
                     case 2:
-                        currentUser.removeFollowed(writer);
-                        userAddNewFollow = true;
-                        System.out.println("Reviewer unfollowed");
+                        if(confirmation("unfollow "+writer))
+                        {
+                            currentUser.removeFollowed(writer);
+                            userAddNewFollow = true;
+                            System.out.println("Reviewer unfollowed");
+                        }
+                        else 
+                            System.out.println("Cancel unfollow");
                         break;
                     case 3:
                         break;
@@ -758,10 +823,16 @@ public class MovieReviewSocialNetwork
                 if(intInput == 1)
                     state = "edit review";
                 else
-                    ReviewManager.getInstance().deleteReview(singleIdTemp);
-                    editUserReview = true;
-                    System.out.println("Review deleted");
-
+                {
+                    if(confirmation("delete review"))
+                    {
+                        ReviewManager.getInstance().deleteReview(singleIdTemp);
+                        editUserReview = true;
+                        System.out.println("Review deleted");
+                    }
+                    else
+                        System.out.println("Cancel delete review");
+                }
             }
             else
             {
@@ -788,22 +859,38 @@ public class MovieReviewSocialNetwork
         switch(intInput)
         {
             case 1:
+
                 stringInput = getOneString("Enter new title:");
-                ReviewManager.getInstance().editReview(singleIdTemp, "title", stringInput);
-                editUserReview = true;
-                System.out.println("Title changed to "+stringInput);
+                if(confirmation("edit review title"))
+                {
+                    ReviewManager.getInstance().editReview(singleIdTemp, "title", stringInput);
+                    editUserReview = true;
+                    System.out.println("Title changed to "+stringInput);
+                }
+                else    
+                    System.out.println("Cancel edit review title");
                 break;
             case 2:
                 stringInput = getOneString("Enter new body:");
-                ReviewManager.getInstance().editReview(singleIdTemp, "body", stringInput);
-                editUserReview = true;
-                System.out.println("Body changed to "+stringInput);
+                if(confirmation("edit review body"))
+                {
+                    ReviewManager.getInstance().editReview(singleIdTemp, "body", stringInput);
+                    editUserReview = true;
+                    System.out.println("Body changed to "+stringInput);
+                }
+                else    
+                    System.out.println("Cancel edit review body");    
                 break;
             case 3:
                 double rating = getOneDouble("Enter new rating (number):");
-                ReviewManager.getInstance().editReview(singleIdTemp, "rating", Double.toString(rating));
-                editUserReview = true;
-                System.out.println("Rating changed to "+ rating);
+                if(confirmation("edit review rating"))
+                {
+                    ReviewManager.getInstance().editReview(singleIdTemp, "rating", Double.toString(rating));
+                    editUserReview = true;
+                    System.out.println("Rating changed to "+ rating);
+                }
+                else 
+                    System.out.println("Cancel esdit review rating");
                 break;
             case 4:
                 state = "main";
@@ -814,12 +901,36 @@ public class MovieReviewSocialNetwork
         }
     }
 
-    /** unfinish needed save */
-    private void exitState()
+    private void logoutState()
     {
-        logout();
-        System.out.println("Close Program");
-        System.exit(0);
+        currentUser = null;
+        if(userAddNewFollow == true)
+        {
+            UserManager.getInstance().rewriteAllFollow();
+        }
+        if(editUserProfile == true)
+        {
+            UserManager.getInstance().rewriteAllUser();
+        }
+        if(editUserReview == true)
+        {
+            ReviewManager.getInstance().rewriteAllReview();
+        }
+
+        state = "begin"; 
+        currentUser = null; 
+        searchState = null; 
+        searchResultPage = 1; 
+        idTemp = null;
+        singleIdTemp = null;
+        
+        editUserReview = false;
+        editUserProfile = false;
+        userAddNewFollow = false;
+
+        intInput = null;
+        stringInput = null;
+        System.out.println("You are now logout");
     }
 
     /**
@@ -856,10 +967,16 @@ public class MovieReviewSocialNetwork
         String title = getOneString("Enter title :");
         String body = getOneString("Enter body :");
         double rating = getOneDouble("Enter rating (number) :");
-        Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
-        ReviewManager.getInstance().addNewReview(newReview);
-        ReviewManager.getInstance().writeNewReview(newReview);
-        System.out.println("Added new review returning to main...");
+        if(confirmation("write review"))
+        {
+            Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
+            ReviewManager.getInstance().addNewReview(newReview);
+            ReviewManager.getInstance().writeNewReview(newReview);
+            System.out.println("Added new review returning to main...");
+        }
+        else
+            System.out.println("Cancel wrtite review returning to main...");
+        
     }
 
     private ArrayList<String> genreMaker()
@@ -925,22 +1042,6 @@ public class MovieReviewSocialNetwork
         return genre;
     }
 
-    public void logout()
-    {
-        currentUser = null;
-        if(userAddNewFollow == true)
-        {
-            UserManager.getInstance().rewriteAllFollow();
-        }
-        if(editUserProfile == true)
-        {
-            UserManager.getInstance().rewriteAllUser();
-        }
-        if(editUserReview == true)
-        {
-            ReviewManager.getInstance().rewriteAllReview();
-        }
-    }
     public static void main(String arg[]) 
     {
         /** Initialize phase */
