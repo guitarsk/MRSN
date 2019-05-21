@@ -24,7 +24,7 @@ public class ReviewManager
 
     private ReviewCollection allReviews;
 
-    // i don't know if this one is the right implementation
+    
     private static ReviewManager singletonInstance = new ReviewManager();
 
      /** need to create review collection */
@@ -146,9 +146,4 @@ public class ReviewManager
         allReviews.showReview(id);
     }
 
-    /* incomplete */
-    public void printSort()
-    {
-
-    }
 }
