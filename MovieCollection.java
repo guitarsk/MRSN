@@ -13,6 +13,7 @@ import java.util.HashMap;
 
 public class MovieCollection
 {
+    /** Collection of movies */
     private HashMap<Integer,Movie> movies;
 
     /**
