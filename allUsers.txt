@@ -16,3 +16,9 @@ EMAIL|jarude555@gmail.com
 PASSWORD|1234
 FAVTYPE|Horror|Music|Comedy|Drama
 ]
+[
+NAME|peter
+EMAIL|dummy@mail.com
+PASSWORD|5555
+FAVTYPE|Adventure|Horror|Music
+]

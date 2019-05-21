@@ -109,6 +109,7 @@ public class ReviewCollection
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
         if(movieMatchReview.containsKey(key))
         {
+            System.out.println("JARDET DUBGGING *********** "+ movieMatchReview.get(key).size());
             for(int i  = 0 ; i < movieMatchReview.get(key).size() ; i++)
             {
                 idTemp.add(movieMatchReview.get(key).get(i));

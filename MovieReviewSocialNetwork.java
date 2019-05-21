@@ -384,10 +384,11 @@ public class MovieReviewSocialNetwork
         System.out.println("(1) search movie name");
         System.out.println("(2) search by category");
         System.out.println("(3) search reviewer name");
+        System.out.println("(4) back to main menu");
         intInput = getOneInteger("Your input :");
-        stringInput = getOneString("Search for :");
         if(intInput == 1 || intInput == 2) // search using MovieManager
         {
+            stringInput = getOneString("Search for :");
             idTemp = MovieManager.getInstance().search(stringInput,intInput);
             state = "search result";
             searchState = "movie";
@@ -395,6 +396,7 @@ public class MovieReviewSocialNetwork
         }
         else if(intInput == 3) // search using ReviewManager
         {
+            stringInput = getOneString("Search for :");
             stringInput = UserManager.getInstance().searchForEmail(stringInput);
             idTemp = ReviewManager.getInstance().search(stringInput);
             state = "search result";
@@ -445,8 +447,12 @@ public class MovieReviewSocialNetwork
                     System.out.println("You are already in first page");
                 break;
             case 2:
-                if(((searchResultPage-1)*5)<idTemp.size())
+                if(((searchResultPage)*5)<idTemp.size())
+                {
+                    System.out.println(((searchResultPage-1)*5)+" "+idTemp.size());
                     searchResultPage++;
+                }
+                    
                 else
                     System.out.println("You are already in last page");
                 break;
@@ -481,20 +487,22 @@ public class MovieReviewSocialNetwork
         //singleIdTemp
         MovieManager.getInstance().printSearch(singleIdTemp);
         idTemp = ReviewManager.getInstance().search(singleIdTemp);
-        System.out.println();
+        System.out.println("\n");
         if(idTemp.size() == 0)
         {
             System.out.println("This movie don't have any reviews");
         }
         else
         {
+            System.out.println("**Review Lists**\n");
             for(int i = 0 ; (i < 5) && (i<idTemp.size()); i++)
             {
                 ReviewManager.getInstance().printSearch(idTemp.get(i));
+                System.out.println();
             }
         }
         
-        System.out.println("\nChoose your a1ction ");
+        System.out.println("\nChoose your action ");
         System.out.println("(1) read more review");
         System.out.println("(2) write review");
         System.out.println("(3) back to main menu");
@@ -620,8 +628,8 @@ public class MovieReviewSocialNetwork
     private void writeReviewState()
     {
         boolean skip = false;
-        
-        stringInput = getOneString("Enter movie name");
+        System.out.println("You are in write review page");
+        stringInput = getOneString("Enter movie name you want to review");
         idTemp = MovieManager.getInstance().search(stringInput, 1);
         
         if(idTemp.size()==0)
@@ -651,6 +659,7 @@ public class MovieReviewSocialNetwork
                 intInput--;
                 if(intInput == -1)
                 {
+                    skip = true;
                     break;
                 }
                 else if(intInput < -1 || intInput >= idTemp.size())
@@ -684,7 +693,11 @@ public class MovieReviewSocialNetwork
                     singleIdTemp = newMovie.getMovieID();
                 }
                 else
+                {
                     System.out.println("Cancel adding new movie");
+                    skip = true;
+                }
+                    
                 break;
             case 3:
                 skip = true;
@@ -1018,9 +1031,21 @@ public class MovieReviewSocialNetwork
 
     private void writeReview()
     {
-        String title = getOneString("Enter title :");
-        String body = getOneString("Enter body :");
-        double rating = getOneDouble("Enter rating (number) :");
+        System.out.println("You are creating review");
+        String title = getOneString("Enter review title :");
+        String body = getOneString("Enter review body :");
+        double rating;
+        while(true)
+        {
+            rating = getOneDouble("Enter review rating (number 0 - 10) :");
+            if(rating<0 || rating > 10)
+            {
+                System.out.println("Rating must be between 0 to 10");
+            }
+            else
+                break;
+        }
+        
         if(confirmation("write review"))
         {
             Review newReview = new Review(MovieManager.getInstance().getMovie(singleIdTemp).getMovieID(),title,body,rating,currentUser.getEmail());
@@ -1029,7 +1054,7 @@ public class MovieReviewSocialNetwork
             System.out.println("Added new review returning to main...");
         }
         else
-            System.out.println("Cancel wrtite review returning to main...");
+            System.out.println("Cancel wrtte review returning to main...");
         
     }
 
