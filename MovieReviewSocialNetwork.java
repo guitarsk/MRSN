@@ -1001,7 +1001,6 @@ public class MovieReviewSocialNetwork
         searchResultPage = 1; 
         idTemp = null;
         singleIdTemp = null;
-        2
         editUserReview = false;
         editUserProfile = false;
         userAddNewFollow = false;
