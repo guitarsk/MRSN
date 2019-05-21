@@ -1,20 +1,17 @@
-
-/**
- *  MovieReviewSocialnetwork is facade class for MRSN project
- * 
- * Created by Nawakanok Muengkam (Guitar) 5907050101044
- *      Build project's possible framework and some implementation
- *  Modified by Jarudet Wichit (Jardet) 59070501008
- *      7/5/2019 Continuing implement project  
- * 
- *  Borrow method getOneInteger() and getOneString() from Prof.Sally Goldin
- */
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-
+/**
+ *  MovieReviewSocialnetwork is facade class for MRSN project
+ * 
+ * Created by Nawakanok Muangkham (Guitar) 59070501044
+ *      Build project's possible framework and some implementation
+ *  Modified by Jarudet Wichit (Jardet) 59070501008
+ *      7 May 2019 Continuing implement project  
+ * 
+ *  Borrow method getOneInteger() and getOneString() from Prof.Sally Goldin
+ */
 public class MovieReviewSocialNetwork
 {
     private User currentUser = null; // keep user that logged in at the moment

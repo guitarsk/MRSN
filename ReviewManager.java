@@ -1,21 +1,19 @@
-/**
- *  ReviewManager act as a central control of Review
- *  
- *  Created by Nawakanok Muengkam (Guitar) 5907050101044
- *      Build project's possible framework and some implementation
- *  Modified by jarudet Wichit (Jardet) 59070501008
- *      7/5/2019 Continuing implement project
- *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
- *      9/5/2019 Implement initialize and rewriteAllReview method
- * 
- */
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-
+/**
+ *  ReviewManager act as a central control of Review
+ *  
+ *  Created by Nawakanok Muangkham (Guitar) 59070501044
+ *      Build project's possible framework and some implementation
+ *  Modified by jarudet Wichit (Jardet) 59070501008
+ *      7/5/2019 Continuing implement project
+ *  Modified by Nawakanok Muangkham (Guitar) 59070501044
+ *      9/5/2019 Implement initialize and rewriteAllReview method
+ * 
+ */
 public class ReviewManager
 {
     private final String reviewFileName = "allReviews.txt";

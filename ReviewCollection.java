@@ -1,27 +1,32 @@
-/** 
- *  ReviewCollection collect and organize Review object
- *  
- *  Created by Nawakanok Muengkam (Guitar) 5907050101044
- *      Build project's possible framework and some implementation
- *  Modified by jarudet Wichit (Jardet) 59070501008
- *      7/5/2019 Continuing implement project
- *  Modified by Nawakanok Muengkam (Guitar) 5907050101044
- *      9/5/2019 Create initMatchTable() method 
- * 
- */
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
-
+/** 
+ *  ReviewCollection collect and organize Review object
+ *  
+ *  Created by Nawakanok Muangkham (Guitar) 59070501044
+ *      Build project's possible framework and some implementation
+ *  Modified by jarudet Wichit (Jardet) 59070501008
+ *      7/5/2019 Continuing implement project
+ *  Modified by Nawakanok Muangkham (Guitar) 59070501044
+ *      9/5/2019 Create initMatchTable() method 
+ * 
+ */
 public class ReviewCollection
 {
+    /** match table of movie and review */
     private HashMap<Integer,ArrayList<Integer>> movieMatchReview;
+
+    /** match table of user and review */
     private HashMap<String,ArrayList<Integer>> userMatchReview;
+
+    /** Collection of reviews */
     private HashMap<Integer,Review> reviews;
 
 
-    /** unfinished need to figure out how to put in data in one go */
+    /**
+     * Constructor for create ReviewCollection instance.
+     */
     public ReviewCollection()
     {
         movieMatchReview = new HashMap<Integer,ArrayList<Integer>>();
@@ -29,6 +34,10 @@ public class ReviewCollection
         reviews = new HashMap<Integer,Review>();
     }
 
+    /**
+     * Add reference of review and movie.
+     * @param review review to add reference.
+     */
     private void movieAddMatchTable(Review review)
     {
         Integer movieID = (Integer)review.getMovieID();
@@ -50,6 +59,10 @@ public class ReviewCollection
         }  
     }
 
+    /**
+     * Add reference of review and user.
+     * @param review review to add reference.
+     */
     private void userAddMatchTable(Review review)
     {
         String userEmail = review.getWriterEmail();
@@ -101,11 +114,20 @@ public class ReviewCollection
         return idTemp;
     }
 
+    /**
+     * 
+     * @param reviewID
+     * @param email
+     * @param value
+     * @return
+     */
     public boolean setLikeOrDislike(int reviewID,String email, String value)
     {
        return  reviews.get(reviewID).setLikeOrDislike(email, value);
     }
 
+
+    
     public Object getSelect(int reviewID, String option)
     {
         switch(option)
@@ -117,8 +139,11 @@ public class ReviewCollection
         }
     }
 
-    /** i don't know what this do need to ask guitar */
-    /** use for rating of movie */
+    /**
+     * Calculate rating of select movie
+     * @param movieID of select movie
+     * @return  rating in double value
+     */
     public double calMovieRating(int movieID)
     {
         double rating = 0;
@@ -146,9 +171,8 @@ public class ReviewCollection
         reviews.get(id).showReview();
     }
 
-
     /**
-     * delete review from reviewID
+     * delete review from reviewID and match table
      * @param reviewID of review
      */
     public void deleteReview(int reviewID)
@@ -160,9 +184,12 @@ public class ReviewCollection
         reviews.remove(reviewID);
     }
 
+   
     /**
-     * edit title body and rating of review
-     * @param reviewID of review
+     * edit title, body or rating of review
+     * @param reviewID
+     * @param option
+     * @param text
      */
     public void editReview(int reviewID, String option,String text)
     {
@@ -181,8 +208,8 @@ public class ReviewCollection
         }
     }
 
-    /** this is not complete still need to add review to other 2 new hashmap */
-    /** add new review
+    /**
+     * add new review and add match table
      * @param review new Review to add
      */
     public void addReview(Review review)
@@ -192,12 +219,13 @@ public class ReviewCollection
         movieAddMatchTable(review);
     }
 
-    /** get HashMap of all reviews in this class
+    /**
+     * get HashMap of all reviews in this class
      * @return all reviews
      */
     public HashMap<Integer,Review> getAllReview()
     {
-        return reviews; // unfinished need to make copy of this and return
+        return reviews; 
     }
 
 }
