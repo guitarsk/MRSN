@@ -123,11 +123,11 @@ public class Review
      */
     public void showReview()
     {
+        System.out.println("<<"+this.title+">>");
         System.out.println("Movie name: "+MovieManager.getInstance().getMovie(movieID).getName());
         System.out.println("Writer: "+UserManager.getInstance().getUser(this.writer).getUserName());
         System.out.println("Rating: "+this.rating);
         System.out.println("Review date: "+this.reviewDate);
-        System.out.println("Title: "+this.title);
         System.out.println("Body: "+this.body);
         //System.out.println("\n"+);
     }

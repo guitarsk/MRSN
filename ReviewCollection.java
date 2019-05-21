@@ -105,11 +105,16 @@ public class ReviewCollection
 
     /** search using movieId*/
     public ArrayList<Integer> searchReview(int key)
-    {
+    { 
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
-        for(int i  = 0 ; i < movieMatchReview.get(key).size() ; i++)
+        if(movieMatchReview.containsKey(key))
         {
-            idTemp.add(movieMatchReview.get(key).get(i));
+            System.out.println("JARDET DUBGGING *********** "+ movieMatchReview.get(key).size());
+            for(int i  = 0 ; i < movieMatchReview.get(key).size() ; i++)
+            {
+                idTemp.add(movieMatchReview.get(key).get(i));
+            }
+            
         }
         return idTemp;
     }

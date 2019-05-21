@@ -104,7 +104,7 @@ public class Movie
         System.out.print("Genre :");
         for(int i = 0 ; i < genre.size() ; i++)
         {
-            System.out.print(genre.get(i)+"");
+            System.out.print(genre.get(i)+" ");
         }
 
     }
