@@ -31,6 +31,48 @@ public class ReviewCollection
         reviews = new HashMap<Integer,Review>();
     }
 
+    private void movieAddMatchTable(Review review)
+    {
+        Integer movieID = (Integer)review.getMovieID();
+        if(movieMatchReview.isEmpty() == true)
+        {
+            ArrayList<Integer> reviewList = new ArrayList<Integer>();
+            reviewList.add((Integer)review.getReviewID());
+            movieMatchReview.put(movieID, reviewList);
+        }
+        else if(movieMatchReview.containsKey(movieID) == true)
+        {
+            movieMatchReview.get(movieID).add(review.getReviewID());
+        }
+        else
+        {
+            ArrayList<Integer> reviewList = new ArrayList<Integer>();
+            reviewList.add((Integer)review.getReviewID());
+            movieMatchReview.put(movieID, reviewList);
+        }  
+    }
+
+    private void userAddMatchTable(Review review)
+    {
+        String userEmail = review.getWriterEmail();
+        if(userMatchReview.isEmpty() == true)
+        {
+            ArrayList<Integer> reviewList = new ArrayList<Integer>();
+            reviewList.add((Integer)review.getReviewID());
+            userMatchReview.put(userEmail, reviewList);
+        }
+        else if(userMatchReview.containsKey(userEmail) == true)
+        {
+            userMatchReview.get(userEmail).add((Integer)review.getReviewID());
+        }
+        else
+        {
+            ArrayList<Integer> reviewList = new ArrayList<Integer>();
+            reviewList.add((Integer)review.getReviewID());
+            userMatchReview.put(userEmail, reviewList);
+        }
+    }
+
     public void initMatchTable()
     {
         Iterator<Map.Entry<Integer,Review>> it = this.reviews.entrySet().iterator();
@@ -38,49 +80,13 @@ public class ReviewCollection
         {
             Map.Entry<Integer,Review> pair = it.next();
             Review review = pair.getValue();
-            String userEmail = review.getWriterEmail();
-            Integer movieID = (Integer)review.getMovieID();
-            if(userMatchReview.isEmpty() == true)
-            {
-                ArrayList<Integer> reviewList = new ArrayList<Integer>();
-                reviewList.add((Integer)review.getReviewID());
-                userMatchReview.put(userEmail, reviewList);
-            }
-            else if(userMatchReview.containsKey(userEmail) == true)
-            {
-                userMatchReview.get(userEmail).add((Integer)review.getReviewID());
-            }
-            else
-            {
-                ArrayList<Integer> reviewList = new ArrayList<Integer>();
-                reviewList.add((Integer)review.getReviewID());
-                userMatchReview.put(userEmail, reviewList);
-            }
 
-            if(movieMatchReview.isEmpty() == true)
-            {
-                ArrayList<Integer> reviewList = new ArrayList<Integer>();
-                reviewList.add((Integer)review.getReviewID());
-                movieMatchReview.put(movieID, reviewList);
-            }
-            else if(movieMatchReview.containsKey(movieID) == true)
-            {
-                movieMatchReview.get(movieID).add(review.getReviewID());
-            }
-            else
-            {
-                ArrayList<Integer> reviewList = new ArrayList<Integer>();
-                reviewList.add((Integer)review.getReviewID());
-                movieMatchReview.put(movieID, reviewList);
-            }  
+            userAddMatchTable(review);
+            movieAddMatchTable(review);
         }
     }
 
-    /*** print all review */
-    /** seem like not use this */
-    public void printAll()
-    {
-    }
+    
     
     /** search using Reviewer name*/
     /** may need to implement partial name search */
@@ -146,6 +152,10 @@ public class ReviewCollection
      */
     public void deleteReview(int reviewID)
     {
+        int movieID = reviews.get(reviewID).getMovieID();
+        String email = reviews.get(reviewID).getWriterEmail();
+        userMatchReview.get(email).remove((Integer)reviewID);
+        movieMatchReview.get((Integer)movieID).remove((Integer)reviewID);
         reviews.remove(reviewID);
     }
 
@@ -177,6 +187,8 @@ public class ReviewCollection
     public void addReview(Review review)
     {
         reviews.put((Integer)review.getReviewID(),review);
+        userAddMatchTable(review);
+        movieAddMatchTable(review);
     }
 
     /** get HashMap of all reviews in this class
