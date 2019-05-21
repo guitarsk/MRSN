@@ -97,9 +97,7 @@ public class ReviewFileManager extends TextFileManager
                     }
                     lineRead = getNextLine();
                 }
-                if(movieID != -1 && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==false) //review with like and dislike
-                    review = new Review(movieID, title, body, date, rate, write, likeAndDislike);
-                else if(movieID != -1 && title != null && body != null && date != null && rate != -1 && write != null && likeAndDislike.isEmpty()==true)    //review with no like and dislike
+                if(movieID != -1 && title != null && body != null && date != null && rate != -1 && write != null) 
                     review = new Review(movieID, title, body, date, rate, write, likeAndDislike);
             }
         }

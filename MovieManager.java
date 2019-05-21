@@ -50,7 +50,6 @@ public class MovieManager
             {
                 allMovies.addMovie(movie);
             }
-            System.out.println(movie);
             movieFileManager.closeRead();
         }
         
