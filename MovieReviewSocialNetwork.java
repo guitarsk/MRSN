@@ -175,7 +175,7 @@ public class MovieReviewSocialNetwork
      * @param newState the state that MRSN will change to (usually main)
      * @param text to show to user (usually error warning)
      */
-    public void tryAgain(String newState,String text)
+    private void tryAgain(String newState,String text)
     {
         System.out.println(text);
         stringInput = getOneString("Do you want to try again [y/n]?");
@@ -190,7 +190,7 @@ public class MovieReviewSocialNetwork
      * @param text to show to user (usually the thing user are about to do)
      * @return true if user enter something start with y
      */
-    public boolean confirmation(String text)
+    private boolean confirmation(String text)
     {
         String temp = getOneString("Confirm "+text+"[y/n]?");
         if(temp.toLowerCase().startsWith("y"))
