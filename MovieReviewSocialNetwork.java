@@ -666,6 +666,12 @@ public class MovieReviewSocialNetwork
         }
     }
 
+    /**
+     * this state show currentUser info
+     * then ask user for their action
+     * 
+     * this state can change to "editState", "changePasswordState", and "mainState"
+     */
     private void userState()
     {
         currentUser.showUser();
@@ -691,6 +697,12 @@ public class MovieReviewSocialNetwork
         }
     }
 
+    /**
+     * this state make user ener their password
+     * if correct will allow user to change their password
+     * 
+     * this state can change to "mainState"
+     */
     private void changePasswordState()
     {
         System.out.println("You are about to change password");
@@ -713,6 +725,16 @@ public class MovieReviewSocialNetwork
             tryAgain("main", "Wrong password");
         }
     }
+
+    /**
+     * this method workflow:
+     * 1.ask for movie name
+     * 2.search for movie
+     * 3.show movie
+     * 4.ask for user choice of action
+     * 
+     * this state can change to "mainState"
+     */
     private void writeReviewState()
     {
         boolean skip = false;
@@ -807,7 +829,12 @@ public class MovieReviewSocialNetwork
         
     }
 
-    /** need to figure out the design of edit page */
+    /** 
+     * show currentUser info
+     * then ask for user choice of action
+     * 
+     * this state can change to "mainState", and "followedState"
+     */
     private void editState()
     {
         currentUser.showUser();
@@ -857,6 +884,13 @@ public class MovieReviewSocialNetwork
         
     }
 
+    /**
+     * show currentUser followed list
+     * ask user to choose User they followed
+     * then ask user for their choice of action
+     * 
+     * this state can change to "reviewState" and "mainState"
+     */
     private void followedState()
     {
         if(currentUser.getFollowedSize()==0)
@@ -926,6 +960,11 @@ public class MovieReviewSocialNetwork
         
     }
 
+    /**
+     * random movie id and show movie
+     * 
+     * this state can change to "mainState" and will call movieState directly
+     */
     private void discoverState()
     {
         int totalMovie = MovieManager.getInstance().size();
@@ -943,6 +982,14 @@ public class MovieReviewSocialNetwork
         }
     }
 
+
+    /**
+     * show Review that currentUser write
+     * then ask for user choice of action
+     * then ask for NO. of review user want to make change
+     * 
+     * this state can change to "mainState", "editReviewState"
+     */
     private void manageState()
     {
         idTemp = ReviewManager.getInstance().search(currentUser.getEmail());
@@ -1000,6 +1047,12 @@ public class MovieReviewSocialNetwork
         
     }
 
+    /**
+     * show full review info from singleIdTemp
+     * then ask user what they want to change
+     * 
+     * this state can change to "mainState"
+     */
     private void editReviewState()
     {
         ReviewManager.getInstance().printSearch(singleIdTemp);
@@ -1055,6 +1108,13 @@ public class MovieReviewSocialNetwork
         }
     }
 
+
+    /**
+     * check changes flag
+     * then save data to file
+     * 
+     * this state can change to "beginState"
+     */
     private void logoutState()
     {
         currentUser = null;
@@ -1088,6 +1148,7 @@ public class MovieReviewSocialNetwork
     /**
      * ask for user info to register,
      * auto login after successful register
+     * @return true if login success
      */
     private boolean login(String email, String password)
     {
@@ -1098,6 +1159,10 @@ public class MovieReviewSocialNetwork
             return true;
     }
 
+    /**
+     * ask for review info input
+     * then create new Review
+     */
     private void writeReview()
     {
         System.out.println("\nYou are creating review");
@@ -1127,6 +1192,10 @@ public class MovieReviewSocialNetwork
         
     }
 
+    /**
+     * this add genre into ArrayList based on User input
+     * @return ArrayList of genres
+     */
     private ArrayList<String> genreMaker()
     {
         ArrayList<String> genre = new ArrayList<String>();
@@ -1174,6 +1243,9 @@ public class MovieReviewSocialNetwork
         return genre;
     }
 
+    /**
+     *  add genre to ArrayList
+     */
     private void genreAdder(String genre, ArrayList<String> genres)
     {
         if(genres.contains(genre))
@@ -1201,6 +1273,5 @@ public class MovieReviewSocialNetwork
         {
             MRSN.stateChange();
         }
-        /** save data phase */
     }
 }
