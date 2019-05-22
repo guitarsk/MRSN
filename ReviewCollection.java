@@ -220,6 +220,7 @@ public class ReviewCollection
                 break;
             case "rating":
                 reviews.get(reviewID).setRating(Double.parseDouble(text));
+                break;
             default:
                 break;
         }
