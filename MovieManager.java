@@ -26,7 +26,7 @@ public class MovieManager
     private static MovieManager singletonInstance = new MovieManager();
 
     /**
-     * Private constructor to prevent to create another instance of class.
+     * Private constructor to prevent creation of another instance of class.
      */
     private MovieManager()
     {
@@ -88,7 +88,12 @@ public class MovieManager
         return allMovies.getMovie(movieId);
     }
 
-    /* incomplete */
+    /**
+     * search for movie based on option
+     * @param key movie name or genre
+     * @param searchOption is option
+     * @return ArrayList of movie ID
+     */
     public ArrayList<Integer> search(String key,int searchOption)
     {
         switch(searchOption)
@@ -103,6 +108,9 @@ public class MovieManager
         }
     }
 
+    /**
+     * print out movie info
+     */
     public void printSearch(int id)
     {
         allMovies.showMovie(id);

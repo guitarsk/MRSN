@@ -25,7 +25,11 @@ public class MovieCollection
     }
 
 
-    /* incomplete */
+    /**
+     * search for Movie based on name
+     * @param key movie name
+     * @return ArrayList of movie ID
+     */
     public ArrayList<Integer> searchMovie(String key)
     {
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
@@ -40,6 +44,11 @@ public class MovieCollection
     }
 
 
+    /**
+     * search for movie based on genre
+     * @param key movie genre
+     * @return ArrayList of movie ID
+     */
     public ArrayList<Integer> searchGenre(String key)
     {
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
