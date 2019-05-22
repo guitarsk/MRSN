@@ -13,11 +13,22 @@ import java.util.ArrayList;
 
 public class Movie
 {
+    /** ID of this movie */
     private int movieID;
+
+    /** movie name */
     private String name = null;
+
+    /** movie genre */
     private ArrayList<String> genre ;
+
+    /** year that movie was released */
     private int releaseYear;
+
+    /** rating of movie */
     private double rating = 0;
+
+    /** use for identify movie id */
     private static int count = 0;
 
     /**

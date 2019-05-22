@@ -16,16 +16,22 @@ import java.util.Map;
  */
 public class ReviewManager
 {
-    private final String reviewFileName = "allReviews.txt"; //file that contain this Manager data
+    /** file that contain this review data */
+    private final String reviewFileName = "allReviews.txt"; 
 
-    private ReviewFileManager reviewFileManager = null; // use to handle file read and write
+    /** use to handle file read and write */
+    private ReviewFileManager reviewFileManager = null;
 
-    private ReviewCollection allReviews; //contains all review in MRSN after read from file
+    /** contains all review in MRSN after read from file */
+    private ReviewCollection allReviews;
 
-    
-    private static ReviewManager singletonInstance = new ReviewManager(); // act as a singleton
+    /** singleton instance for access review resource */
+    private static ReviewManager singletonInstance = new ReviewManager();
 
-     /** prevent creation of this class */
+    /** 
+     * prevent creation of this class
+     * 
+     */
     private ReviewManager()
     {
         

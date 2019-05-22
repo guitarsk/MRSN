@@ -81,6 +81,11 @@ public class User
         return true;
     }
 
+    /**
+     * Setter method for edit favorite movie type of user
+     * @param genre new favorite movie type
+     * @return  true for succes change , else false
+     */
     public boolean setFavoriteMovieType(ArrayList<String> genre)
     {
         favoriteMovieType = genre;
@@ -119,11 +124,20 @@ public class User
         followedList.add(followedUser);
     }
 
+    /**
+     * Unfollow followed user.
+     * @param unfollowedUser user that want to unfollowed
+     */
     public void removeFollowed(User unfollowedUser)
     {
         followedList.remove(unfollowedUser);
     }
 
+    
+    /**
+     * Getter method for get total followed.
+     * @return size of followed list.
+     */
     public int getFollowedSize()
     {
         return followedList.size();
@@ -139,6 +153,9 @@ public class User
         return followedList.get(index);
     }
 
+    /**
+     * Display user info.
+     */
     public void showUser()
     {
         System.out.println("User name :"+name);

@@ -20,19 +20,40 @@ import java.util.Random;
 
 public class MovieReviewSocialNetwork
 {
-    private User currentUser = null; // keep user that logged in at the moment
-    private String state = "begin"; // use to keep MRSN current state
-    private String searchState = null; // use in searchState and searchResultState
-    private Integer searchResultPage = 1; // current page of search result use in SearhResultState
-    private ArrayList<Integer> idTemp = null; // id of movies or reviews that has been searched
-    private Integer singleIdTemp = null; // id of movies or reviews that will show their info in movieState or reviewState
-    
-    private boolean editUserReview = false; // flag to detect the need to rewrite the entire allReviews.txt
-    private boolean editUserProfile = false; // flag to detect the need to rewrite the entire allUsers.txt
-    private boolean userAddNewFollow = false; // flag to detect the need to rewrite the entire allFollows.txt
+    /** keep user that logged in at the moment */
+    private User currentUser = null; 
 
-    private Integer intInput = null; // central temp variable for input integer value
-    private String stringInput = null; // central temp variable for input String value
+    /** use to keep MRSN current state */
+    private String state = "begin"; 
+
+    /** use in searchState and searchResultState */
+    private String searchState = null;
+
+    /** current page of search result use in SearhResultState */
+    private Integer searchResultPage = 1;
+
+    /** id of movies or reviews that has been searched */
+    private ArrayList<Integer> idTemp = null;
+
+    /** id of movies or reviews that will show their info in movieState or reviewState */
+    private Integer singleIdTemp = null;
+    
+    /** flag to detect the need to rewrite the entire allReviews.txt */
+    private boolean editUserReview = false; 
+
+    /** flag to detect the need to rewrite the entire allUsers.txt */
+    private boolean editUserProfile = false;
+
+    /** flag to detect the need to rewrite the entire allFollows.txt */
+    private boolean userAddNewFollow = false;
+
+    /** central temp variable for input integer value */
+    private Integer intInput = null;
+
+    /** central temp variable for input String value */
+    private String stringInput = null;
+
+    
     /**
      * Asks for one integer value, and returns it
      * as the function value.
