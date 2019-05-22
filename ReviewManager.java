@@ -16,16 +16,16 @@ import java.util.Map;
  */
 public class ReviewManager
 {
-    private final String reviewFileName = "allReviews.txt";
+    private final String reviewFileName = "allReviews.txt"; //file that contain this Manager data
 
-    private ReviewFileManager reviewFileManager = null;
+    private ReviewFileManager reviewFileManager = null; // use to handle file read and write
 
-    private ReviewCollection allReviews;
+    private ReviewCollection allReviews; //contains all review in MRSN after read from file
 
     
-    private static ReviewManager singletonInstance = new ReviewManager();
+    private static ReviewManager singletonInstance = new ReviewManager(); // act as a singleton
 
-     /** need to create review collection */
+     /** prevent creation of this class */
     private ReviewManager()
     {
         
@@ -34,14 +34,16 @@ public class ReviewManager
     /** 
      * get instance of ReviewManager
      * @return ReviewManger
-     * 
      */
     public static ReviewManager getInstance()
     {
 	    return singletonInstance;
     }
 
-    // maybe guitar want to use this to initialize ReviewCollection object
+    /**
+     * read from file
+     * and keep all review in ReviewCollection
+     */
     public void initialize()
     {
         
@@ -76,31 +78,65 @@ public class ReviewManager
         allReviews.deleteReview(reviewID);
     }
 
+    /**
+     * search for review using reviewer name
+     * @param key reviewer name
+     * @return ArrayList of review ID
+     */
     public ArrayList<Integer> search(String key)
     {
         return allReviews.searchReview(key);
     }
 
+    /**
+     * search for Review using movie ID
+     * @param key movie ID
+     * @return ArrayList of review ID
+     */
     public ArrayList<Integer> search(int key)
     {
         return allReviews.searchReview(key);
     }
 
+    /**
+     * set Review like or dislike
+     * @param reviewID that need to be liked or disliked
+     * @param email User email
+     * @param value like or dislike value
+     * @return true if succeed
+     */
     public boolean setLikeOrDislike(int reviewID, String email, String value)
     {
         return allReviews.setLikeOrDislike(reviewID, email, value);
     }
 
+    /**
+     * get data from review based on option
+     * @param reviewID review to get from
+     * @param option for now can only get email by set this to email
+     * @return data based on option
+     */
     public Object getSelect(int reviewID,String option)
     {
         return allReviews.getSelect(reviewID, option);
     }
     
+    /**
+     * calculate rating of movie
+     * @param movieID id of movie
+     * @return rating
+     */
     public double calMovieRating(int movieID)
     {
         return allReviews.calMovieRating(movieID);
     }
 
+    /**
+     * chang data in side Review based on option
+     * @param reviewID review needed to change data
+     * @param option "tital", "body", or "rating"
+     * @param text new data to replace
+     */
     public void editReview(int reviewID, String option,String text)
     {
         allReviews.editReview(reviewID,option,text);
@@ -131,6 +167,11 @@ public class ReviewManager
         return success;
     }
 
+    /**
+     * write new review to file
+     * @param newReview is new review
+     * @return true if succeed
+     */
     public boolean writeNewReview(Review newReview)
     {
         boolean success = false;
@@ -143,6 +184,10 @@ public class ReviewManager
         return success;
     }
 
+    /**
+     * print review info 
+     * @param id of review
+     */
     public void printSearch(int id)
     {
         allReviews.showReview(id);

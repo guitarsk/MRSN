@@ -84,8 +84,11 @@ public class ReviewCollection
         }
     }    
     
-    /** search using Reviewer name*/
-    /** may need to implement partial name search */
+    /**
+     * search for Review using reviewer name
+     * @param key reviewer name
+     * @return ArrayList of Review ID
+     */
     public ArrayList<Integer> searchReview(String key)
     {
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
@@ -99,7 +102,11 @@ public class ReviewCollection
         return idTemp;
     }
 
-    /** search using movieId*/
+    /**
+     * search for Review using Movie ID
+     * @param key Movie ID
+     * @return ArrayList of Movie ID
+     */
     public ArrayList<Integer> searchReview(int key)
     { 
         ArrayList<Integer> idTemp = new ArrayList<Integer>();
@@ -115,19 +122,29 @@ public class ReviewCollection
     }
 
     /**
-     * 
-     * @param reviewID
-     * @param email
-     * @param value
-     * @return
+     * set Review like or dislike
+     * @param reviewID that need to set like/dislike
+     * @param email User email
+     * @param value like or dislike value
+     * @return true if succeed
      */
     public boolean setLikeOrDislike(int reviewID,String email, String value)
     {
        return  reviews.get(reviewID).setLikeOrDislike(email, value);
     }
 
-
-    
+    /**
+     * get Review info object
+     * such as String of email
+     * or int of ID
+     * this can change based on implementation
+     * 
+     *       ***** this method is risky handle with care**
+     * 
+     * @param reviewID need to get from
+     * @param option for now can only get email
+     * @return data object
+     */
     public Object getSelect(int reviewID, String option)
     {
         switch(option)
@@ -187,9 +204,9 @@ public class ReviewCollection
    
     /**
      * edit title, body or rating of review
-     * @param reviewID
-     * @param option
-     * @param text
+     * @param reviewID that need to edit
+     * @param option edit option
+     * @param text new info to replace
      */
     public void editReview(int reviewID, String option,String text)
     {
@@ -203,6 +220,7 @@ public class ReviewCollection
                 break;
             case "rating":
                 reviews.get(reviewID).setRating(Double.parseDouble(text));
+                break;
             default:
                 break;
         }
