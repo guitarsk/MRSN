@@ -274,6 +274,8 @@ public class MovieReviewSocialNetwork
 
     /** 
      * first page of the site made user login or register
+     * 
+     * this state can change to "loginState", "registerState" and "exitState"
      */
     private void beginState()
     {
@@ -304,6 +306,9 @@ public class MovieReviewSocialNetwork
      * receive input email and password
      * then try to login using login()
      * which using UserManager
+     * after succeed change state to main
+     * 
+     * this state can change to "mainState" and "beginState"
      */
     private void loginState()
     {
@@ -323,6 +328,9 @@ public class MovieReviewSocialNetwork
     /**
      * ask for user info to register,
      * auto login after successful register
+     * after succeed this change state to main
+     * 
+     * this state can change to "beginState" and "mainState"
      */
     private void registerState()
     {
@@ -355,6 +363,8 @@ public class MovieReviewSocialNetwork
 
     /** 
      * main page to let user choose their action 
+     * 
+     * this state can change to any state
      */
     private void mainState()
     {
@@ -401,7 +411,10 @@ public class MovieReviewSocialNetwork
     }
 
     /**
+     * ask user for search type then search using MovieManager or ReviewManager
+     * if search succeed change MRSN state to searchResultState
      * 
+     * this state can change to "searchResultState" and "mainState"
      */
     private void searchState()
     {
@@ -415,18 +428,18 @@ public class MovieReviewSocialNetwork
         {
             stringInput = getOneString("Search for :");
             idTemp = MovieManager.getInstance().search(stringInput,intInput);
-            state = "search result";
-            searchState = "movie";
-            searchResultPage = 1;
+            searchResultInitialize("movie");
         }
         else if(intInput == 3) // search using ReviewManager
         {
             stringInput = getOneString("Search for :");
             stringInput = UserManager.getInstance().searchForEmail(stringInput);
             idTemp = ReviewManager.getInstance().search(stringInput);
-            state = "search result";
-            searchState = "review"; 
-            searchResultPage = 1; 
+            searchResultInitialize("review");
+        }
+        else if(intInput == 4)
+        {
+            state =" main";
         }
         else
         {
@@ -434,8 +447,23 @@ public class MovieReviewSocialNetwork
         } 
     }
 
-    // this method need to config idTemp, searchState and searchResultPage before use
-    private void searchResultState()
+
+    /**
+     * this method used to set config state, searchState, and searchResultPage
+     * before using searchResultState() 
+     */
+    private void searchResultInitialize(String searchState)
+    {
+        state = "search result";
+        this.searchState = searchState; 
+        searchResultPage = 1; 
+    }
+
+    /**
+     * print out result of search from idTemp
+     * this method should use searchResultInitialize() first
+     */
+    private void printResult()
     {
         System.out.println("     "+idTemp.size()+" results");
         if(searchState.equals("movie"))
@@ -456,6 +484,20 @@ public class MovieReviewSocialNetwork
                 ReviewManager.getInstance().printSearch(idTemp.get(i));
             }   
         }
+    }
+
+    /**
+     *  this method show search result
+     *  then ask user for their action
+     * 
+     *  this state can change to "movieState", "reviewState", and "mainState"
+     * 
+     *  if using this method after meking change in idTemp 
+     *  should use searchresultInitialize() first
+     */
+     private void searchResultState()
+    {
+        printResult();
         System.out.println("\nYou are in "+searchResultPage+" page");
         System.out.println("Enter your action");
         System.out.println("(1) go to previous page");
@@ -463,6 +505,7 @@ public class MovieReviewSocialNetwork
         System.out.println("(3) select");
         System.out.println("(4) back to main menu");
         intInput = getOneInteger("Your input:");
+        int pageMaximumResult = (searchResultPage-1)*5;
         switch(intInput)
         {
             case 1:
@@ -474,7 +517,7 @@ public class MovieReviewSocialNetwork
             case 2:
                 if(((searchResultPage)*5)<idTemp.size())
                 {
-                    System.out.println(((searchResultPage-1)*5)+" "+idTemp.size());
+                    System.out.println(pageMaximumResult+" "+idTemp.size());
                     searchResultPage++;
                 }
                     
@@ -483,9 +526,9 @@ public class MovieReviewSocialNetwork
                 break;
             case 3:
                 intInput = getOneInteger("Enter search result number:");
-                if(((((searchResultPage-1)*5)+(intInput-1))<idTemp.size()) && ((((searchResultPage-1)*5)+(intInput-1)) >= 0)) // chack if index out of bound
+                if(((pageMaximumResult+(intInput-1))<idTemp.size()) && ((pageMaximumResult+(intInput-1)) >= 0)) // chack if index out of bound
                 {
-                    singleIdTemp = idTemp.get((((searchResultPage-1)*5)+(intInput-1)));
+                    singleIdTemp = idTemp.get((pageMaximumResult+(intInput-1)));
                     if(searchState.equals("movie"))
                         state = "movie";
                     else if(searchState.equals("review"))
@@ -507,6 +550,12 @@ public class MovieReviewSocialNetwork
         
     }
 
+    /**
+     * this method show Movie info from singleIdTemp
+     * then ask user for their choice of action
+     * 
+     * this state can change to "searchResultState" and "mainState"
+     */
     private void movieState()
     {
         //singleIdTemp
@@ -535,9 +584,7 @@ public class MovieReviewSocialNetwork
         switch(intInput)
         {
             case 1:;
-                state = "search result";
-                searchState = "review"; 
-                searchResultPage = 1; 
+                searchResultInitialize("review");
                 break;
             case 2:
                 writeReview();
@@ -551,6 +598,12 @@ public class MovieReviewSocialNetwork
         }
     }
 
+    /**
+     * this method show Review info from singleIdTemp.
+     * then ask user for their choice of action
+     * 
+     * this state can change to "mainState"
+     */
     private void reviewState()
     {
         //singleIdTemp
@@ -844,9 +897,7 @@ public class MovieReviewSocialNetwork
                 {
                     case 1:
                         idTemp = ReviewManager.getInstance().search(writer.getEmail());
-                        state = "search result";
-                        searchState = "review";
-                        searchResultPage = 1;
+                        searchResultInitialize("review");
                         break;
                     case 2:
                         if(confirmation("unfollow "+writer.getUserName()))
